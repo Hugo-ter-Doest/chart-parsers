@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    div
+      h1 Load grammar
+      form( method="post", action="/load_grammar", enctype="multipart/form-data")
+        fieldset
+          div
+            label Grammar file
+            input#inputFilePath(type="file", name="grammar_file")
+        br
+        input(type='submit', name='op_import', value='Upload')

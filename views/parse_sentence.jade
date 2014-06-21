@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form( method="post", action="/parse_sentence")    
+    div
+      label Input sentence:
+      input(type="text", name="input_sentence", width="300px")
+    div
+      input(type='submit', name='op_save', value='Save')
+  

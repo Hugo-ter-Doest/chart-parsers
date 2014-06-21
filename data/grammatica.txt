@@ -1,0 +1,21 @@
+S -> NP VP
+NP -> DET N
+NP -> NP PP
+PP -> P NP
+VP -> V NP
+VP -> VP PP
+DET -> the
+NP -> I
+N -> man
+N -> telescope
+P -> with
+V -> saw
+N -> cat
+N -> dog
+N -> pig
+N -> hill
+N -> park
+N -> roof
+P -> from
+P -> on
+P -> in
