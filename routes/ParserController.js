@@ -5,8 +5,9 @@
 
 var formidable = require('formidable');
 
-var Grammar = require('./Grammar');
+var Grammar = require('./ContextFreeGrammar');
 var CYK = require('./CYK');
+var EarleyChartParser = require('./EarleyChartParser');
 
 // Page for loading a grammar
 exports.choose_grammar_file = function(req, res) {
@@ -32,14 +33,26 @@ exports.input_sentence = function(req, res) {
 
 // Page for presenting the result of parsing
 exports.parse_sentence = function(req, res) {
-  var chart;
+  var chart_CYK, chart_Earley;
   var sentence;
   var start, end, accepted;
+  var CYK_time, Earley_time;
   
+  // CYK
   sentence = CYK.tokenize_sentence(req.param('input_sentence'));
   start = new Date();
-  chart = CYK.CYK_Chart_Parser(sentence);
+  chart_CYK = CYK.CYK_Chart_Parser(sentence);
   end = new Date();
-  accepted = chart[sentence.length - 1][0] ? (chart[sentence.length - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
-  res.render('parse_result', {chart: chart, N: sentence.length, sentence: sentence, parsing_time: end - start, in_language: accepted});
+  CYK_time = end - start;
+  console.log(chart_CYK);
+
+  // Earley
+  start = new Date();
+  chart_Earley = EarleyChartParser.earley_parse(sentence);
+  end = new Date();
+  Earley_time = end - start;
+  console.log(chart_Earley);
+  
+  accepted = chart_CYK[sentence.length - 1][0] ? (chart_CYK[sentence.length - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
+  res.render('parse_result', {chart: chart_CYK, N: sentence.length, sentence: sentence, parsing_time: CYK_time, in_language: accepted});
 };

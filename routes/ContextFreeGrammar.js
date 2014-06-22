@@ -10,17 +10,25 @@ var _terminal_rules = [];
 var _non_terminal_rules = [];
 var _s = null;
 
-// Checks if B is a nonterminal
+// Checks if B is a nonterminal: if does appears as lhs then it is a nonterminal
 exports.is_nonterminal = function(B) {
-  var B_is_nonterminal = false;
+  var is_nt = false;
   // some stops the loop if the callback returns true...
   _non_terminal_rules.some(function(rule) {
     if (rule.lhs === B) {
-      B_is_nonterminal = true;
+      is_nt = true;
+      return true;
     }
-    return(B_is_nonterminal);
+    return is_nt;
   });
-  return(B_is_nonterminal);
+  _terminal_rules.some(function(rule) {
+    if (rule.lhs === B) {
+      is_nt = true;
+    }
+    return is_nt;
+  });
+  console.log("Check if B is nonterminal " + B + " " + is_nt);
+  return is_nt;
 };
 
 // Looks up all rules with lhs B
@@ -28,6 +36,11 @@ exports.rules_with_lhs = function(B) {
   var rules = [];
   
   _non_terminal_rules.forEach(function(rule) {
+    if (rule.lhs === B) {
+      rules.push(rule);
+    }
+  });
+  _terminal_rules.forEach(function(rule) {
     if (rule.lhs === B) {
       rules.push(rule);
     }
@@ -51,8 +64,8 @@ exports.left_hand_sides = function(s) {
 
   for (var i = 0; i < _terminal_rules.length; ++i) {
     var r = _terminal_rules[i];
-    if (r[1] === s) {
-      res.push(r[0]);
+    if ((r.rhs[0] === s) && (r.rhs.length === 1)) {
+      res.push(r.lhs);
     }
   }
   return res;
@@ -64,8 +77,8 @@ exports.left_hand_sides2 = function(s, t) {
   
   for (var i = 0; i < _non_terminal_rules.length; ++i) {
     var r = _non_terminal_rules[i];
-    if ((r[1] === s) && (r[2] === t)) {
-      res.push(r[0]);
+    if ((r.rhs[0] === s) && (r.rhs[1] === t)) {
+      res.push(r.lhs);
     }
   }
   return res;
@@ -90,6 +103,7 @@ function parse_grammar(grammar_text) {
       throw "bad rule syntax: " + r;
     }
 
+    new_rule = {};
     new_rule.lhs = a[1];
     new_rule.rhs = a[2].split(/\s+/);
 

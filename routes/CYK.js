@@ -3,7 +3,7 @@
  * Last edit: 19-6-2014
  */
 
-var Grammar = require('./Grammar');
+var Grammar = require('./ContextFreeGrammar');
 
 // Split the sentence by space
 exports.tokenize_sentence = function(sentence) {
