@@ -88,7 +88,7 @@ exports.left_hand_sides2 = function(s, t) {
 function parse_grammar(grammar_text) {
   var new_rule;
  
-  var re_rule = /^(\w+)\s*->\s*(.*)$/;
+  var re_rule = /^(.+)\s*->\s*(.*)$/;
   grammar_text = grammar_text.split(/\r?\n/);
   
   for (var i = 0; i < grammar_text.length; ++i) {
