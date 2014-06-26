@@ -5,8 +5,7 @@
 
 var CFG = require('./ContextFreeGrammar');
 
-function initialise_chart(sentence) {
-  var N = sentence.length;
+function initialise_chart(N) {
   var chart = new Array(N+1);
   var i;
   
@@ -41,9 +40,9 @@ function next_cat_is_nonterminal(item) {
 }
 
 // The earley parser. Sentence is an array of words
-exports.earley_parse = function(sentence) {
-  var chart = initialise_chart(sentence);
-  var N = sentence.length;
+exports.earley_parse = function(tagged_sentence) {
+  var N = tagged_sentence.length;
+  var chart = initialise_chart(N);
   var start_item;
   var i;
   var items_were_added = false;
@@ -75,8 +74,8 @@ exports.earley_parse = function(sentence) {
     // remember the size of the set at position j + 1 
     var nr_items = Object.keys(chart[j+1]).length;
     // Place the dot one to the right if the word matches
-    if (sentence[j] === item.rule.rhs[item.dot]) {
-      console.log("Scanning word: " + sentence[j]);
+    if (tagged_sentence[j][1] === item.rule.rhs[item.dot]) {
+      console.log("Scanning word: (" + tagged_sentence[j][0] + ", " + tagged_sentence[j][1] + ")");
       var newitem = new_item(item.rule, item.dot+1, item.from);
       chart[j+1][JSON.stringify(newitem)] = newitem;
       console.log("Scanner: added item " + JSON.stringify(newitem) + " to state " + j+1);

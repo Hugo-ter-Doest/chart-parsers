@@ -8,6 +8,7 @@ var formidable = require('formidable');
 var Grammar = require('./ContextFreeGrammar');
 var CYK = require('./CYK');
 var EarleyChartParser = require('./EarleyChartParser');
+var pos = require('pos');
 
 // Page for loading a grammar
 exports.choose_grammar_file = function(req, res) {
@@ -38,20 +39,23 @@ exports.parse_sentence = function(req, res) {
   var start, end, accepted_CYK, accepted_Earley;
   var time_CYK, time_Earley;
 
-  sentence = CYK.tokenize_sentence(req.param('input_sentence'));
-  var N = sentence.length;
+  sentence = req.param('input_sentence');
+  var words = new pos.Lexer().lex(sentence);
+  var taggedWords = new pos.Tagger().tag(words);
+  var N = taggedWords.length;
+  console.log(taggedWords);
   
   // CYK
-  start = new Date().getTime();
-  chart_CYK = CYK.CYK_Chart_Parser(sentence);
-  end = new Date().getTime();
-  time_CYK = end - start;
-  console.log(chart_CYK);
-  accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
+  //start = new Date().getTime();
+  //chart_CYK = CYK.CYK_Chart_Parser(sentence);
+  //end = new Date().getTime();
+  //time_CYK = end - start;
+  //console.log(chart_CYK);
+  //accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
   
   // Earley
   start = new Date().getTime();
-  chart_Earley = EarleyChartParser.earley_parse(sentence);
+  chart_Earley = EarleyChartParser.earley_parse(taggedWords);
   end = new Date().getTime();
   console.log(end);
   time_Earley = end - start;

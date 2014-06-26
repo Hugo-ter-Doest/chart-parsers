@@ -9,6 +9,7 @@
     "express": "*",
     "jade": "*",
     "body-parser": "*",
-    "formidable": "*"
+    "formidable": "*",
+    "pos": "*"
   }
 }
