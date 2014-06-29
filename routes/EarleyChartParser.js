@@ -33,12 +33,6 @@ function is_incomplete(item) {
   return(item.dot < item.rule.rhs.length);
 }
 
-// Checks if the next category after the dot is a nonterminal
-function next_cat_is_nonterminal(item) {
-  console.log("Checking if next category is nonterminal: " + JSON.stringify(item));
-  return(CFG.is_nonterminal(item.rule.rhs[item.dot]));
-}
-
 // The earley parser. Sentence is an array of words
 exports.earley_parse = function(tagged_sentence) {
   var N = tagged_sentence.length;
@@ -106,6 +100,7 @@ exports.earley_parse = function(tagged_sentence) {
   // Seed the parser with the start rule;
   start_item = new_item(CFG.start_rule(), 0, 0);
   chart[0][JSON.stringify(start_item)] = start_item;
+  console.log("Added start production to the start: " + JSON.stringify(start_item));
   // Start parsing
   for (i = 0; i <= N; i++) {
       console.log("Parse iteration: " + i);
@@ -117,14 +112,14 @@ exports.earley_parse = function(tagged_sentence) {
           console.log("Parser: checking item " + JSON.stringify(item));
           // apply predictor, scanner and completer until no more items can be added
           if (is_incomplete(item)) {
-            if (next_cat_is_nonterminal(item)) {
-              // non-terminal
+            if (CFG.is_nonterminal(item.rule.rhs[item.dot])) {
+              console.log("Next symbol is a nonterminal: " + item.rule.rhs[item.dot]);
               if (predictor(item, i) > 0) {
                 items_were_added = true;
               }
             }
             else {
-              // terminal
+              console.log("Next symbol is a terminal: " + item.rule.rhs[item.dot]);
               if (scanner(item, i) > 0) {
                 items_were_added = true;
               }
