@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h1. Parse result
+  
+  div 
+    label Sentence: 
+    label #{sentence}
+  div
+    label Length: 
+    label #{N}
+  h2. Cocke-Younger-Kasami pure bottom up
+  div
+    label Parsing time: 
+    label #{parsing_time_CYK} ms
+  div
+    label In language: 
+    label #{in_language_CYK}
+  br
+  div
+    table(border="1px")
+        tr
+          td=""
+          each word in sentence
+            td(width="50px", height="30px", align="center")=word
+        tr
+          td=""
+          - for (var i = 0; i < N; i++) {
+              td(width="50px", height="30px", align="center")=i+1
+          - }
+        - for (var i = 0; i < N; i++) {
+          tr
+            td(width="30px", height="50px", align="center")=i+1
+            - for (var j = 0; j < (N-i); j++) {
+                td(width="50px", height="50px", align="center")=chart_CYK[i][j]
+            - }
+        - }

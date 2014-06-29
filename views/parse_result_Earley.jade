@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1. Parse result
+  
+  div 
+    label Sentence: 
+    label #{sentence}
+  div
+    label Length: 
+    label #{N}
+  h2. Earley chart parser
+  div
+    label Parsing time: 
+    label #{parsing_time_Earley} ms
+  div
+    label In language: 
+    label #{in_language_Earley}
+  br
+  div
+    table(border="1px")
+      tr
+        td(width="50px", height="50px", align="center")=""
+        - for (var i = 0; i < N; i++) {
+            td(width="50px", height="50px", align="center")=tagged_sentence[i][0]
+        - }
+      tr
+        td(width="50px", height="50px", align="center")=""
+        - for (var i = 0; i < N; i++) {
+            td(width="50px", height="50px", align="center")=tagged_sentence[i][1]
+        - }
+      tr
+        - for (var i = 0; i <= N; i++) {
+            td(width="130px", height="50px", align="center")=i
+        - }
+      tr
+        - for (var i = 0; i <= N; i++) {
+            td(valign="top")
+              each key in Object.keys(chart_Earley[i])
+                if (chart_Earley[i][key].rule.rhs.length === chart_Earley[i][key].dot)
+                  label (#{chart_Earley[i][key].rule.lhs} -> #{chart_Earley[i][key].rule.rhs}, #{chart_Earley[i][key].from})
+                  br
+        - }
