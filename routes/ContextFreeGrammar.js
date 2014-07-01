@@ -77,6 +77,10 @@ function parse_grammar(grammar_text) {
       continue;
     }
     
+    if ((r[0] === '/') && (r[1] === '/')) {
+      continue;
+    }
+    
     var a = re_rule.exec(r);
     if (a === null) {
       throw "bad rule syntax: " + r;

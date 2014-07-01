@@ -1,10 +1,79 @@
+// Author: Hugo W.L. ter Doest
+// Last edit: 1-7-2014
+// Based on: http://www.scientificpsychic.com/grammar/enggram1.html
+
 Z -> S
 
-S -> NP
-S -> PP
+S -> NOUN_PHRASE
+S -> PREPOSITIONAL_PHRASE
 S -> SUBJECT PREDICATE
 
-SUBJECT -> NP
+// <subject> = <simple subject> | <compound subject>
+SUBJECT -> SIMPLE_SUBJECT
+SUBJECT -> COMPOUND_SUBJECT
+
+// <simple subject> = <noun phrase> | <nominative personal pronoun>
+SIMPLE_SUBJECT -> NOUN_PHRASE
+SIMPLE_SUBJECT -> PRP
+
+// <compound subject> =
+//       <simple subject> ("and" | "or") <simple subject> |
+//       "Either" <simple subject> "or" <simple subject> |
+//       "Neither" <simple subject> "nor" <simple subject> 
+COMPOUND_SUBJECT -> SIMPLE_SUBJECT CC SIMPLE_SUBJECT
+COMPOUND_SUBJECT -> EITHER SIMPLE_SUBJECT OR SIMPLE_SUBJECT
+COMPOUND_SUBJECT -> NEITHER SIMPLE_SUBJECT NOR SIMPLE_SUBJECT
+
+NOUN_PHRASE -> NN
+NOUN_PHRASE -> NNS
+NOUN_PHRASE -> JJ NN
+NOUN_PHRASE -> ADVERBS ADJECTIVES NN
+NOUN_PHRASE -> ADJECTIVES NNS
+NOUN_PHRASE -> ADVERBS ADJECTIVES NNS
+
+// <noun phrase> = "the" <specific proper noun>
+NOUN_PHRASE -> DT NNP
+NOUN_PHRASE -> DT NNPS
+
+// <noun phrase> = <proper noun>
+NOUN_PHRASE -> NNP
+NOUN_PHRASE -> NNPS
+
+// <noun phrase> = <non-personal pronoun>
+
+// <noun phrase> = <article> [<adverb>* <adjective>] <noun>
+NOUN_PHRASE -> DT NOUN
+NOUN_PHRASE -> DT ADJECTIVES NOUN
+NOUN_PHRASE -> DT ADVERBS ADJECTIVES NOUN
+
+// <noun phrase> = [<adverb>* <adjective>] <noun-plural>
+NOUN_PHRASE -> NOUN_PLURAL
+NOUN_PHRASE -> ADJECTIVES NOUN_PLURAL
+NOUN_PHRASE -> ADVERBS ADJECTIVES NOUN_PLURAL
+
+// <noun phrase> = <proper noun-possessive> [<adverb>* <adjective>] <noun>
+NOUN_PHRASE -> NNP POS ADJECTIVES NOUN
+NOUN_PHRASE -> NNP POS ADVERBS ADJECTIVES NOUN
+
+// <noun phrase> = <personal possessive adjective> [<adverb>* <adjective>] <noun>
+NOUN_PHRASE -> PRP$ ADJECTIVES NOUN
+NOUN_PHRASE -> PRP$ ADVERBS ADJECTIVES NOUN
+
+NOUN_PHRASE -> DT NN POS ADJECTIVES NOUN
+NOUN_PHRASE -> DT NN POS ADVERBS ADJECTIVES NOUN
+
+ADVERBS -> ADVERBS RB
+ADVERBS -> RB
+
+ADJECTIVES -> ADJECTIVE CC ADJECTIVE
+ADJECTIVES -> ADJECTIVE JJ
+ADJECTIVES -> JJ
+
+// <noun> = <noun> [<prep phr>*]
+NOUN -> NN
+NOUN -> NN PREPOSTIONAL_PHRASES
+NOUN -> NNS
+NOUN -> NNS PREPOSTIONAL_PHRASES
 
 PREDICATE -> VERB
 PREDICATE -> VP
@@ -24,28 +93,11 @@ INDIRECT_OBJECT -> OBJECT
 OBJECT -> SIMPLE_OBJECT
 OBJECT -> COMPOUND_OBJECT
 COMPOUND_OBJECT -> COMPOUND_OBJECT CC SIMPLE_OBJECT
-SIMPLE_OBJECT -> NP
-SIMPLE_OBJECT -> OBJECTIVE_PERSONAL_PRONOUN
-OBJECTIVE_PERSONAL_PRONOUN -> PRP
+SIMPLE_OBJECT -> NOUN_PHRASE
+SIMPLE_OBJECT -> PRP
 
-PPS -> PPS PP
-PPS -> PP
-
-RBS -> RBS RB
-RBS -> RB
-
-PP -> IN NP
-
-NP -> NN
-NP -> NNS
-NP -> JJ NN
-NP -> DT JJ NN
-NP -> DT NN
-NP -> JJ NNS
-NP -> DT JJ NNS
-NP -> DT NNS
-NP -> NNP
-NP -> NNPS
+PREPOSITIONAL_PHRASE -> IN NOUN_PHRASE
+PREPOSITIONAL_PHRASES -> PREPOSITIONAL_PHRASES PREPOSITIONAL_PHRASE
 
 VERB -> VBP
 VERB -> VBZ
