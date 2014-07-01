@@ -120,8 +120,10 @@ exports.earley_parse = function(tagged_sentence) {
             }
             else {
               console.log("Next symbol is a terminal: " + item.rule.rhs[item.dot]);
-              if (scanner(item, i) > 0) {
-                items_were_added = true;
+              if (i < N) {
+                if (scanner(item, i) > 0) {
+                  items_were_added = true;
+                }
               }
             }
           }
