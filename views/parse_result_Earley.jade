@@ -1,11 +1,33 @@
 extends layout
 
+script(type="text/javascript").
+  function translate(key, value) {
+    if (key === "lhs") {
+      return value;
+    }
+    if (key === "rhs") {
+      return value;
+    }
+    if (key === "children") {
+      return value;
+    }    
+    if (key === "rule") {
+      return undefined;
+    }    
+    if (key === "dot") {
+      return undefined;
+    }    
+    if (key === "from") {
+      return undefined;
+    }
+    return undefined;
+  }
 block content
   h1. Parse result
   
   div 
     label Sentence: 
-    label #{sentence}
+    label #{JSON.stringify(tagged_sentence)}
   div
     label Length: 
     label #{N}
@@ -13,6 +35,9 @@ block content
   div
     label Parsing time: 
     label #{parsing_time_Earley} ms
+  div
+    label Number of items created: 
+    label #{nr_items_created} items
   div
     label In language: 
     label #{in_language_Earley}
@@ -41,3 +66,6 @@ block content
                   label (#{chart_Earley[i][key].rule.lhs} -> #{chart_Earley[i][key].rule.rhs}, #{chart_Earley[i][key].from})
                   br
         - }
+  div
+    pre
+      #{JSON.stringify(parse, ["rule", "rhs", "children"], 2)}

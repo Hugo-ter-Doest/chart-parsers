@@ -8,13 +8,13 @@ var fs = require('fs');
 
 // Production rules and start symbol are global
 var _production_rules = [];
-var _nonterminals = [];
+var _nonterminals = {};
 var _s = null;
 
 // Checks if B is a nonterminal
 exports.is_nonterminal = function(B) {
-  console.log("Checking if " + B + " is a nonterminal: " + _nonterminals.indexOf(B) !== -1);
-  return (_nonterminals.indexOf(B) !== -1);
+  console.log("Checking if " + B + " is a nonterminal: " + _nonterminals[B]);
+  return (_nonterminals[B]);
 };
 
 // Looks up all rules with lhs B
@@ -91,7 +91,7 @@ function parse_grammar(grammar_text) {
     new_rule.rhs = a[2].split(/\s+/);
 
     _production_rules.push(new_rule);
-    _nonterminals.push(new_rule.lhs);
+    _nonterminals[new_rule.lhs] = true;
     if (_s === null) {
       _s = a[1];
     }
@@ -101,7 +101,7 @@ function parse_grammar(grammar_text) {
 // Reset production rules and start symbol
 function initialise_grammar() {
   _production_rules = [];
-  _nonterminals = [];
+  _nonterminals = {};
   _s = null;
 }
 

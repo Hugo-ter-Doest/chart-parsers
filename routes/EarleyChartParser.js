@@ -24,6 +24,7 @@ function new_item(rule, dot, from) {
   item.rule = rule;
   item.dot = dot;
   item.from = from;
+  item.children = [];
   return item;
 }
 
@@ -71,6 +72,7 @@ exports.earley_parse = function(tagged_sentence) {
     if (tagged_sentence[j][1] === item.rule.rhs[item.dot]) {
       console.log("Scanning word: (" + tagged_sentence[j][0] + ", " + tagged_sentence[j][1] + ")");
       var newitem = new_item(item.rule, item.dot+1, item.from);
+      newitem.children.push(tagged_sentence[j]);
       chart[j+1][JSON.stringify(newitem)] = newitem;
       console.log("Scanner: added item " + JSON.stringify(newitem) + " to state " + j+1);
     }
@@ -89,6 +91,8 @@ exports.earley_parse = function(tagged_sentence) {
       var item_for_comp = chart[item.from][key];
       if (item_for_comp.rule.rhs[item_for_comp.dot] === B) {
         var newitem = new_item(item_for_comp.rule, item_for_comp.dot+1, item_for_comp.from);
+        newitem.children = item_for_comp.children.slice();
+        newitem.children.push(item);
         chart[k][JSON.stringify(newitem)] = newitem;
         console.log("Completer: added item " + JSON.stringify(newitem) + " to state " + k);
       }
@@ -98,7 +102,7 @@ exports.earley_parse = function(tagged_sentence) {
   }
 
   // Seed the parser with the start rule;
-  start_item = new_item(CFG.start_rule(), 0, 0);
+  start_item = new_item(CFG.start_rule(), 0, 0, []);
   chart[0][JSON.stringify(start_item)] = start_item;
   console.log("Added start production to the start: " + JSON.stringify(start_item));
   // Start parsing

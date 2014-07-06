@@ -38,6 +38,7 @@ function parse_sentence_with_Earley(req, res) {
   var sentence;
   var start, end, accepted_Earley;
   var time_Earley;
+  var complete_parse = {};
 
   sentence = req.param('input_sentence');
   var words = new pos.Lexer().lex(sentence);
@@ -58,14 +59,22 @@ function parse_sentence_with_Earley(req, res) {
     var item = chart_Earley[N][key];
     if ((item.rule.lhs === Grammar.start_symbol()) && (item.rule.rhs.length === item.dot)) {
       accepted_Earley = true;
+      complete_parse = item;
     }
+  });
+  
+  var nr_items = 0;
+  chart_Earley.forEach(function(state) {
+    nr_items += Object.keys(state).length;
   });
 
   res.render('parse_result_Earley', {chart_Earley: chart_Earley,
                                      parsing_time_Earley: time_Earley,
                                      in_language_Earley: accepted_Earley,
                                      N: N,
-                                     tagged_sentence: taggedWords });
+                                     tagged_sentence: taggedWords,
+                                     parse: complete_parse,
+                                     nr_items_created: nr_items});
 }
 
 //Page for presenting the result of parsing with the CYK parser
