@@ -47,7 +47,7 @@ Grammar.read_grammar_file(grammar_file_path, function(error) {
 
 // Parse sentence
 var sentence = 'I saw the man with the telescope';
-chart_CYK = CYK.CYK_Chart_Parser(sentence);
+chart = CYK.CYK_Chart_Parser(sentence);
 ```
 
 ## Developing
@@ -61,7 +61,7 @@ See http://en.wikipedia.org/wiki/Earley_parser for more information on the algor
 ## Usage
 The Earley parser takes a tagged sentence as argument. Example of a tagged sentence:
 ```
-[{'I', 'Pronoun'}, {'saw', 'Verb'}, {'the', 'Article'}, {'man', 'Noun'}]
+[['I', 'Pronoun'], ['saw', 'Verb'], ['the', 'Article'], ['man', 'Noun']]
 ```
 
 And here is how to parse a sentence:
@@ -70,7 +70,13 @@ var EarleyChartParser = require('./EarleyChartParser');
 var pos = require('pos');
 chart = EarleyChartParser.earley_parse(taggedWords);
 ```
-The resulting chart is an array of length N+1, and each entry contains items of the form [production rule, dot, from]. The dot is the position in the right hand side of the rules up to which it has been recognised. The from is the origin position pointing at the position in the sentence at which recognition of this rule began.
+The resulting chart is an array of length N+1, and each entry contains items of the form [rule, dot, from, children] where:
+* rule is the production rule; it has two members: lhs for the left-hand-side of the rule, and rhs for the right-hand-side of the rule.
+* dot is the position in the right hand side of the rules up to which it has been recognised. 
+* from is the origin position pointing at the position in the sentence at which recognition of this rule began.
+* children are the completed items that are used to recognised the current item
+
+Based on the children of the completed items the parse(s) of a sentence can be constructed.
 
 ## Development
 
