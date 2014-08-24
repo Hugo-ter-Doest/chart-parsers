@@ -69,7 +69,7 @@ And here is how to parse a sentence:
 var EarleyChartParser = require('./EarleyChartParser');
 var pos = require('pos');
 chart = EarleyChartParser.earley_parse(taggedWords);
-``
+```
 The resulting chart is an array of length N+1, and each entry contains items of the form [production rule, dot, from]. The dot is the position in the right hand side of the rules up to which it has been recognised. The from is the origin position pointing at the position in the sentence at which recognition of this rule began.
 
 ## Development
