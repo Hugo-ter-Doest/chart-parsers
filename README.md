@@ -7,6 +7,7 @@ A -> B C
 A -> a
 ```
 where A, B and C are nonterminals and a is a terminal.
+See http://en.wikipedia.org/wiki/CYK_algorithm for an explanation of the algorithm.
 
 Below is a simple toy grammar:
 ```
@@ -54,7 +55,25 @@ chart_CYK = CYK.CYK_Chart_Parser(sentence);
 * Chomsky Normal Form entails rules of the form A -> *empty* as well. Such rules cannot be loaded and I don't know if the parser can handle these.
 
 # Earley Chart Parser
-The Earley Chart Parser ...
+The Earley Chart Parser can parse all context-free languages and uses arbitrary context-free grammars.
+See http://en.wikipedia.org/wiki/Earley_parser for more information on the algorithm.
+
+## Usage
+The Earley parser takes a tagged sentence as argument. Example of a tagged sentence:
+```
+[{'I', 'Pronoun'}, {'saw', 'Verb'}, {'the', 'Article'}, {'man', 'Noun'}]
+```
+
+And here is how to parse a sentence:
+```
+var EarleyChartParser = require('./EarleyChartParser');
+var pos = require('pos');
+chart = EarleyChartParser.earley_parse(taggedWords);
+``
+The resulting chart is an array of length N+1, and each entry contains items of the form [production rule, dot, from]. The dot is the position in the right hand side of the rules up to which it has been recognised. The from is the origin position pointing at the position in the sentence at which recognition of this rule began.
+
+## Development
+
 
 # Tools
 
