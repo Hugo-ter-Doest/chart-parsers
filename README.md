@@ -47,12 +47,12 @@ Grammar.read_grammar_file(grammar_file_path, function(error) {
 
 // Parse sentence
 var sentence = 'I saw the man with the telescope';
-chart = CYK.CYK_Chart_Parser(sentence);
+var chart = CYK.CYK_Chart_Parser(sentence);
 ```
 
 ## Developing
 * Separate the lexicon from the grammar.
-* Chomsky Normal Form entails rules of the form A -> *empty* as well. Such rules cannot be loaded and I don't know if the parser can handle these.
+* Chomsky Normal Form allows rules of the form A -> *empty* as well. Such rules cannot be loaded and I don't know if the parser can handle these.
 
 # Earley Chart Parser
 The Earley Chart Parser can parse all context-free languages and uses arbitrary context-free grammars.
@@ -68,13 +68,13 @@ And here is how to parse a sentence:
 ```
 var EarleyChartParser = require('./EarleyChartParser');
 var pos = require('pos');
-chart = EarleyChartParser.earley_parse(taggedWords);
+var chart = EarleyChartParser.earley_parse(taggedWords);
 ```
 The resulting chart is an array of length N+1, and each entry contains items of the form [rule, dot, from, children] where:
 * rule is the production rule; it has two members: lhs for the left-hand-side of the rule, and rhs for the right-hand-side of the rule.
-* dot is the position in the right hand side of the rules up to which it has been recognised. 
+* dot is the position in the right hand side of the rule up to which it has been recognised. 
 * from is the origin position pointing at the position in the sentence at which recognition of this rule began.
-* children are the completed items that are used to recognised the current item
+* children are the completed items that are used to recognise the current item
 
 Based on the children of the completed items the parse(s) of a sentence can be constructed.
 
