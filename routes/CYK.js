@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Grammar = require('./ContextFreeGrammar');
-
 // Split the sentence by space
 exports.tokenize_sentence = function(sentence) {
   var s = sentence.split(/\s+/);
@@ -40,13 +38,13 @@ function onlyUnique(value, index, self) {
 }
 
 // This is the actual CYK chart parser
-exports.CYK_Chart_Parser = function(sentence) {
+exports.CYK_Chart_Parser = function(sentence, grammar) {
   var N = sentence.length;
   var C = allocate_chart(N);
   var i, j, k;
   
   for (j = 0; j < N; ++j) {
-    C[0][j] = Grammar.left_hand_sides(sentence[j]);
+    C[0][j] = grammar.left_hand_sides(sentence[j]);
   }
   
   for (i = 1; i < N; ++i) {
@@ -59,7 +57,7 @@ exports.CYK_Chart_Parser = function(sentence) {
             var nt1 = nts1[ii];
             for (var jj = 0; jj < nts2.length; ++jj) {
               var nt2 = nts2[jj];
-              var rhss = Grammar.left_hand_sides2(nt1, nt2);
+              var rhss = grammar.left_hand_sides2(nt1, nt2);
               if (!C[i][j]) {
                 C[i][j] = [];
               }

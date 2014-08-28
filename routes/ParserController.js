@@ -19,9 +19,11 @@
 var formidable = require('formidable');
 
 var Grammar = require('./ContextFreeGrammar');
+var CFG = require('./CFG');
 var CYK = require('./CYK');
 var EarleyChartParser = require('./EarleyChartParser');
 var pos = require('pos');
+var grammar;
 
 // Page for loading a grammar
 exports.choose_grammar_file = function(req, res) {
@@ -34,9 +36,8 @@ exports.submit_grammar = function(req, res) {
 
   form.parse(req, function(err, fields, files) {
     var grammar_file = files.grammar_file.path + files.grammar_file.name;
-    Grammar.read_grammar_file(files.grammar_file.path, function(error) {
-      res.redirect('/parse_sentence');
-    });
+    grammar = new CFG(files.grammar_file.path);
+    res.redirect('/parse_sentence');
   });
 };
 
@@ -105,13 +106,14 @@ function parse_sentence_with_CYK (req, res) {
   
   // CYK
   start = new Date().getTime();
-  chart_CYK = CYK.CYK_Chart_Parser(sentence);
+  console.log(grammar);
+  chart_CYK = CYK.CYK_Chart_Parser(sentence, grammar);
   end = new Date().getTime();
   time_CYK = end - start;
   console.log(chart_CYK);
   accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
 
-  res.render('parse_result-CYK', {chart_CYK: chart_CYK,
+  res.render('parse_result_CYK', {chart_CYK: chart_CYK,
                                   parsing_time_CYK: time_CYK,
                                   in_language_CYK: accepted_CYK,
                                   N: N,

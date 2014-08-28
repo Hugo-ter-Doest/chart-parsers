@@ -17,69 +17,68 @@
 */
 var fs = require('fs');
 
-// Parse the grammar into production rules
-function parseGrammar(grammar_text, grammar) {
-  var new_rule;
- 
-  var re_rule = /^(\w+)\s*->\s*(.*)$/;
-  grammar_text = grammar_text.split(/\r?\n/);
-  
-  for (var i = 0; i < grammar_text.length; ++i) {
-    var r = grammar_text[i];
-    
-    if (r.length === 0) {
-      continue;
-    }
-    
-    if ((r[0] === '/') && (r[1] === '/')) {
-      continue;
-    }
-    
-    var a = re_rule.exec(r);
-    if (a === null) {
-      throw "bad rule syntax: " + r;
-    }
-
-    new_rule = {};
-    new_rule.lhs = a[1];
-    new_rule.rhs = a[2].split(/\s+/);
-
-    grammar.ProductionRules.push(new_rule);
-    grammar.Nonterminals[new_rule.lhs] = true;
-    if (grammar.StartSymbol === null) {
-      grammar.StartSymbol = a[1];
-    }
-  }
-}
-
 //Constructor for the grammar object
-function Grammar(grammar_file, callback)  {
+function Grammar(grammar_file) {
+  var grammar = this;
   fs.readFile(grammar_file, 'utf8', function (error, grammar_text) {
     if (error) {
       console.log(error);
     }
-    this.ProductionRules = [];
-    this.Nonterminals = {};
-    this.StartSymbol = null;
-    parseGrammar(grammar_text, this);
-    console.log(this.ProductionRules);
-    console.log(this.Nonterminals);
-    console.log(this.StartSymbol);
-    callback(error);
+    grammar.production_rules = [];
+    grammar.nonterminals = {};
+    grammar.start_symbol = null;
+    grammar.is_CNF = true;
+
+    var new_rule;
+   
+    var re_rule = /^(\w+)\s*->\s*(.*)$/;
+    grammar_text = grammar_text.split(/\r?\n/);
+    
+    //Parse the grammar text
+    for (var i = 0; i < grammar_text.length; ++i) {
+      var r = grammar_text[i];
+      
+      if (r.length === 0) {
+        continue;
+      }
+      
+      if ((r[0] === '/') && (r[1] === '/')) {
+        continue;
+      }
+      
+      var a = re_rule.exec(r);
+      if (a === null) {
+        throw "bad rule syntax: " + r;
+      }
+
+      new_rule = {};
+      new_rule.lhs = a[1];
+      new_rule.rhs = a[2].split(/\s+/);
+      if (new_rule.rhs.length > 2) {
+        grammar.is_CNF = false;
+      }
+
+      grammar.production_rules.push(new_rule);
+      grammar.nonterminals[new_rule.lhs] = true;
+      if (grammar.start_symbol === null) {
+        grammar.start_symbol = a[1];
+      }
+    }
+    console.log(grammar);
   });
 }
 
 //Checks if B is a nonterminal
 Grammar.prototype.is_nonterminal = function(B) {
-  console.log("Checking if " + B + " is a nonterminal: " + this.Nonterminals[B]);
-  return (this.Nonterminals[B]);
+  console.log("Checking if " + B + " is a nonterminal: " + this.nonterminals[B]);
+  return (this.nonterminals[B]);
 };
 
 // Looks up all rules with lhs B
 Grammar.prototype.rules_with_lhs = function(B) {
   var rules = [];
   
-  this.ProductionRules.forEach(function(rule) {
+  this.production_rules.forEach(function(rule) {
     if (rule.lhs === B) {
       rules.push(rule);
     }
@@ -89,19 +88,20 @@ Grammar.prototype.rules_with_lhs = function(B) {
 
 // Returns the start production rule which is the first rule read from file
 Grammar.prototype.start_rule = function() {
-  return(this.ProductionRules[0]);
+  return(this.production_rules[0]);
 };
 
 // Returns the start symbol
 Grammar.prototype.start_symbol = function() {
-  return this.StartSymbol;
+  return this.start_symbol;
 };
 
 // Returns all terminal rules that match right hand side terminal s
 Grammar.prototype.left_hand_sides = function(s) {
   var res = [];
 
-  this.ProductionsRules.forEach(function(rule) {
+  console.log(this);
+  this.production_rules.forEach(function(rule) {
     if ((rule.rhs[0] === s) && (rule.rhs.length === 1)) {
       res.push(rule);
     }
@@ -113,7 +113,7 @@ Grammar.prototype.left_hand_sides = function(s) {
 Grammar.prototype.left_hand_sides2 = function(s, t) {
   var res = [];
   
-  this.ProductionsRules.forEach(function(rule) {
+  this.production_rules.forEach(function(rule) {
     if ((rule.rhs.length === 2) && (rule.rhs[1] === s) && (rule.rhs[2] === t)) {
       res.push(rule);
     }
