@@ -64,7 +64,7 @@ function Grammar(grammar_file) {
         grammar.start_symbol = a[1];
       }
     }
-    console.log(grammar);
+    console.log(JSON.stringify(grammar));
   });
 }
 
@@ -92,15 +92,14 @@ Grammar.prototype.start_rule = function() {
 };
 
 // Returns the start symbol
-Grammar.prototype.start_symbol = function() {
-  return this.start_symbol;
+Grammar.prototype.get_start_symbol = function() {
+  return(this.start_symbol);
 };
 
 // Returns all terminal rules that match right hand side terminal s
 Grammar.prototype.left_hand_sides = function(s) {
   var res = [];
 
-  console.log(this);
   this.production_rules.forEach(function(rule) {
     if ((rule.rhs[0] === s) && (rule.rhs.length === 1)) {
       res.push(rule);
@@ -114,8 +113,8 @@ Grammar.prototype.left_hand_sides2 = function(s, t) {
   var res = [];
   
   this.production_rules.forEach(function(rule) {
-    if ((rule.rhs.length === 2) && (rule.rhs[1] === s) && (rule.rhs[2] === t)) {
-      res.push(rule);
+    if ((rule.rhs.length === 2) && (rule.rhs[0] === s) && (rule.rhs[1] === t)) {
+      res.push(rule.lhs);
     }
   });
   return res;

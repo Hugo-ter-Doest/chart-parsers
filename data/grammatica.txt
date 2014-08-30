@@ -1,21 +1,10 @@
 S -> NP VP
-NP -> DET N
+S -> NN VP
+S -> PRP VP
+NP -> DT NN
 NP -> NP PP
-PP -> P NP
-VP -> V NP
+PP -> IN NP
+VP -> VBP NP
+VP -> VBD NP
+VP -> VBZ NP
 VP -> VP PP
-DET -> the
-NP -> I
-N -> man
-N -> telescope
-P -> with
-V -> saw
-N -> cat
-N -> dog
-N -> pig
-N -> hill
-N -> park
-N -> roof
-P -> from
-P -> on
-P -> in

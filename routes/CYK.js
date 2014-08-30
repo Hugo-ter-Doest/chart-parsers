@@ -38,13 +38,17 @@ function onlyUnique(value, index, self) {
 }
 
 // This is the actual CYK chart parser
-exports.CYK_Chart_Parser = function(sentence, grammar) {
-  var N = sentence.length;
+// sentence is a tagged sentence of the form [[word, category], [word, category], ...]
+exports.CYK_Chart_Parser = function(tagged_sentence, grammar) {
+  var N = tagged_sentence.length;
   var C = allocate_chart(N);
   var i, j, k;
   
+  console.log("Sentence length" + N);
   for (j = 0; j < N; ++j) {
-    C[0][j] = grammar.left_hand_sides(sentence[j]);
+    // The categories are used to fill the first row of the chart
+    C[0][j] = [];
+    C[0][j].push(tagged_sentence[j][1]);
   }
   
   for (i = 1; i < N; ++i) {
@@ -57,7 +61,10 @@ exports.CYK_Chart_Parser = function(sentence, grammar) {
             var nt1 = nts1[ii];
             for (var jj = 0; jj < nts2.length; ++jj) {
               var nt2 = nts2[jj];
+              console.log("nt1: " + nt1);
+              console.log("nt2: " + nt2);
               var rhss = grammar.left_hand_sides2(nt1, nt2);
+              console.log(rhss);
               if (!C[i][j]) {
                 C[i][j] = [];
               }

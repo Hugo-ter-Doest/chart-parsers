@@ -37,7 +37,7 @@ exports.submit_grammar = function(req, res) {
   form.parse(req, function(err, fields, files) {
     var grammar_file = files.grammar_file.path + files.grammar_file.name;
     grammar = new CFG(files.grammar_file.path);
-    res.redirect('/parse_sentence');
+    res.redirect('/input_sentence');
   });
 };
 
@@ -46,8 +46,8 @@ exports.input_sentence = function(req, res) {
   res.render('parse_sentence');
 };
 
-// Page for presenting the result of parsing
-function parse_sentence_with_Earley(req, res) {
+// Parsing with the Earley algorithm
+exports.parse_sentence_with_Earley = function(req, res) {
   var chart_Earley;
   var sentence;
   var start, end, accepted_Earley;
@@ -58,7 +58,7 @@ function parse_sentence_with_Earley(req, res) {
   var words = new pos.Lexer().lex(sentence);
   var taggedWords = new pos.Tagger().tag(words);
   var N = taggedWords.length;
-  console.log(taggedWords);
+  console.log('Tagged sentence: ' + taggedWords);
   
   start = new Date().getTime();
   chart_Earley = EarleyChartParser.earley_parse(taggedWords);
@@ -89,10 +89,10 @@ function parse_sentence_with_Earley(req, res) {
                                      tagged_sentence: taggedWords,
                                      parse: complete_parse,
                                      nr_items_created: nr_items});
-}
+};
 
-//Page for presenting the result of parsing with the CYK parser
-function parse_sentence_with_CYK (req, res) {
+// Parsing with the CYK parser
+exports.parse_sentence_with_CYK = function(req, res) {
   var chart_CYK;
   var sentence;
   var start, end, accepted_CYK;
@@ -106,28 +106,27 @@ function parse_sentence_with_CYK (req, res) {
   
   // CYK
   start = new Date().getTime();
-  console.log(grammar);
-  chart_CYK = CYK.CYK_Chart_Parser(sentence, grammar);
+  chart_CYK = CYK.CYK_Chart_Parser(taggedWords, grammar);
   end = new Date().getTime();
   time_CYK = end - start;
   console.log(chart_CYK);
-  accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(Grammar.start_symbol()) !== -1) : false;
-
+  accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(grammar.get_start_symbol()) !== -1) : false;
+  console.log(accepted_CYK);
   res.render('parse_result_CYK', {chart_CYK: chart_CYK,
                                   parsing_time_CYK: time_CYK,
                                   in_language_CYK: accepted_CYK,
                                   N: N,
-                                  sentence: sentence });
-}
+                                  sentence: taggedWords });
+};
 
 //Generic handler for parsing a sentence
 exports.parse_sentence = function(req, res) {
   if (req.param("op_CYK")) {
-    parse_sentence_with_CYK(req, res);
+    res.redirect('/parse_sentence_with_CYK?input_sentence=' + req.param('input_sentence'));
   }
   else {
     if (req.param("op_Earley")) {
-      parse_sentence_with_Earley(req, res);
+      res.redirect('/parse_sentence_with_Earley?input_sentence=' + req.param('input_sentence'));
     }
   }
 };
