@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var CFG = require('./ContextFreeGrammar');
-
 function initialise_chart(N) {
   var chart = new Array(N+1);
   var i;
@@ -48,7 +46,7 @@ function is_incomplete(item) {
 }
 
 // The earley parser. Sentence is an array of words
-exports.earley_parse = function(tagged_sentence) {
+exports.earley_parse = function(tagged_sentence, grammar) {
   var N = tagged_sentence.length;
   var chart = initialise_chart(N);
   var start_item;
@@ -64,7 +62,7 @@ exports.earley_parse = function(tagged_sentence) {
     // B is the nonterminal that should be predicted
     var B = item.rule.rhs[item.dot];
     // Get all rules with lhs B
-    var rules_with_lhs_B = CFG.rules_with_lhs(B);
+    var rules_with_lhs_B = grammar.rules_with_lhs(B);
     // for each rule with LHS B create an item
     rules_with_lhs_B.forEach(function(rule) {
         var newitem = new_item(rule, 0, j);
@@ -115,7 +113,7 @@ exports.earley_parse = function(tagged_sentence) {
   }
 
   // Seed the parser with the start rule;
-  start_item = new_item(CFG.start_rule(), 0, 0, []);
+  start_item = new_item(grammar.start_rule(), 0, 0, []);
   chart[0][JSON.stringify(start_item)] = start_item;
   console.log("Added start production to the start: " + JSON.stringify(start_item));
   // Start parsing
@@ -129,7 +127,7 @@ exports.earley_parse = function(tagged_sentence) {
           console.log("Parser: checking item " + JSON.stringify(item));
           // apply predictor, scanner and completer until no more items can be added
           if (is_incomplete(item)) {
-            if (CFG.is_nonterminal(item.rule.rhs[item.dot])) {
+            if (grammar.is_nonterminal(item.rule.rhs[item.dot])) {
               console.log("Next symbol is a nonterminal: " + item.rule.rhs[item.dot]);
               if (predictor(item, i) > 0) {
                 items_were_added = true;
