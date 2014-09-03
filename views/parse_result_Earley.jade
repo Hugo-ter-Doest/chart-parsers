@@ -61,11 +61,11 @@ block content
       tr
         - for (var i = 0; i <= N; i++) {
             td(valign="top")
-              each key in Object.keys(chart_Earley[i])
-                if (chart_Earley[i][key].rule.rhs.length === chart_Earley[i][key].dot)
-                  label (#{chart_Earley[i][key].rule.lhs} -> #{chart_Earley[i][key].rule.rhs}, #{chart_Earley[i][key].from})
+              each key in chart_Earley.get_keys_of_state(i)
+                if (chart_Earley.get_item(i, key).data.rule.rhs.length === chart_Earley.get_item(i, key).data.dot)
+                  label (#{chart_Earley.get_item(i, key).data.rule.lhs} -> #{chart_Earley.get_item(i, key).data.rule.rhs}, #{chart_Earley.get_item(i, key).data.from})
                   br
         - }
   div
     pre
-      #{JSON.stringify(parse, ["rule", "rhs", "children"], 2)}
+      #{JSON.stringify(parse, ["id", "name", "rule", "rhs", "children"], 2)}
