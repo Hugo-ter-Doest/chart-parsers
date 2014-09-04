@@ -18,8 +18,9 @@
 var fs = require('fs');
 
 //Constructor for the grammar object
-function Grammar(grammar_file) {
+function Grammar(grammar_file, callback) {
   var grammar = this;
+
   fs.readFile(grammar_file, 'utf8', function (error, grammar_text) {
     if (error) {
       console.log(error);
@@ -57,7 +58,7 @@ function Grammar(grammar_file) {
       if (new_rule.rhs.length > 2) {
         grammar.is_CNF = false;
       }
-
+      console.log(new_rule);
       grammar.production_rules.push(new_rule);
       grammar.nonterminals[new_rule.lhs] = true;
       if (grammar.start_symbol === null) {
@@ -65,6 +66,7 @@ function Grammar(grammar_file) {
       }
     }
     console.log(JSON.stringify(grammar));
+    callback(grammar);
   });
 }
 
@@ -102,7 +104,7 @@ Grammar.prototype.left_hand_sides = function(s) {
 
   this.production_rules.forEach(function(rule) {
     if ((rule.rhs[0] === s) && (rule.rhs.length === 1)) {
-      res.push(rule);
+      res.push(rule.lhs);
     }
   });
   return res;

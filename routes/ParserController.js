@@ -36,8 +36,9 @@ exports.submit_grammar = function(req, res) {
 
   form.parse(req, function(err, fields, files) {
     var grammar_file = files.grammar_file.path + files.grammar_file.name;
-    grammar = new CFG(files.grammar_file.path);
-    res.redirect('/input_sentence');
+    grammar = new CFG(files.grammar_file.path, function(dummy) {
+      res.redirect('/input_sentence');
+    });
   });
 };
 
