@@ -1,0 +1,5 @@
+S -> NP VP
+NP -> DT NN
+PP -> IN NP
+VP -> VBP NP
+VP -> work
