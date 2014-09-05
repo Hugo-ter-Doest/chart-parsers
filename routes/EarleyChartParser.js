@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var Item = require('./Item');
+
 // Constructor for the chart
 function Chart(N) {
   var i;
@@ -49,29 +51,6 @@ Chart.prototype.get_keys_of_state = function (state) {
 // Method for retrieving a specific item by its key
 Chart.prototype.get_item = function (state, key) {
   return(this.states[state][key]);
-};
-
-// Creates an item; dot is an index in the RHS of the rule, 
-// from is the starting point in the sentence
-// Data structure is prepared for InfoVis
-function Item(rule, dot, from) {
-  var item = {};
-  
-  // A unique identifier is constructed from rule, dot and from
-  this.id = "(" + rule.lhs + "->" + rule.rhs + ", " + dot + ", " + from + ")";
-  this.name = rule.lhs;
-  this.children = [];
-  
-  this.data = {};
-  this.data.rule = rule;
-  this.data.dot = dot;
-  this.data.from = from;
-}
-
-// Checks if an item is recognised
-Item.prototype.is_incomplete = function () {
-  console.log("Item is incomplete?: " + this.id + (this.data.dot < this.data.rule.rhs.length));
-  return(this.data.dot < this.data.rule.rhs.length);
 };
 
 // The earley parser. Sentence is an array of words

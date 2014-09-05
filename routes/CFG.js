@@ -110,6 +110,18 @@ Grammar.prototype.left_hand_sides = function(s) {
   return res;
 };
 
+// Returns all rules that match right hand side nonterminals s and t
+Grammar.prototype.get_rules_with_rhs = function(s, t) {
+  var res = [];
+  
+  this.production_rules.forEach(function(rule) {
+    if ((rule.rhs.length === 2) && (rule.rhs[0] === s) && (rule.rhs[1] === t)) {
+      res.push(rule);
+    }
+  });
+  return res;
+};
+
 // Returns all left hand sides that match right hand side nonterminals s and t
 Grammar.prototype.left_hand_sides2 = function(s, t) {
   var res = [];

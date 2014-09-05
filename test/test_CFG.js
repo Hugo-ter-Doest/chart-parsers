@@ -26,7 +26,7 @@ var Grammar = require('../routes/CFG');
 //PP -> IN NP
 //VP -> VBP NP
 //VP -> work
-var dummy = new Grammar('../data/test_grammar.txt', function(actual) {
+var dummy = new Grammar('../data/test_grammar_for_CFG.txt', function(actual) {
   var expected = {};
   expected.production_rules = [{'lhs': 'S', 'rhs': ['NP', 'VP']}, 
                                {'lhs': 'NP', 'rhs': ['DT', 'NN']}, 
