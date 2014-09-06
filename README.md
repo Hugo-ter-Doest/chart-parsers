@@ -19,18 +19,18 @@ A new grammar object is created as follows:
 ```
 var Grammar = require('./ContextFreeGrammar');
 // Read a grammar from file
-var dummy = new Grammar(grammar_file_path, callback(grammar) {
+var dummy = new Grammar(grammar_file_path, function(grammar) {
   // do something with the grammar
 });
 ```
 The constructor is asynchronous: a callback must be provided that will be called when reading the grammar is finished.
 
 Methods of a grammar object are:
-* <code>is_nonterminal(nt)</code>: checks if a symbol is a nonterminal
-* rules_with_lhs(nt): returns all rules that have nt as left-hand-side
-* start_rule(): returns the first production rule of the grammar; this is used by the Earley parser
-* get_start_symbol(): returns the start symbol of the grammar; this is the left-hand-side nonterminal of the first production rule.
-* get_rules_with_rhs(nt1, nt2): looks up all production rules of wich the right-hand-side consists of two nonterminals nt1 and nt2; this is used by the CYK parser.
+* <code>is_nonterminal(nt)</code>: checks if symbol <code>nt</code> is a nonterminal
+* <code>rules_with_lhs(nt)</code>: returns all rules that have <code>nt</code> as left-hand-side
+* <code>start_rule()</code>: returns the first production rule of the grammar; this is used by the Earley parser
+* <code>get_start_symbol()</code>: returns the start symbol of the grammar; this is the left-hand-side nonterminal of the first production rule.
+* <code>get_rules_with_rhs(nt1, nt2)</code>: looks up all production rules of wich the right-hand-side consists of two nonterminals <code>nt1</code> and <code>nt2</code>; this is used by the CYK parser.
 
 # CYK Chart Parser
 The CYK algorithm works with context-free grammars in Chomsky Normal Form (CNF). Production rules are of the form:
