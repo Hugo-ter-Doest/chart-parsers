@@ -1,5 +1,6 @@
 // Author: Hugo W.L. ter Doest
-// Last edit: 4-7-2014
+// This work is licensed under a Creative Commons Attribution Share-Alike 4.0 License. - See more at: http://creativecommons.org/licenses/by-sa/4.0/
+
 // Based on: http://www.scientificpsychic.com/grammar/enggram1.html
 // Formalism: Context-free Grammar
 

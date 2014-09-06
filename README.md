@@ -5,11 +5,11 @@ The grammar module reads context-free grammars from file, and offers some method
 
 The syntax of production rules is as follows (in EBNF):
 ```
-grammar = { comment | production_rule }
+grammar =         { comment | production_rule }
 production_rule = nonterminal, [ white_space ], "->", [ white_space ], nonterminal_seq
 nonterminal_seq = nonterminal, { whitespace, nonterminal }
-nonterminal = non_whitespace_char, { non_whitespace_char }
-comment = "//", { any_character }
+nonterminal =     non_whitespace_char, { non_whitespace_char }
+comment =         "//", { any_character }
 ```
 Terminals are not allowed in the grammar, because we assume these to recognised by a lexer and tagged with (lexical) categories. In the grammar these lexical categories can be seen as preterminals.
 
@@ -77,7 +77,8 @@ var grammar = new Grammar(grammar_file_path);
 
 // Create a parser
 var parser = new CYK(grammar);
-// Declare a tagged sentence. Format is taken from https://github.com/neopunisher/pos-js.
+
+// Declare a tagged sentence. Format is adopted from the Brill part-of-speech tagger at https://github.com/neopunisher/pos-js.
 var tagged_sentence = [['I', 'NP'],
                        ['saw', 'V'],
                        ['the', 'DET'],
@@ -85,6 +86,7 @@ var tagged_sentence = [['I', 'NP'],
                        ['with', 'P'],
                        ['the', 'DET'],
                        ['telescope', 'N']];
+
 // Parse a sentence
 var chart = parser.parse(tagged_sentence);
 ```

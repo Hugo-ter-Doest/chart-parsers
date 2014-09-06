@@ -18,9 +18,8 @@
 
 var formidable = require('formidable');
 
-var Grammar = require('./ContextFreeGrammar');
 var CFG = require('./CFG');
-var CYK = require('./CYK');
+var CYK_ChartParser = require('./CYK');
 var EarleyChartParser = require('./EarleyChartParser');
 var pos = require('pos');
 var grammar;
@@ -103,14 +102,14 @@ exports.parse_sentence_with_CYK = function(req, res) {
   var words = new pos.Lexer().lex(sentence);
   var taggedWords = new pos.Tagger().tag(words);
   var N = taggedWords.length;
-  console.log(taggedWords);
+  var parser = new CYK_ChartParser(grammar);
   
   start = new Date().getTime();
-  chart_CYK = CYK.CYK_Chart_Parser(taggedWords, grammar);
+  chart_CYK = parser.parse(taggedWords, grammar);
   end = new Date().getTime();
   time_CYK = end - start;
   console.log(chart_CYK);
-  accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(grammar.get_start_symbol()) !== -1) : false;
+  //accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(grammar.get_start_symbol()) !== -1) : false;
   console.log(accepted_CYK);
   res.render('parse_result_CYK', {chart_CYK: chart_CYK,
                                   parsing_time_CYK: time_CYK,

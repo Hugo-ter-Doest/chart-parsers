@@ -41,7 +41,7 @@ Item.prototype.is_incomplete = function () {
 
 // Checks if an item is complete
 Item.prototype.is_complete = function () {
-  console.log("Item is incomplete?: " + this.id + (this.data.dot < this.data.rule.rhs.length));
+  console.log("Item is complete?: " + this.id + (this.data.dot === this.data.rule.rhs.length));
   return(this.data.dot === this.data.rule.rhs.length);
 };
 

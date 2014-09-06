@@ -19,7 +19,7 @@
 var assert = require('assert');
 
 var Grammar = require('../routes/CFG');
-var CYK_ChartParser = require('../routes/CYK_refactored');
+var CYK_ChartParser = require('../routes/CYK');
 var Item = require('../routes/Item');
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
