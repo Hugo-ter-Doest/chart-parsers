@@ -64,7 +64,7 @@ var tagged_sentence = [['I', 'NP'],
                        ['the', 'DET'],
                        ['telescope', 'N']];
 // Parse a sentence
-var chart = CYK.CYK_Chart_Parser(tagged_sentence);
+var chart = parser.parse(tagged_sentence);
 ```
 
 ## Developing
