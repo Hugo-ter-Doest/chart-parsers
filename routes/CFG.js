@@ -98,18 +98,6 @@ Grammar.prototype.get_start_symbol = function() {
   return(this.start_symbol);
 };
 
-// Returns all terminal rules that match right hand side terminal s
-Grammar.prototype.left_hand_sides = function(s) {
-  var res = [];
-
-  this.production_rules.forEach(function(rule) {
-    if ((rule.rhs[0] === s) && (rule.rhs.length === 1)) {
-      res.push(rule.lhs);
-    }
-  });
-  return res;
-};
-
 // Returns all rules that match right hand side nonterminals s and t
 Grammar.prototype.get_rules_with_rhs = function(s, t) {
   var res = [];
@@ -117,18 +105,6 @@ Grammar.prototype.get_rules_with_rhs = function(s, t) {
   this.production_rules.forEach(function(rule) {
     if ((rule.rhs.length === 2) && (rule.rhs[0] === s) && (rule.rhs[1] === t)) {
       res.push(rule);
-    }
-  });
-  return res;
-};
-
-// Returns all left hand sides that match right hand side nonterminals s and t
-Grammar.prototype.left_hand_sides2 = function(s, t) {
-  var res = [];
-  
-  this.production_rules.forEach(function(rule) {
-    if ((rule.rhs.length === 2) && (rule.rhs[0] === s) && (rule.rhs[1] === t)) {
-      res.push(rule.lhs);
     }
   });
   return res;
