@@ -28,17 +28,24 @@ function allocate_chart(N) {
   return c;
 }
 
+// Constructur for parser object
+// grammar is an object as defined in CFG.js
+function CYK_ChartParser(grammar) {
+  this.grammar = grammar;
+  console.log("Constructor CYK_ChartParser" + JSON.stringify(this.grammar, null, 2));
+}
+
 // This is the CYK chart parser
 // sentence is a tagged sentence of the form [[word, category], [word, category], ...]
-// grammar is an object as defined in CFG.js
-exports.CYK_Chart_Parser = function(tagged_sentence, grammar) {
+CYK_ChartParser.prototype.parse = function(tagged_sentence) {
   var N = tagged_sentence.length;
   var C = allocate_chart(N);
   var i, j, k;
   var item;
   var matching_rules;
+  var grammar = this.grammar;
   
-  console.log('IN: ' + JSON.stringify(tagged_sentence, null, 2));
+  console.log('CYK_ChartParser.parse IN: ' + JSON.stringify(tagged_sentence, null, 2));
   for (j = 0; j < N; ++j) {
     // The categories are used to fill the first row of the chart
     C[0][j] = {};
@@ -66,6 +73,8 @@ exports.CYK_Chart_Parser = function(tagged_sentence, grammar) {
         }
       }
     }
-  console.log('OUT: ' + JSON.stringify(C, null, 2));
+  console.log('CYK_ChartParser.parse OUT: ' + JSON.stringify(C, null, 2));
   return C;
 };
+
+module.exports = CYK_ChartParser;

@@ -19,7 +19,8 @@
 var assert = require('assert');
 
 var Grammar = require('../routes/CFG');
-var CYK = require('../routes/CYK_refactored');
+var CYK_ChartParser = require('../routes/CYK_refactored');
+var Item = require('../routes/Item');
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP
@@ -55,10 +56,13 @@ var dummy = new Grammar('../data/test_grammar_for_CYK.txt', function(grammar) {
                          ['the', 'DET'],
                          ['telescope', 'N']];
   var N = tagged_sentence.length;
-  var chart = CYK.CYK_Chart_Parser(tagged_sentence, grammar);
+  var parser = new CYK_ChartParser(grammar);
+  var chart = parser.parse(tagged_sentence);
 
   // Top most cell should not be undefined
   assert.notEqual(chart[N - 1][0], undefined, 'chart[N - 1][0] is undefined');
   // Top most cell should contain an item for a rule with start symbol as LHS
-  //assert.equal(chart[N - 1][0], 'S', 'chart[N - 1][0] does not contain start symbol');
+  // Create the item we expect in chart[N - 1]
+  var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0);
+  assert.deepEqual(chart[N - 1][0][expected_item.id], expected_item, 'chart[N - 1][0] does not contain full parse');
 });
