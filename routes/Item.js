@@ -33,6 +33,13 @@ function Item(rule, dot, from) {
   this.data.from = from;
 }
 
+// Create a copy of the item including the children
+Item.prototype.copy = function() {
+  var new_item = new Item(this.data.rule, this.data.dot, this.data.from);
+  new_item.data.children = this.children.slice();
+  return(new_item);
+}
+
 // Checks if an item is incomplete
 Item.prototype.is_incomplete = function () {
   console.log("Item is incomplete?: " + this.id + (this.data.dot < this.data.rule.rhs.length));

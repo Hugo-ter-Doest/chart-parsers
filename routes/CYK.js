@@ -28,7 +28,7 @@ function allocate_chart(N) {
   return c;
 }
 
-// Constructur for parser object
+// Constructor for parser object
 // grammar is an object as defined in CFG.js
 function CYK_ChartParser(grammar) {
   this.grammar = grammar;
@@ -60,9 +60,13 @@ CYK_ChartParser.prototype.parse = function(tagged_sentence) {
         var items2 = (C[i - k - 1][j + k + 1]) ? Object.keys(C[i - k - 1][j + k + 1]): [];
           items1.forEach(function(key_item1) {
             items2.forEach(function(key_item2) {
-              matching_rules = grammar.get_rules_with_rhs(C[k][j][key_item1].data.rule.lhs, C[i - k - 1][j + k + 1][key_item2].data.rule.lhs);
+              var item1 = C[k][j][key_item1];
+              var item2 = C[i - k - 1][j + k + 1][key_item2];
+              matching_rules = grammar.get_rules_with_rhs(item1.data.rule.lhs, item2.data.rule.lhs);
               matching_rules.forEach(function(rule) {
-                item = new Item(rule, 2, C[k][j][key_item1].data.from);
+                item = new Item(rule, 2, item1.data.from);
+                item.children = [item1, item2];
+                item.id += '(' + item1.id + item2.id + ')';
                 if (!C[i][j]) {
                   C[i][j] = {};
                 }

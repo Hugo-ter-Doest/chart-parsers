@@ -30,7 +30,15 @@ function Chart(N) {
 
 // Method for adding an item to state i
 Chart.prototype.add_item = function (i, item) {
-  this.states[i][item.id] = item; 
+  
+  // Construct an identifier that is unique for if the combination of the current item plus the children items is unique
+  var id = item.id + '(';
+  item.children.forEach(function(child_item) {
+    id += child_item.id;
+  });
+  id += ')';
+  item.id = id;
+  this.states[i][id] = item;
 };
 
 // Method that returns the number of items in state i
@@ -92,7 +100,10 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
     if (tagged_sentence[j][1] === item.data.rule.rhs[item.data.dot]) {
       console.log("Scanning word: (" + tagged_sentence[j][0] + ", " + tagged_sentence[j][1] + ")");
       var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from);
-      newitem.children.push(tagged_sentence[j]);
+      // create an item from tagged word
+      var tag_item = new Item({'lhs': tagged_sentence[j][1], 'rhs': [tagged_sentence[j][0]]}, 1, j);
+      chart.add_item(j+1, tag_item);
+      newitem.children.push(tag_item);
       chart.add_item(j+1, newitem);
       console.log("Scanner: added item " + newitem.id + " to state " + j+1);
     }
@@ -110,8 +121,8 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
     keys.forEach(function(key) {
       var item_for_comp = chart.get_item(item.data.from, key);
       if (item_for_comp.data.rule.rhs[item_for_comp.data.dot] === B) {
-        var newitem = new Item(item_for_comp.data.rule, item_for_comp.data.dot+1, item_for_comp.data.from);
-        newitem.children = item_for_comp.children.slice();
+        var newitem = item_for_comp.copy();
+        newitem.data.dot++;
         newitem.children.push(item);
         chart.add_item(k, newitem);
         console.log("Completer: added item " + newitem.id + " to state " + k);
