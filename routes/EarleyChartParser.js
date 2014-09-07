@@ -54,12 +54,13 @@ Chart.prototype.get_item = function (state, key) {
 };
 
 // The earley parser. Sentence is an array of words
-exports.earley_parse = function(tagged_sentence, grammar) {
+EarleyChartParser.prototype.parse = function(tagged_sentence) {
   var N = tagged_sentence.length;
   var chart = new Chart(N);
   var start_item;
   var i;
   var items_were_added = false;
+  var grammar = this.grammar;
 
   // Introduces new items for the next nonterminal to be recognised
   function predictor(item, j) {
@@ -133,7 +134,7 @@ exports.earley_parse = function(tagged_sentence, grammar) {
         keys.forEach(function(key) {
           var item = chart.get_item(i,key);
           console.log("Parser: checking item " + item.id);
-          // apply predictor, scanner and completer until no more items can be added
+          // Apply predictor, scanner and completer until no more items can be added
           if (item.is_incomplete()) {
             if (grammar.is_nonterminal(item.data.rule.rhs[item.data.dot])) {
               console.log("Next symbol is a nonterminal: " + item.data.rule.rhs[item.data.dot]);
@@ -162,4 +163,8 @@ exports.earley_parse = function(tagged_sentence, grammar) {
   return chart;
 };
 
-exports.Chart;
+function EarleyChartParser(grammar) {
+  this.grammar = grammar; 
+}
+
+module.exports = EarleyChartParser;
