@@ -110,5 +110,9 @@ Grammar.prototype.get_rules_with_rhs = function(s, t) {
   return res;
 };
 
+Grammar.prototype.compute_lc_relation = function() {
+  //
+};
+
 // Export the Grammar object
 module.exports = Grammar;

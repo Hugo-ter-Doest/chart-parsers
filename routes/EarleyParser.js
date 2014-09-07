@@ -22,9 +22,9 @@ var Item = require('./Item');
 function Chart(N) {
   var i;
   
-  this.states = new Array(N+1);
+  this.state_sets = new Array(N+1);
   for (i = 0; i <= N+1; i++) {
-    this.states[i] = {};
+    this.state_sets[i] = {};
   }
 }
 
@@ -38,27 +38,22 @@ Chart.prototype.add_item = function (i, item) {
   });
   id += ')';
   item.id = id;
-  this.states[i][id] = item;
+  this.state_sets[i][id] = item;
 };
 
 // Method that returns the number of items in state i
-Chart.prototype.nr_of_items_in_state = function(i) {
-  return(Object.keys(this.states[i]).length);
-};
-
-// Method returns the i-th state of the chart
-Chart.prototype.get_state = function(i) {
-  return(this.states[i]);
+Chart.prototype.nr_of_items_in_state_set = function(i) {
+  return(Object.keys(this.state_sets[i]).length);
 };
 
 // Method that returns the keys of the item in a state
-Chart.prototype.get_keys_of_state = function (state) {
-  return(Object.keys(this.states[state]));
+Chart.prototype.get_keys_of_state_set = function (pos) {
+  return(Object.keys(this.state_sets[pos]));
 };
 
 // Method for retrieving a specific item by its key
-Chart.prototype.get_item = function (state, key) {
-  return(this.states[state][key]);
+Chart.prototype.get_item = function (pos, key) {
+  return(this.state_sets[pos][key]);
 };
 
 // The earley parser. Sentence is an array of words
@@ -74,7 +69,7 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
   function predictor(item, j) {
     console.log("Predictor: " + item.id + j);
     // remember the size of the set at position j 
-    var nr_items = chart.nr_of_items_in_state(j);
+    var nr_items = chart.nr_of_items_in_state_set(j);
     console.log("Nummber of items before: " + nr_items);
     // B is the nonterminal that should be predicted
     var B = item.data.rule.rhs[item.data.dot];
@@ -86,16 +81,16 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
         chart.add_item(j, newitem);
         console.log("Predictor: added item " + newitem.id  + " to state " + j);
     });
-    console.log("Nummber of items after: " + chart.nr_of_items_in_state(j));
+    console.log("Nummber of items after: " + chart.nr_of_items_in_state_set(j));
     // Return number of items added
-    return(chart.nr_of_items_in_state(j) - nr_items);
+    return(chart.nr_of_items_in_state_set(j) - nr_items);
   }
 
   // The next category to be recognised is a terminal
   function scanner(item, j) {
     console.log("Scanner: " + item.id + j);
     // remember the size of the set at position j + 1 
-    var nr_items = chart.nr_of_items_in_state(j+1);
+    var nr_items = chart.nr_of_items_in_state_set(j+1);
     // Place the dot one to the right if the word matches
     if (tagged_sentence[j][1] === item.data.rule.rhs[item.data.dot]) {
       console.log("Scanning word: (" + tagged_sentence[j][0] + ", " + tagged_sentence[j][1] + ")");
@@ -108,16 +103,16 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
       console.log("Scanner: added item " + newitem.id + " to state " + j+1);
     }
     // Return number of items added
-    return(chart.nr_of_items_in_state(j+1) - nr_items);
+    return(chart.nr_of_items_in_state_set(j+1) - nr_items);
   }
 
   // Shifts the dot to the right for items in chart[k]
   function completer(item, k) {
     console.log("Completer: " + item.id + k);
     // remember the size of the set at position k 
-    var nr_items = chart.nr_of_items_in_state(k);
+    var nr_items = chart.nr_of_items_in_state_set(k);
     var B = item.data.rule.lhs;
-    var keys = chart.get_keys_of_state(item.data.from);
+    var keys = chart.get_keys_of_state_set(item.data.from);
     keys.forEach(function(key) {
       var item_for_comp = chart.get_item(item.data.from, key);
       if (item_for_comp.data.rule.rhs[item_for_comp.data.dot] === B) {
@@ -129,7 +124,7 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
       }
     });
     // Return number of items added
-    return(chart.nr_of_items_in_state(k) - nr_items);
+    return(chart.nr_of_items_in_state_set(k) - nr_items);
   }
 
   // Seed the parser with the start rule;
@@ -141,7 +136,7 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
       console.log("Parse iteration: " + i);
       do {
         items_were_added = false;
-        var keys = chart.get_keys_of_state(i);
+        var keys = chart.get_keys_of_state_set(i);
         keys.forEach(function(key) {
           var item = chart.get_item(i,key);
           console.log("Parser: checking item " + item.id);
