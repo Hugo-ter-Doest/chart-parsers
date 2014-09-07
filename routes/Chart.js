@@ -1,5 +1,5 @@
 /*
-    Generic chart class
+    Generic chart that can be used for all chart parsers (hopefully)
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -18,3 +18,50 @@
 
 // Implements a chart with from/to edges. Items are added by chart.add_item(i, j, item)
 // Items are identified by their id. Items that have the same id are not added to the samen edge.
+
+function Chart(N) {
+  this.outgoing_edges = new Array(N);
+  this.incoming_edges = new Array(N);
+}
+
+Chart.prototype.add_item = function(i, j, item) {
+  if (!this.outgoing_edges[i]) {
+    this.outgoing_edges[i] = {};
+  }
+  this.outgoing_edges[i][item.id] = item;
+  if (!this.incoming_edges[i]) {
+    this.incoming_edges[i] = {};
+  }
+  this.incoming_edges[j][item.id] = item;
+};
+
+Chart.prototype.get_items_from_to = function(i, j) {
+  var res = [];
+  var that = this;
+  this.outgoing_edges[i].forEach(function(item_id){
+    if (that.outgoing_edges[i][item_id].data.to === j) {
+      res.push(that.outgoing_edges[i][item_id]);
+    }
+  });
+  return(res);
+};
+
+Chart.prototype.get_items_from = function(i) {
+  var res = [];
+  var that = this;
+  this.outgoing_edges[i].forEach(function(item_id){
+    res.push(that.outgoing_edges[i][item_id]);
+  });
+  return(res);
+};
+
+Chart.prototype.get_items_to = function(j) {
+  var res = [];
+  var that = this;
+  this.incoming_edges[i].forEach(function(item_id){
+    res.push(that.incoming_edges[i][item_id]);
+  });
+  return(res);
+};
+
+module.exports = Chart;
