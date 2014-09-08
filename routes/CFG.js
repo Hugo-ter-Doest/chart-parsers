@@ -114,5 +114,9 @@ Grammar.prototype.compute_lc_relation = function() {
   //
 };
 
+Grammar.prototype.rules_with_lc = function (B) {
+  return(this.lc[B]);
+};
+
 // Export the Grammar object
 module.exports = Grammar;

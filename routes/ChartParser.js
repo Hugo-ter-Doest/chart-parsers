@@ -1,5 +1,5 @@
 /*
-    Earley chart parser 
+    Chart parser that must be specialised with a predictor
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -57,7 +57,7 @@ Chart.prototype.get_item = function (pos, key) {
 };
 
 // The next category to be recognised is a terminal
-EarleyChartParser.prototype.scanner = function(item, j) {
+ChartParser.prototype.scanner = function(item, j) {
   console.log("Scanner: " + item.id + j);
   // remember the size of the set at position j + 1 
   var nr_items = this.chart.nr_of_items_in_state_set(j+1);
@@ -76,30 +76,8 @@ EarleyChartParser.prototype.scanner = function(item, j) {
   return(this.chart.nr_of_items_in_state_set(j+1) - nr_items);
 };
 
-// Introduces new items for the next nonterminal to be recognised
-EarleyChartParser.prototype.predictor = function(item, j) {
-  console.log("Predictor: " + item.id + j);
-  // remember the size of the set at position j 
-  var nr_items = this.chart.nr_of_items_in_state_set(j);
-  console.log("Nummber of items before: " + nr_items);
-  // B is the nonterminal that should be predicted
-  var B = item.data.rule.rhs[item.data.dot];
-  // Get all rules with lhs B
-  var rules_with_lhs_B = this.grammar.rules_with_lhs(B);
-  // for each rule with LHS B create an item
-  var that = this;
-  rules_with_lhs_B.forEach(function(rule) {
-      var newitem = new Item(rule, 0, j);
-      that.chart.add_item(j, newitem);
-      console.log("Predictor: added item " + newitem.id  + " to state " + j);
-  });
-  console.log("Nummber of items after: " + this.chart.nr_of_items_in_state_set(j));
-  // Return number of items added
-  return(this.chart.nr_of_items_in_state_set(j) - nr_items);
-};
-
 // Shifts the dot to the right for items in chart[k]
-EarleyChartParser.prototype.completer = function(item, k) {
+ChartParser.prototype.completer = function(item, k) {
   console.log("Completer: " + item.id + k);
   // remember the size of the set at position k 
   var nr_items = this.chart.nr_of_items_in_state_set(k);
@@ -121,7 +99,7 @@ EarleyChartParser.prototype.completer = function(item, k) {
 };
   
 // The earley parser. Sentence is an array of words
-EarleyChartParser.prototype.parse = function(tagged_sentence) {
+ChartParser.prototype.parse = function(tagged_sentence) {
   var N = tagged_sentence.length;
   this.chart = new Chart(N);
   this.tagged_sentence = tagged_sentence;
@@ -173,8 +151,8 @@ EarleyChartParser.prototype.parse = function(tagged_sentence) {
   return this.chart;
 };
 
-function EarleyChartParser(grammar) {
-  this.grammar = grammar; 
+function ChartParser(grammar) {
+  this.grammar = grammar;
 }
 
-module.exports = EarleyChartParser;
+module.exports = ChartParser;

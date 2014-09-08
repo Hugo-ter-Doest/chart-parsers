@@ -1,5 +1,5 @@
 /*
-    Left Corner Chart Parser that specialises Chart Parser
+    Earley Chart Parser that specialises Chart Parser
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,14 @@ var ChartParser = require('./ChartParser');
 var Item = require('./Item');
 
 // inheritance according to http://book.mixu.net/node/ch6.html:
-function LeftCornerChartParser(grammar) {
-  grammar.compute_lc_relation();
+function EarleyChartParser(grammar) {
   ChartParser.apply(this, Array.prototype.slice.call(arguments));
 }
 
-LeftCornerChartParser.prototype = new ChartParser();
+EarleyChartParser.prototype = new ChartParser();
 
 // Introduces new items for the next nonterminal to be recognised
-LeftCornerChartParser.prototype.predictor = function(item, j) {
+EarleyChartParser.prototype.predictor = function(item, j) { 
   console.log("Predictor: " + item.id + j);
   // remember the size of the set at position j 
   var nr_items = this.chart.nr_of_items_in_state_set(j);
@@ -36,10 +35,10 @@ LeftCornerChartParser.prototype.predictor = function(item, j) {
   // B is the nonterminal that should be predicted
   var B = item.data.rule.rhs[item.data.dot];
   // Get all rules with lhs B
-  var rules_lc_B = this.grammar.rules_with_lc(B);
+  var rules_with_lhs_B = this.grammar.rules_with_lhs(B);
   // for each rule with LHS B create an item
   var that = this;
-  rules_lc_B.forEach(function(rule) {
+  rules_with_lhs_B.forEach(function(rule) {
       var newitem = new Item(rule, 0, j);
       that.chart.add_item(j, newitem);
       console.log("Predictor: added item " + newitem.id  + " to state " + j);
@@ -49,4 +48,4 @@ LeftCornerChartParser.prototype.predictor = function(item, j) {
   return(this.chart.nr_of_items_in_state_set(j) - nr_items);
 };
 
-module.exports = LeftCornerChartParser;
+module.exports = EarleyChartParser;
