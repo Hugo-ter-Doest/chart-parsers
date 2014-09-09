@@ -21,6 +21,7 @@ var formidable = require('formidable');
 var CFG = require('./CFG');
 var CYK_ChartParser = require('./CYKParser');
 var EarleyChartParser = require('./EarleyChartParser');
+var LeftCornerChartParser = require('./LeftCornerParser');
 var pos = require('pos');
 var grammar;
 
@@ -35,7 +36,8 @@ exports.submit_grammar = function(req, res) {
 
   form.parse(req, function(err, fields, files) {
     var grammar_file = files.grammar_file.path + files.grammar_file.name;
-    grammar = new CFG(files.grammar_file.path, function(dummy) {
+    new CFG(files.grammar_file.path, function(grmmr) {
+      grammar = grmmr;
       res.redirect('/input_sentence');
     });
   });

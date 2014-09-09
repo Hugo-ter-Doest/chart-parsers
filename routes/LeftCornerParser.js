@@ -33,9 +33,9 @@ LeftCornerChartParser.prototype.predictor = function(item, j) {
   // remember the size of the set at position j 
   var nr_items = this.chart.nr_of_items_in_state_set(j);
   console.log("Nummber of items before: " + nr_items);
-  // B is the nonterminal that should be predicted
+  // B is the next nonterminal to be recognised
   var B = item.data.rule.rhs[item.data.dot];
-  // Get all rules with lhs B
+  // Get all rules with lc B
   var rules_lc_B = this.grammar.rules_with_lc(B);
   // for each rule with LHS B create an item
   var that = this;
