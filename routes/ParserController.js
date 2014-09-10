@@ -71,9 +71,8 @@ exports.parse_sentence_with_Earley = function(req, res) {
   console.log(chart_Earley);
   
   accepted_Earley = false;
-  var keys_of_final_state = chart_Earley.get_keys_of_state_set(N);
-  keys_of_final_state.forEach(function(key) {
-    var item = chart_Earley.get_item(N,key);
+  var items = chart_Earley.get_items_to(N);
+  items.forEach(function(item) {
     if ((item.data.rule.lhs === grammar.get_start_symbol()) && (item.data.rule.rhs.length === item.data.dot)) {
       accepted_Earley = true;
       complete_parse = item;
@@ -81,8 +80,8 @@ exports.parse_sentence_with_Earley = function(req, res) {
   });
   
   var nr_items = 0;
-  for (i = 0; i <= N+1; i++) {
-    nr_items += chart_Earley.nr_of_items_in_state_set(i);
+  for (i = 0; i <= N; i++) {
+    nr_items += chart_Earley.nr_items_to(i);
   }
 
   res.render('parse_result_Earley', {chart_Earley: chart_Earley,

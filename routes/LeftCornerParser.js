@@ -28,10 +28,12 @@ function LeftCornerChartParser(grammar) {
 LeftCornerChartParser.prototype = new ChartParser();
 
 // Introduces new items for the next nonterminal to be recognised
+// Improved left-corner based on:
+// http://www.umiacs.umd.edu/~resnik/ling723_fa2006/assignments/7/iwpt2000-rev3.pdf
 LeftCornerChartParser.prototype.predictor = function(item, j) {
   console.log("Predictor: " + item.id + j);
   // remember the size of the set at position j 
-  var nr_items = this.chart.nr_of_items_in_state_set(j);
+  var nr_items = this.chart.nr_items_to(j);
   console.log("Nummber of items before: " + nr_items);
   // B is the next nonterminal to be recognised
   var B = item.data.rule.rhs[item.data.dot];
@@ -41,12 +43,12 @@ LeftCornerChartParser.prototype.predictor = function(item, j) {
   var that = this;
   rules_lc_B.forEach(function(rule) {
       var newitem = new Item(rule, 0, j);
-      that.chart.add_item(j, newitem);
+      that.chart.add_item(j, j, newitem);
       console.log("Predictor: added item " + newitem.id  + " to state " + j);
   });
-  console.log("Nummber of items after: " + this.chart.nr_of_items_in_state_set(j));
+  console.log("Nummber of items after: " + this.chart.nr_items_to(j));
   // Return number of items added
-  return(this.chart.nr_of_items_in_state_set(j) - nr_items);
+  return(this.chart.nr_items_to(j) - nr_items);
 };
 
 module.exports = LeftCornerChartParser;

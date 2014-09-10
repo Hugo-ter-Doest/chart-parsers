@@ -17,21 +17,21 @@
 */
 
 // Implements a chart with from/to edges. Items are added by chart.add_item(i, j, item)
-// Items are identified by their id. Items that have the same id are not added to the samen edge.
+// Items are identified by their id. Items that have the same id are not added to the same edge.
 
 function Chart(N) {
-  this.outgoing_edges = new Array(N);
-  this.incoming_edges = new Array(N);
+  this.outgoing_edges = new Array(N+1);
+  this.incoming_edges = new Array(N+1);
+  
+  var i;
+  for (i = 0; i <= N; i++) {
+    this.outgoing_edges[i] = {};
+    this.incoming_edges[i] = {};
+  }
 }
 
 Chart.prototype.add_item = function(i, j, item) {
-  if (!this.outgoing_edges[i]) {
-    this.outgoing_edges[i] = {};
-  }
   this.outgoing_edges[i][item.id] = item;
-  if (!this.incoming_edges[i]) {
-    this.incoming_edges[i] = {};
-  }
   this.incoming_edges[j][item.id] = item;
 };
 
@@ -49,7 +49,7 @@ Chart.prototype.get_items_from_to = function(i, j) {
 Chart.prototype.get_items_from = function(i) {
   var res = [];
   var that = this;
-  this.outgoing_edges[i].forEach(function(item_id){
+  Object.keys(this.outgoing_edges[i]).forEach(function(item_id){
     res.push(that.outgoing_edges[i][item_id]);
   });
   return(res);
@@ -58,10 +58,14 @@ Chart.prototype.get_items_from = function(i) {
 Chart.prototype.get_items_to = function(j) {
   var res = [];
   var that = this;
-  this.incoming_edges[i].forEach(function(item_id){
-    res.push(that.incoming_edges[i][item_id]);
+  Object.keys(this.incoming_edges[j]).forEach(function(item_id){
+    res.push(that.incoming_edges[j][item_id]);
   });
   return(res);
 };
+
+Chart.prototype.nr_items_to = function(j) {
+  return(Object.keys(this.incoming_edges[j]).length);
+}
 
 module.exports = Chart;

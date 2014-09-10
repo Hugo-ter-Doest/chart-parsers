@@ -30,7 +30,7 @@ EarleyChartParser.prototype = new ChartParser();
 EarleyChartParser.prototype.predictor = function(item, j) { 
   console.log("Predictor: " + item.id + j);
   // remember the size of the set at position j 
-  var nr_items = this.chart.nr_of_items_in_state_set(j);
+  var nr_items = this.chart.nr_items_to(j);
   console.log("Nummber of items before: " + nr_items);
   // B is the nonterminal that should be predicted
   var B = item.data.rule.rhs[item.data.dot];
@@ -40,12 +40,12 @@ EarleyChartParser.prototype.predictor = function(item, j) {
   var that = this;
   rules_with_lhs_B.forEach(function(rule) {
       var newitem = new Item(rule, 0, j);
-      that.chart.add_item(j, newitem);
+      that.chart.add_item(j, j, newitem);
       console.log("Predictor: added item " + newitem.id  + " to state " + j);
   });
-  console.log("Nummber of items after: " + this.chart.nr_of_items_in_state_set(j));
+  console.log("Nummber of items after: " + this.chart.nr_items_to(j));
   // Return number of items added
-  return(this.chart.nr_of_items_in_state_set(j) - nr_items);
+  return(this.chart.nr_items_to(j) - nr_items);
 };
 
 module.exports = EarleyChartParser;
