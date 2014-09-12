@@ -31,6 +31,8 @@ function Chart(N) {
 }
 
 Chart.prototype.add_item = function(i, j, item) {
+  item.data.from = i;
+  item.data.to = j;
   this.outgoing_edges[i][item.id] = item;
   this.incoming_edges[j][item.id] = item;
 };

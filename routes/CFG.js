@@ -77,6 +77,12 @@ Grammar.prototype.is_nonterminal = function(B) {
   return (this.nonterminals[B]);
 };
 
+//Checks if B is a (pre)terminal
+Grammar.prototype.is_terminal = function(B) {
+  console.log("Checking if " + B + " is a (pre)terminal: " + this.nonterminals[B]);
+  return (!this.nonterminals[B]);
+};
+
 // Looks up all rules with lhs B
 Grammar.prototype.rules_with_lhs = function(B) {
   var rules = [];
