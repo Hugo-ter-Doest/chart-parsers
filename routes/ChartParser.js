@@ -32,7 +32,7 @@ ChartParser.prototype.scanner = function(item, j) {
     var tag_item = new Item({'lhs': this.tagged_sentence[j][1], 'rhs': [this.tagged_sentence[j][0]]}, 1, j);
     this.chart.add_item(j, j+1, tag_item);
     newitem.children.push(tag_item);
-    this.chart.add_item(j, j+1, newitem);
+    this.chart.add_item(item.data.from, j+1, newitem);
     console.log("Scanner: added item " + newitem.id + " to state " + j+1);
   }
   // Return number of items added

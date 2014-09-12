@@ -95,6 +95,17 @@ Grammar.prototype.rules_with_lhs = function(B) {
   return(rules);
 };
 
+Grammar.prototype.rules_with_lc = function(B) {
+  var rules = [];
+  
+  this.production_rules.forEach(function(rule) {
+    if (rule.rhs[0] === B) {
+      rules.push(rule);
+    }
+  });
+  return(rules);
+};
+
 // Returns the start production rule which is the first rule read from file
 Grammar.prototype.start_rule = function() {
   return(this.production_rules[0]);
@@ -160,16 +171,22 @@ Grammar.prototype.compute_lc_relation = function() {
 
 Grammar.prototype.rules_with_lc = function (B) {
   rules = [];
-  that = this;
 
-  Object.keys(this.lc[B]).forEach(function(A) {
-    that.production_rules.forEach(function(rule) {
-      if (rule.rhs[0] === A) {
-        rules.push(rule);
-      }
-    });
+  this.production_rules.forEach(function(rule) {
+    if (rule.rhs[0] === B) {
+      rules.push(rule);
+    }
   });
   return(rules);
+};
+
+Grammar.prototype.is_leftcorner_of = function(B, C) {
+  if (this.lc[C]) {
+    return(this.lc[C][B]);
+  }
+  else {
+    return(false);
+  }
 };
 
 // Export the Grammar object
