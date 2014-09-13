@@ -19,11 +19,12 @@
 // Creates an item; dot is an index in the RHS of the rule, 
 // from is the starting point in the sentence
 // Data structure is prepared for InfoVis
-function Item(rule, dot, from) {
+function Item(rule, dot, from, to) {
   var item = {};
   
   // A unique identifier is constructed from rule, dot and from
-  this.id = "(" + rule.lhs + "->" + rule.rhs + ", " + dot + ", " + from + ")";
+  this.id = "(" + rule.lhs + "->" + rule.rhs + ", " + dot + ", " + from + ", " + to +")";
+  console.log('New item: ' + this.id);
   this.name = rule.lhs;
   this.children = [];
   
@@ -31,6 +32,7 @@ function Item(rule, dot, from) {
   this.data.rule = rule;
   this.data.dot = dot;
   this.data.from = from;
+  this.data.to = to;
 }
 
 // Create a copy of the item including the children

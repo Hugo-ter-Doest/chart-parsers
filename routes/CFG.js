@@ -79,7 +79,7 @@ Grammar.prototype.is_nonterminal = function(B) {
 
 //Checks if B is a (pre)terminal
 Grammar.prototype.is_terminal = function(B) {
-  console.log("Checking if " + B + " is a (pre)terminal: " + this.nonterminals[B]);
+  console.log("Checking if " + B + " is a (pre)terminal: " + !this.nonterminals[B]);
   return (!this.nonterminals[B]);
 };
 
@@ -169,7 +169,7 @@ Grammar.prototype.compute_lc_relation = function() {
   console.log(this.lc);
 };
 
-Grammar.prototype.rules_with_lc = function (B) {
+Grammar.prototype.rules_with_leftmost_daughter = function (B) {
   rules = [];
 
   this.production_rules.forEach(function(rule) {

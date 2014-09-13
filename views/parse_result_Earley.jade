@@ -63,7 +63,7 @@ block content
             td(valign="top")
               each item in chart_Earley.get_items_to(i)
                 if (item.data.rule.rhs.length === item.data.dot)
-                  label (#{item.id})
+                  label #{item.id}
                   br
         - }
   div

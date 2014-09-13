@@ -31,76 +31,104 @@ function LeftCornerChartParser(grammar) {
 LeftCornerChartParser.prototype.initialise = function(N) {
   var that = this;
   var new_item;
+  var nr_items_added = 0;
   
+  console.log('Initialise chart');
   // Initialise chart
   this.chart = new Chart(N);
   // Add items for rules that have the start symbol as left-hand-side
   var rules = this.grammar.rules_with_lhs(this.grammar.get_start_symbol());
   rules.forEach(function(rule) {
-    new_item = new Item(rule, 0, 0);
-    that.chart.add_item(0, 0, new_item);
+    new_item = new Item(rule, 0, 0, 0);
+    nr_items_added += that.chart.add_item(new_item);
   });
+  console.log('Initialise chart added ' + nr_items_added + ' items');
+  return(nr_items_added);
 };
 
 LeftCornerChartParser.prototype.completer = function(item) {
   var that = this;
+  var nr_items_added = 0;
 
-  if (item.is_incomplete() && (this.grammar.is_nonterminal(item.data.rule.rhs[item.data.dot]))) {
-    var items = this.chart.get_items_from(item.data.to);
+  console.log('Completer: ' + item.id)
+  if (item.is_complete()) {
+    var items = this.chart.get_items_to(item.data.from);
     items.forEach(function(item2) {
-      if (item2.is_complete() && (item2.data.rule.lhs === item[data.rule.rhs[item.data.dot]])) {
-        var new_item = new Item(item1.data.rule, item1.data.dot + 1, item1.data.from);
-        that.chart.add_item(new_item, item1.data.from, item1.data.to);
+      if (item2.is_incomplete() && (item.data.rule.lhs === item2.data.rule.rhs[item2.data.dot])) {
+        var new_item = new Item(item2.data.rule, item2.data.dot + 1, item2.data.from, item.data.to);
+        nr_items_added += that.chart.add_item(new_item);
+        console.log('Completer: added item' + new_item.id);
       }
     });
   }
+  console.log('Completer: added ' + nr_items_added + ' items');
+  return(nr_items_added);
 };
 
 LeftCornerChartParser.prototype.scanner = function(item) {
-  var that = this;
+  var nr_items_added = 0;
 
-  if (item.is_incomplete() && (this.grammar.is_terminal(item.data.rule.rhs[item.data.dot]))) {
-    if (this.tagged_sentence[item.data.to][1] === item.data.rule.rhs[item.data.dot]) {
-      // Add lexical item
-      var tag_item = new Item({'lhs': this.tagged_sentence[j][1], 'rhs': [this.tagged_sentence[j][0]]}, 1, j);
-      this.chart.add_item(item.data.to, item.data.to+1, tag_item);
-      // Create new item from input item with dot one to the right
-      var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from);
-      newitem.children.push(tag_item);
-      this.chart.add_item(item.data.from, item.data.to+1, newitem);
+  console.log('Scanner at position ' + item.data.to + ": " + item.id);
+  if (item.data.to < this.tagged_sentence.length) {
+    if (item.is_incomplete() && (this.grammar.is_terminal(item.data.rule.rhs[item.data.dot]))) {
+      console.log('Scanner: compare lexical category: ' + this.tagged_sentence[item.data.to][1] + '===' + item.data.rule.rhs[item.data.dot]);
+      if (this.tagged_sentence[item.data.to][1] === item.data.rule.rhs[item.data.dot]) {
+        // Add lexical item
+        var tag_item = new Item({'lhs': this.tagged_sentence[item.data.to][1], 'rhs': [this.tagged_sentence[item.data.to][0]]}, 1, item.data.to, item.data.to+1);
+        nr_items_added += this.chart.add_item(tag_item);
+        // Create new item from input item with dot one to the right
+        var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from, item.data.to+1);
+        newitem.children.push(tag_item);
+        nr_items_added += this.chart.add_item(newitem);
+      }
     }
   }
+  console.log('Scanner: added ' + nr_items_added + ' items');
+  return(nr_items_added);
 };
 
 // Predictor based on rule 4a on page 5
 LeftCornerChartParser.prototype.lc_predictor = function(item) {
   that = this;
-  
+  var nr_items_added = 0;
+
+  console.log('Predictor: ' + item.id)
   if (item.is_complete()) {
-    this.grammar.rules_with_lc(item.data.rule.lhs).forEach(function(rule) {
+    // Get the productions rules that have the LHS of item as left-most daughter
+    this.grammar.rules_with_leftmost_daughter(item.data.rule.lhs).forEach(function(rule) {
+      // Get the items that end at the given item
       that.chart.get_items_to(item.data.from).forEach(function(item2) {
         if (item2.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item2.data.rule.rhs[item2.data.dot])) {
-          var newitem = new Item(rule, 1, item.to);
-          that.chart.add_item(item.from, item.to, newitem);
+          var newitem = new Item(rule, 1, item.data.from, item.data.to);
+          console.log('Predictor: added item ' + newitem.id);
+          nr_items_added += that.chart.add_item(newitem);
         }
       });
     });
   }
+  console.log('Predictor: added ' + nr_items_added + ' items');
+  return(nr_items_added);
 };
 
 // Predictor based on rule 5a on page 5
 LeftCornerChartParser.prototype.lc_predictor_scanner = function(j) {
   var that = this;
+  var nr_items_added = 0;
   
-  this.grammar.rules_with_lc(this.tagged_sentence[j][1]).forEach(function(rule) {
-    var items = that.chart.get_items_to(j);
-    items.forEach(function(item) {
-      if (item.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item.data.rule.rhs[item.data.dot])) {
-        var new_item = new Item(rule, 1, j);
-        that.chart.add_item(j, j+1, new_item);
-      }
+  console.log('Predictor/scanner: ' + j);
+  if (j < this.tagged_sentence.length) {
+    this.grammar.rules_with_leftmost_daughter(this.tagged_sentence[j][1]).forEach(function(rule) {
+      var items = that.chart.get_items_to(j);
+      items.forEach(function(item) {
+        if (item.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item.data.rule.rhs[item.data.dot])) {
+          var new_item = new Item(rule, 1, j, j+1);
+          nr_items_added += that.chart.add_item(new_item);
+        }
+      });
     });
-  });
+  }
+  console.log('Predictor/scanner: added ' + nr_items_added + ' items');
+  return(nr_items_added);
 };
 
 LeftCornerChartParser.prototype.parse = function(tagged_sentence) {
@@ -111,8 +139,9 @@ LeftCornerChartParser.prototype.parse = function(tagged_sentence) {
   this.initialise(N);
   var i;
   for (i = 0; i <= N; i++) {
-    var items_added = 0;
+    var items_added;
     do {
+      items_added = 0;
       var items = this.chart.get_items_to(i);
       items.forEach(function(item) {
         items_added += that.scanner(item);

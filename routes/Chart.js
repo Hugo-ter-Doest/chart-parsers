@@ -30,11 +30,16 @@ function Chart(N) {
   }
 }
 
-Chart.prototype.add_item = function(i, j, item) {
-  item.data.from = i;
-  item.data.to = j;
-  this.outgoing_edges[i][item.id] = item;
-  this.incoming_edges[j][item.id] = item;
+// Adds an item to the chart; returns 1 if the item was added, 0 otherwise
+Chart.prototype.add_item = function(item) {
+  if (!this.outgoing_edges[item.data.from][item.id]) {
+    this.outgoing_edges[item.data.from][item.id] = item;
+    this.incoming_edges[item.data.to][item.id] = item;
+    return(1);
+  }
+  else {
+    return(0);
+  }
 };
 
 Chart.prototype.get_items_from_to = function(i, j) {
