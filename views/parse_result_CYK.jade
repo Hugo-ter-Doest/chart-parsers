@@ -19,17 +19,18 @@ block content
     table(border="1px")
         tr
           td=""
+          td=""
           each word in sentence
             td(width="50px", height="30px", align="center")=word
         tr
           td=""
-          - for (var i = 0; i < N; i++) {
-              td(width="50px", height="30px", align="center")=i+1
+          - for (var i = 0; i <= N; i++) {
+              td(width="50px", height="30px", align="center")=i
           - }
         - for (var i = 0; i < N; i++) {
           tr
-            td(width="30px", height="50px", align="center")=i+1
-            - for (var j = 0; j < (N-i); j++) {
-                td(width="50px", height="50px", align="left")=JSON.stringify(chart_CYK.cells[i][j] ? Object.keys(chart_CYK.cells[i][j]): [])
+            td(width="30px", height="50px", align="center")=i
+            - for (var j = 0; j <= N; j++) {
+                td(width="50px", height="50px", align="left")=JSON.stringify(chart_CYK.get_items_from_to(i, j))
             - }
         - }

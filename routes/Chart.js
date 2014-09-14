@@ -1,5 +1,5 @@
 /*
-    Generic chart that can be used for all chart parsers (hopefully)
+    Generic chart that can be used for all chart parsers
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ Chart.prototype.add_item = function(item) {
 Chart.prototype.get_items_from_to = function(i, j) {
   var res = [];
   var that = this;
-  this.outgoing_edges[i].forEach(function(item_id){
+  Object.keys(this.outgoing_edges[i]).forEach(function(item_id){
     if (that.outgoing_edges[i][item_id].data.to === j) {
       res.push(that.outgoing_edges[i][item_id]);
     }

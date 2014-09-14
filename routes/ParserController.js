@@ -61,8 +61,8 @@ exports.parse_sentence_with_Earley = function(req, res) {
   var taggedWords = new pos.Tagger().tag(words);
   var N = taggedWords.length;
   console.log('Tagged sentence: ' + taggedWords);
-  grammar.compute_lc_relation();
-  var parser = new LeftCornerChartParser(grammar);
+  //grammar.compute_lc_relation();
+  var parser = new EarleyChartParser(grammar);
   
   start = new Date().getTime();
   chart_Earley = parser.parse(taggedWords);
@@ -71,15 +71,8 @@ exports.parse_sentence_with_Earley = function(req, res) {
   time_Earley = end - start;
   console.log(chart_Earley);
   
-  accepted_Earley = false;
-  var items = chart_Earley.get_items_to(N);
-  items.forEach(function(item) {
-    if ((item.data.rule.lhs === grammar.get_start_symbol()) && (item.data.rule.rhs.length === item.data.dot)) {
-      accepted_Earley = true;
-      complete_parse = item;
-    }
-  });
-  
+  accepted_Earley = parser.full_parse();
+
   var nr_items = 0;
   for (i = 0; i <= N; i++) {
     nr_items += chart_Earley.nr_items_to(i);
@@ -90,7 +83,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
                                      in_language_Earley: accepted_Earley,
                                      N: N,
                                      tagged_sentence: taggedWords,
-                                     parse: complete_parse,
+                                     parse: "",
                                      nr_items_created: nr_items});
 };
 
@@ -112,7 +105,7 @@ exports.parse_sentence_with_CYK = function(req, res) {
   end = new Date().getTime();
   time_CYK = end - start;
   console.log(chart_CYK);
-  //accepted_CYK = chart_CYK[N - 1][0] ? (chart_CYK[N - 1][0].indexOf(grammar.get_start_symbol()) !== -1) : false;
+  accepted_CYK = parser.full_parse();
   console.log(accepted_CYK);
   res.render('parse_result_CYK', {chart_CYK: chart_CYK,
                                   parsing_time_CYK: time_CYK,

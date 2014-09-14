@@ -20,72 +20,17 @@
 // Improved Left-Corner Chart Parsing for Large Context-Free Grammars, Robert C. Moore
 // IWPT2000
 
-var Chart = require('./Chart');
 var Item = require('./Item');
+var Chart = require('./Chart');
+var ChartParser = require('./ChartParser');
 
-// Constructur for the left-corner parser
+// Constructor for the left-corner parser
 function LeftCornerChartParser(grammar) {
   this.grammar = grammar;
+  this.grammar.compute_lc_relation();
 }
 
-LeftCornerChartParser.prototype.initialise = function(N) {
-  var that = this;
-  var new_item;
-  var nr_items_added = 0;
-  
-  console.log('Initialise chart');
-  // Initialise chart
-  this.chart = new Chart(N);
-  // Add items for rules that have the start symbol as left-hand-side
-  var rules = this.grammar.rules_with_lhs(this.grammar.get_start_symbol());
-  rules.forEach(function(rule) {
-    new_item = new Item(rule, 0, 0, 0);
-    nr_items_added += that.chart.add_item(new_item);
-  });
-  console.log('Initialise chart added ' + nr_items_added + ' items');
-  return(nr_items_added);
-};
-
-LeftCornerChartParser.prototype.completer = function(item) {
-  var that = this;
-  var nr_items_added = 0;
-
-  console.log('Completer: ' + item.id)
-  if (item.is_complete()) {
-    var items = this.chart.get_items_to(item.data.from);
-    items.forEach(function(item2) {
-      if (item2.is_incomplete() && (item.data.rule.lhs === item2.data.rule.rhs[item2.data.dot])) {
-        var new_item = new Item(item2.data.rule, item2.data.dot + 1, item2.data.from, item.data.to);
-        nr_items_added += that.chart.add_item(new_item);
-        console.log('Completer: added item' + new_item.id);
-      }
-    });
-  }
-  console.log('Completer: added ' + nr_items_added + ' items');
-  return(nr_items_added);
-};
-
-LeftCornerChartParser.prototype.scanner = function(item) {
-  var nr_items_added = 0;
-
-  console.log('Scanner at position ' + item.data.to + ": " + item.id);
-  if (item.data.to < this.tagged_sentence.length) {
-    if (item.is_incomplete() && (this.grammar.is_terminal(item.data.rule.rhs[item.data.dot]))) {
-      console.log('Scanner: compare lexical category: ' + this.tagged_sentence[item.data.to][1] + '===' + item.data.rule.rhs[item.data.dot]);
-      if (this.tagged_sentence[item.data.to][1] === item.data.rule.rhs[item.data.dot]) {
-        // Add lexical item
-        var tag_item = new Item({'lhs': this.tagged_sentence[item.data.to][1], 'rhs': [this.tagged_sentence[item.data.to][0]]}, 1, item.data.to, item.data.to+1);
-        nr_items_added += this.chart.add_item(tag_item);
-        // Create new item from input item with dot one to the right
-        var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from, item.data.to+1);
-        newitem.children.push(tag_item);
-        nr_items_added += this.chart.add_item(newitem);
-      }
-    }
-  }
-  console.log('Scanner: added ' + nr_items_added + ' items');
-  return(nr_items_added);
-};
+LeftCornerChartParser.prototype = Object.create(ChartParser.prototype);
 
 // Predictor based on rule 4a on page 5
 LeftCornerChartParser.prototype.lc_predictor = function(item) {
