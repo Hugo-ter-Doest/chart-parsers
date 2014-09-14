@@ -20,7 +20,7 @@ var formidable = require('formidable');
 
 var CFG = require('./CFG');
 var CYK_ChartParser = require('./CYKParser');
-var EarleyChartParser = require('./EarleyChartParser');
+var EarleyChartParser = require('./EarleyParser');
 var LeftCornerChartParser = require('./LeftCornerParser');
 var pos = require('pos');
 var grammar;
