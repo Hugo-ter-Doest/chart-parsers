@@ -45,6 +45,7 @@ LeftCornerChartParser.prototype.lc_predictor = function(item) {
       that.chart.get_items_to(item.data.from).forEach(function(item2) {
         if (item2.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item2.data.rule.rhs[item2.data.dot])) {
           var newitem = new Item(rule, 1, item.data.from, item.data.to);
+          newitem.add_child(item);
           console.log('Predictor: added item ' + newitem.id);
           nr_items_added += that.chart.add_item(newitem);
         }
@@ -66,7 +67,10 @@ LeftCornerChartParser.prototype.lc_predictor_scanner = function(j) {
       var items = that.chart.get_items_to(j);
       items.forEach(function(item) {
         if (item.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item.data.rule.rhs[item.data.dot])) {
+          var tag_item = new Item({'lhs': that.tagged_sentence[j][1], 'rhs': [that.tagged_sentence[j][0]]}, 1, j, j + 1);
+          nr_items_added += that.chart.add_item(tag_item);
           var new_item = new Item(rule, 1, j, j+1);
+          new_item.add_child(tag_item);
           nr_items_added += that.chart.add_item(new_item);
         }
       });

@@ -20,6 +20,7 @@
 // Items are identified by their id. Items that have the same id are not added to the same edge.
 
 function Chart(N) {
+  this.N = N;
   this.outgoing_edges = new Array(N+1);
   this.incoming_edges = new Array(N+1);
   
@@ -74,5 +75,39 @@ Chart.prototype.get_items_to = function(j) {
 Chart.prototype.nr_items_to = function(j) {
   return(Object.keys(this.incoming_edges[j]).length);
 }
+
+Chart.prototype.parse_trees = function(nonterminal) {
+  var that = this;
+  var parses = [];
+  
+  this.get_items_from_to(0, this.N).forEach(function(item) {
+    if ((item.data.rule.lhs === nonterminal) &&
+        (item.data.dot === item.data.rule.rhs.length)) {
+      parses.push(that.create_parse_tree(item));
+      //parses.push(JSON.stringify(item));
+    }
+  });
+  return(parses);
+};
+
+Chart.prototype.create_parse_tree = function(item) {
+  console.log(item);
+  var that= this;
+  var subtree = item.data.rule.lhs;
+  
+  if (item.children.length === 0) {
+    subtree += "( " + item.data.rule.rhs + " )";
+  }
+  else {
+    subtree += " (";
+    var i;
+    for (i = 0; i < item.children.length; i++) {
+      subtree +=  this.create_parse_tree(item.children[i]);
+    }
+    subtree += ") ";
+  }
+  return(subtree);
+}
+
 
 module.exports = Chart;

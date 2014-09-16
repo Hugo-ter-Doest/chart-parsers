@@ -67,5 +67,5 @@ block content
                   br
         - }
   div
-    pre
-      #{JSON.stringify(parse, null, 2)}
+    each parse in parses
+      p #{parse}

@@ -54,7 +54,6 @@ exports.parse_sentence_with_Earley = function(req, res) {
   var sentence;
   var start, end, accepted_Earley;
   var time_Earley;
-  var complete_parse = {};
 
   sentence = req.param('input_sentence');
   var words = new pos.Lexer().lex(sentence);
@@ -62,7 +61,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
   var N = taggedWords.length;
   console.log('Tagged sentence: ' + taggedWords);
   //grammar.compute_lc_relation();
-  var parser = new EarleyChartParser(grammar);
+  var parser = new LeftCornerChartParser(grammar);
   
   start = new Date().getTime();
   chart_Earley = parser.parse(taggedWords);
@@ -71,7 +70,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
   time_Earley = end - start;
   console.log(chart_Earley);
   
-  accepted_Earley = parser.full_parse();
+  var complete_parses = chart_Earley.parse_trees(grammar.get_start_symbol());
 
   var nr_items = 0;
   for (i = 0; i <= N; i++) {
@@ -83,7 +82,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
                                      in_language_Earley: accepted_Earley,
                                      N: N,
                                      tagged_sentence: taggedWords,
-                                     parse: "",
+                                     parses: complete_parses,
                                      nr_items_created: nr_items});
 };
 

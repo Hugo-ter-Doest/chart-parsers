@@ -20,19 +20,25 @@
 // from is the starting point in the sentence
 // Data structure is prepared for InfoVis
 function Item(rule, dot, from, to) {
-  var item = {};
-  
   // A unique identifier is constructed from rule, dot and from
   this.id = "(" + rule.lhs + "->" + rule.rhs + ", " + dot + ", " + from + ", " + to +")";
   console.log('New item: ' + this.id);
   this.name = rule.lhs;
   this.children = [];
-  
+
   this.data = {};
   this.data.rule = rule;
   this.data.dot = dot;
   this.data.from = from;
   this.data.to = to;
+}
+
+Item.prototype.set_children = function(children) {
+  this.children = children;
+}
+
+Item.prototype.add_child = function(child) {
+  this.children.push(child);
 }
 
 // Create a copy of the item including the children

@@ -51,7 +51,7 @@ ChartParser.prototype.scanner = function(item) {
         nr_items_added += this.chart.add_item(tag_item);
         // Create new item from input item with dot one to the right
         var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from, item.data.to+1);
-        newitem.children.push(tag_item);
+        newitem.add_child(tag_item);
         nr_items_added += this.chart.add_item(newitem);
       }
     }
@@ -72,6 +72,9 @@ ChartParser.prototype.completer = function(item) {
     items.forEach(function(item2) {
       if (item2.is_incomplete() && (item.data.rule.lhs === item2.data.rule.rhs[item2.data.dot])) {
         var new_item = new Item(item2.data.rule, item2.data.dot + 1, item2.data.from, item.data.to);
+        // Make a copy of the children of item2, otherwise two items refer to the same set of children
+        new_item.set_children(item2.children.slice());
+        new_item.add_child(item);
         nr_items_added += that.chart.add_item(new_item);
         console.log('Completer: added item' + new_item.id);
       }
@@ -104,23 +107,6 @@ ChartParser.prototype.parse = function(tagged_sentence) {
     } while (items_added);
   }
   return this.chart;
-};
-
-ChartParser.prototype.full_parse = function() {
-  var that = this;
-  var fp = false;
-  
-  this.chart.get_items_from_to(0, this.tagged_sentence.length).forEach(function(item) {
-    if ((item.data.rule.lhs === that.grammar.get_start_symbol()) &&
-        (item.data.dot === item.data.rule.rhs.length)) {
-      fp = true;
-    }
-  });
-  return(fp);
-};
-
-ChartParser.prototype.parse_trees = function() {
-  // todo
 };
 
 function ChartParser() {}
