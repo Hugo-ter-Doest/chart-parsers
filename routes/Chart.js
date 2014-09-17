@@ -19,6 +19,8 @@
 // Implements a chart with from/to edges. Items are added by chart.add_item(i, j, item)
 // Items are identified by their id. Items that have the same id are not added to the same edge.
 
+var _ = require('lodash');
+
 function Chart(N) {
   this.N = N;
   this.outgoing_edges = new Array(N+1);
@@ -31,24 +33,45 @@ function Chart(N) {
   }
 }
 
-// Adds an item to the chart; returns 1 if the item was added, 0 otherwise
+// Adds an item to the chart if it is not already there; returns 1 if the item was added, 0 otherwise
+// Items are compared using deep compare (so including children)
 Chart.prototype.add_item = function(item) {
-  if (!this.outgoing_edges[item.data.from][item.id]) {
-    this.outgoing_edges[item.data.from][item.id] = item;
-    this.incoming_edges[item.data.to][item.id] = item;
-    return(1);
+  var nr_items_added = 0;
+  var item_found = false;
+
+  if (this.outgoing_edges[item.data.from][item.id]) {
+    // item already exists -> deep compare
+    this.outgoing_edges[item.data.from][item.id].some(function(item2) {
+      if (_.isEqual(item, item2)) {
+        item_found = true;
+        return(true);
+      }
+    });
+    if (!item_found) {  
+      // if not found -> add  item to chart
+      this.outgoing_edges[item.data.from][item.id].push(item);
+      this.incoming_edges[item.data.to][item.id].push(item);
+      nr_items_added = 1;
+    }
   }
   else {
-    return(0);
+      // item does not exist -> add to the chart
+      this.outgoing_edges[item.data.from][item.id] = [item];
+      this.incoming_edges[item.data.to][item.id] = [item];
+      nr_items_added = 1;
   }
+  
+  return(nr_items_added);
 };
 
 Chart.prototype.get_items_from_to = function(i, j) {
   var res = [];
   var that = this;
   Object.keys(this.outgoing_edges[i]).forEach(function(item_id){
-    if (that.outgoing_edges[i][item_id].data.to === j) {
-      res.push(that.outgoing_edges[i][item_id]);
+    if (that.outgoing_edges[i][item_id].length > 0) {
+      if (that.outgoing_edges[i][item_id][0].data.to === j) {
+        res = res.concat(that.outgoing_edges[i][item_id]);
+      }
     }
   });
   return(res);
@@ -58,7 +81,7 @@ Chart.prototype.get_items_from = function(i) {
   var res = [];
   var that = this;
   Object.keys(this.outgoing_edges[i]).forEach(function(item_id){
-    res.push(that.outgoing_edges[i][item_id]);
+      res = res.concat(that.outgoing_edges[i][item_id]);
   });
   return(res);
 };
@@ -67,14 +90,19 @@ Chart.prototype.get_items_to = function(j) {
   var res = [];
   var that = this;
   Object.keys(this.incoming_edges[j]).forEach(function(item_id){
-    res.push(that.incoming_edges[j][item_id]);
+      res = res.concat(that.incoming_edges[j][item_id]);
   });
   return(res);
 };
 
 Chart.prototype.nr_items_to = function(j) {
-  return(Object.keys(this.incoming_edges[j]).length);
-}
+  var that = this;
+  var nr_items = 0;
+  Object.keys(this.incoming_edges[j]).forEach(function(item_id){
+      nr_items += that.incoming_edges[i][item_id].length;
+  });
+  return(nr_items);
+};
 
 Chart.prototype.parse_trees = function(nonterminal) {
   var that = this;
@@ -107,7 +135,7 @@ Chart.prototype.create_parse_tree = function(item) {
     subtree += ") ";
   }
   return(subtree);
-}
+};
 
 
 module.exports = Chart;

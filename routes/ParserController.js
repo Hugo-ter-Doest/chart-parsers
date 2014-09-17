@@ -61,7 +61,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
   var N = taggedWords.length;
   console.log('Tagged sentence: ' + taggedWords);
   //grammar.compute_lc_relation();
-  var parser = new LeftCornerChartParser(grammar);
+  var parser = new EarleyChartParser(grammar);
   
   start = new Date().getTime();
   chart_Earley = parser.parse(taggedWords);
