@@ -1,28 +1,8 @@
 extends layout
-
-script(type="text/javascript").
-  function translate(key, value) {
-    if (key === "lhs") {
-      return value;
-    }
-    if (key === "rhs") {
-      return value;
-    }
-    if (key === "children") {
-      return value;
-    }    
-    if (key === "rule") {
-      return undefined;
-    }    
-    if (key === "dot") {
-      return undefined;
-    }    
-    if (key === "from") {
-      return undefined;
-    }
-    return undefined;
-  }
+<body onload="init();">
 block content
+  script(language="javascript" type="text/javascript" src="Jit/jit-yc.js")
+  script(language="javascript" type="text/javascript" src="Jit/Examples/Spacetree/example1.js")
   h1 Parse result
   
   div 
@@ -66,6 +46,6 @@ block content
                   label #{item.id}
                   br
         - }
-  div
-    each parse in parses
-      p #{parse}
+  div(id="infovis")
+  script(language="javascript" type="text/javascript").
+    init();

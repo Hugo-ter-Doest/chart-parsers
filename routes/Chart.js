@@ -104,6 +104,19 @@ Chart.prototype.nr_items_to = function(j) {
   return(nr_items);
 };
 
+Chart.prototype.complete_items = function(nonterminal) {
+  var that = this;
+  var items = [];
+  
+  this.get_items_from_to(0, this.N).forEach(function(item) {
+    if ((item.data.rule.lhs === nonterminal) &&
+        (item.data.dot === item.data.rule.rhs.length)) {
+      items.push(item);
+    }
+  });
+  return(items);
+};
+
 Chart.prototype.parse_trees = function(nonterminal) {
   var that = this;
   var parses = [];

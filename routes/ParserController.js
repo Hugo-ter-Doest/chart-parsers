@@ -70,7 +70,8 @@ exports.parse_sentence_with_Earley = function(req, res) {
   time_Earley = end - start;
   console.log(chart_Earley);
   
-  var complete_parses = chart_Earley.parse_trees(grammar.get_start_symbol());
+  var complete_parses_text = chart_Earley.parse_trees(grammar.get_start_symbol());
+  var complete_parses_json = chart_Earley.complete_items(grammar.get_start_symbol());
 
   var nr_items = 0;
   for (i = 0; i <= N; i++) {
@@ -82,7 +83,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
                                      in_language_Earley: accepted_Earley,
                                      N: N,
                                      tagged_sentence: taggedWords,
-                                     parses: complete_parses,
+                                     parses: complete_parses_json,
                                      nr_items_created: nr_items});
 };
 

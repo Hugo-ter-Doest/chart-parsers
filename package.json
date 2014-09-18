@@ -10,6 +10,7 @@
     "jade": "*",
     "body-parser": "*",
     "formidable": "*",
-    "pos": "*"
+    "pos": "*",
+    "lodash" : "*"
   }
 }
