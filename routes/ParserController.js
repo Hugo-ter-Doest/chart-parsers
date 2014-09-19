@@ -72,6 +72,7 @@ exports.parse_sentence_with_Earley = function(req, res) {
   
   var complete_parses_text = chart_Earley.parse_trees(grammar.get_start_symbol());
   var complete_parses_json = chart_Earley.complete_items(grammar.get_start_symbol());
+  console.log(complete_parses_json);
 
   var nr_items = 0;
   for (i = 0; i <= N; i++) {

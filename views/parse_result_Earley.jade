@@ -2,7 +2,7 @@ extends layout
 <body onload="init();">
 block content
   script(language="javascript" type="text/javascript" src="Jit/jit-yc.js")
-  script(language="javascript" type="text/javascript" src="Jit/Examples/Spacetree/example1.js")
+  script(language="javascript" type="text/javascript" src="Javascript/parse_trees.js")
   h1 Parse result
   
   div 
@@ -46,6 +46,7 @@ block content
                   label #{item.id}
                   br
         - }
-  div(id="infovis")
-  script(language="javascript" type="text/javascript").
-    init();
+    div(id="infovis" style="position:relative; height:700px; width:700px; border:solid 1px #333;")
+    script(language="javascript" type="text/javascript").
+      var local_data = !{JSON.stringify(parses)};
+      init(local_data);

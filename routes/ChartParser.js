@@ -46,8 +46,11 @@ ChartParser.prototype.scanner = function(item) {
     if (item.is_incomplete() && (this.grammar.is_terminal(item.data.rule.rhs[item.data.dot]))) {
       console.log('Scanner: compare lexical category: ' + this.tagged_sentence[item.data.to][1] + '===' + item.data.rule.rhs[item.data.dot]);
       if (this.tagged_sentence[item.data.to][1] === item.data.rule.rhs[item.data.dot]) {
+        // Add terminal item
+        var term_item = new Item({'lhs': this.tagged_sentence[item.data.to][0], 'rhs': ''}, 1, item.data.to, item.data.to+1);
         // Add lexical item
         var tag_item = new Item({'lhs': this.tagged_sentence[item.data.to][1], 'rhs': [this.tagged_sentence[item.data.to][0]]}, 1, item.data.to, item.data.to+1);
+        tag_item.add_child(term_item);
         nr_items_added += this.chart.add_item(tag_item);
         // Create new item from input item with dot one to the right
         var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from, item.data.to+1);
