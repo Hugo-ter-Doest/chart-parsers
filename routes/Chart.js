@@ -77,6 +77,20 @@ Chart.prototype.get_items_from_to = function(i, j) {
   return(res);
 };
 
+Chart.prototype.get_complete_items_from_to = function(i, j) {
+  var res = [];
+  var that = this;
+  Object.keys(this.outgoing_edges[i]).forEach(function(item_id){
+    if (that.outgoing_edges[i][item_id].length > 0) {
+      if ((that.outgoing_edges[i][item_id][0].data.to === j) && 
+          (that.outgoing_edges[i][item_id][0].data.rule.rhs.length === that.outgoing_edges[i][item_id][0].data.dot)){
+        res = res.concat(that.outgoing_edges[i][item_id]);
+      }
+    }
+  });
+  return(res);
+};
+
 Chart.prototype.get_items_from = function(i) {
   var res = [];
   var that = this;
@@ -148,6 +162,14 @@ Chart.prototype.create_parse_tree = function(item) {
     subtree += ") ";
   }
   return(subtree);
+};
+
+Chart.prototype.nr_of_items = function() {
+  var nr_items = 0;
+  for (i = 0; i <= this.N; i++) {
+    nr_items += this.nr_items_to(i);
+  }
+  return(nr_items);
 };
 
 

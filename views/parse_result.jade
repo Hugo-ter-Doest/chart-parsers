@@ -1,26 +1,29 @@
 extends layout
-<body onload="init();">
 block content
   script(language="javascript" type="text/javascript" src="Jit/jit-yc.js")
   script(language="javascript" type="text/javascript" src="Javascript/parse_trees.js")
   h1 Parse result
-  
+  div 
+    label Parser: 
+    label #{type_of_parser}
   div 
     label Sentence: 
     label #{JSON.stringify(tagged_sentence)}
   div
     label Length: 
     label #{N}
-  h2 Earley chart parser
   div
     label Parsing time: 
-    label #{parsing_time_Earley} ms
+    label #{parsing_time} ms
+  div
+    label Number of parses:
+    label #{parses.length}
   div
     label Number of items created: 
     label #{nr_items_created} items
   div
     label In language: 
-    label #{in_language_Earley}
+    label #{in_language}
   br
   div
     table(border="1px")
@@ -39,12 +42,12 @@ block content
             td(width="130px", height="50px", align="center")=i
         - }
       tr
-        - for (var i = 0; i <= N; i++) {
-            td(valign="top")
-              each item in chart_Earley.get_items_to(i)
-                if (item.data.rule.rhs.length === item.data.dot)
-                  label #{item.id}
-                  br
+        - for (var i = 0; i < N; i++) {
+          tr
+            td(width="30px", height="50px", align="center")=i
+            - for (var j = 1; j <= N; j++) {
+                td(width="50px", height="50px", align="left")=JSON.stringify(chart.get_complete_items_from_to(i, j))
+            - }
         - }
     div(id="infovis" style="position:relative; height:700px; width:700px; border:solid 1px #333;")
     script(language="javascript" type="text/javascript").

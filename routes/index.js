@@ -26,7 +26,5 @@ app.get('/load_grammar', ParserController.choose_grammar_file);
 app.post('/load_grammar', ParserController.submit_grammar);
 app.get('/input_sentence', ParserController.input_sentence);
 app.post('/parse_sentence', ParserController.parse_sentence);
-app.get('/parse_sentence_with_CYK', ParserController.parse_sentence_with_CYK);
-app.get('/parse_sentence_with_Earley', ParserController.parse_sentence_with_Earley);
 
 module.exports = app;

@@ -68,7 +68,7 @@ LeftCornerChartParser.prototype.lc_predictor_scanner = function(j) {
       items.forEach(function(item) {
         if (item.is_incomplete() && that.grammar.is_leftcorner_of(rule.lhs, item.data.rule.rhs[item.data.dot])) {
           // Add terminal item
-          var term_item = new Item({'lhs': this.tagged_sentence[j][0], 'rhs': ''}, 1, j, j + 1);
+          var term_item = new Item({'lhs': that.tagged_sentence[j][0], 'rhs': ''}, 1, j, j + 1);
           // Add tag item
           var tag_item = new Item({'lhs': that.tagged_sentence[j][1], 'rhs': [that.tagged_sentence[j][0]]}, 1, j, j + 1);
           tag_item.add_child(term_item);
