@@ -54,6 +54,8 @@ ChartParser.prototype.scanner = function(item) {
         nr_items_added += this.chart.add_item(tag_item);
         // Create new item from input item with dot one to the right
         var newitem = new Item(item.data.rule, item.data.dot+1, item.data.from, item.data.to+1);
+        // copy this children of item
+        newitem.set_children(item.children.slice());
         newitem.add_child(tag_item);
         nr_items_added += this.chart.add_item(newitem);
       }

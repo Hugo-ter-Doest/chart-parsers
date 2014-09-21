@@ -118,7 +118,7 @@ Chart.prototype.nr_items_to = function(j) {
   return(nr_items);
 };
 
-Chart.prototype.complete_items = function(nonterminal) {
+Chart.prototype.full_parse_items = function(nonterminal) {
   var that = this;
   var items = [];
   

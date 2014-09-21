@@ -75,12 +75,14 @@ exports.parse_sentence = function(req, res) {
   
   console.log(chart);
   
+  var full_parse_items = chart.full_parse_items(grammar.get_start_symbol());
+  
   res.render('parse_result', {type_of_parser: typeof parser,
                               N: N,
                               tagged_sentence: taggedWords,
                               chart: chart,
                               parsing_time: end - start,
-                              in_language: chart.complete_items(grammar.get_start_symbol()).length > 0,
-                              parses: chart.complete_items(grammar.get_start_symbol()),
+                              in_language: full_parse_items.length > 0,
+                              parses: full_parse_items,
                               nr_items_created: chart.nr_of_items()});
 };

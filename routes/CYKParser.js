@@ -39,10 +39,12 @@ CYK_ChartParser.prototype.parse = function(tagged_sentence) {
   this.chart = new Chart(N);
   var j;
   for (j = 0; j < N; ++j) {
-    // The categories are used to fill the first row of the chart
-    //C[0][j] = {};
-    item = new Item({'lhs': tagged_sentence[j][1], 'rhs': [tagged_sentence[j][0]]}, 1, j, j+1);
-    this.chart.add_item(item);
+    // Create a terminal item of the form Terminal -> *empty*
+    var term_item = new Item({'lhs': tagged_sentence[j][0], 'rhs': []}, 1, j, j+1);
+    // Create a tag item of the form Categorie -> Terminal
+    var tag_item = new Item({'lhs': tagged_sentence[j][1], 'rhs': [tagged_sentence[j][0]]}, 1, j, j+1);
+    tag_item.add_child(term_item);
+    this.chart.add_item(tag_item);
   }
   
   var i, k;
@@ -56,6 +58,8 @@ CYK_ChartParser.prototype.parse = function(tagged_sentence) {
             var matching_rules = that.grammar.get_rules_with_rhs(item1.data.rule.lhs, item2.data.rule.lhs);
             matching_rules.forEach(function(rule) {
               var item = new Item(rule, 2, item1.data.from, item2.data.to);
+              item.add_child(item1);
+              item.add_child(item2);
               that.chart.add_item(item);
             });
           });
