@@ -1,5 +1,5 @@
 /*
-    Unit test for CYK.js
+    Unit test for LeftCornerParser.js
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -23,31 +23,75 @@ var LeftCornerParser = require('../routes/LeftCornerParser');
 var EarleyParser = require('../routes/EarleyParser');
 var Item = require('../routes/Item');
 
-//E -> E plus E
-//E -> E minus E
-//E -> E divide E
-//E -> E multiply E
-//E -> number
+// E -> E plus E
+// E -> E minus E
+// E -> E divide E
+// E -> E multiply E
+// E -> number
 var dummy = new Grammar('../data/math_expressions.txt', function(grammar) {
-  // 2 + 3 * 4
+  var parser = new LeftCornerParser(grammar);
+
+  // 2 + 3
   var tagged_sentence = [['2', 'number'],
                          ['+', 'plus'],
-                         ['3', 'number'],
-                         ['*', 'multiply'],
-                         ['4', 'number']];
-  var N = tagged_sentence.length;
-  var parser = new EarleyParser(grammar);
+                         ['3', 'number']];
   var chart = parser.parse(tagged_sentence);
-
   var parses = chart.full_parse_items(grammar.get_start_symbol());
-  console.log(parses.length);
-  console.log(parses);
-  console.log(chart.parse_trees(grammar.get_start_symbol()));
+  assert.equal(parses.length, 1, "Number of parses found should be one.");
+  var expected_item = new Item({'lhs': 'E', 'rhs': ['E', 'plus', 'E']}, 3, 0, 3);
+  assert.equal(parses[0].id, expected_item.id, "Full parse items does not match (E -> E + E, 3, 0, 3)");
+
+  // 2 + 3 * 4
+  tagged_sentence = [['2', 'number'],
+                     ['+', 'plus'],
+                     ['3', 'number'],
+                     ['*', 'multiply'],
+                     ['4', 'number']];
+  chart = parser.parse(tagged_sentence);
+  parses = chart.full_parse_items(grammar.get_start_symbol());
+  assert.equal(parses.length, 2, "Number of parses found should be two.");
+});
+
+// Grammar (in ../data/test_grammar_for_CYK.txt)
+//S  -> NP VP
+//NP -> DET N
+//NP -> NP PP
+//PP -> P NP
+//VP -> V NP
+//VP -> VP PP
+
+// Lexicon
+//DET -> the
+//NP -> I
+//N -> man
+//N -> telescope
+//P -> with
+//V -> saw
+//N -> cat
+//N -> dog
+//N -> pig
+//N -> hill
+//N -> park
+//N -> roof
+//P -> from
+//P -> on
+//P -> in
+
+var dummy = new Grammar('../data/test_grammar_for_CYK.txt', function(grammar) {
+  var parser = new LeftCornerParser(grammar);
+
+  var tagged_sentence = [['I', 'NP'],
+                         ['saw', 'V'],
+                         ['the', 'DET'],
+                         ['man', 'N'],
+                         ['with', 'P'],
+                         ['the', 'DET'],
+                         ['telescope', 'N']];
+  var chart = parser.parse(tagged_sentence);
+  var parses = chart.full_parse_items(grammar.get_start_symbol());
   
-  // Top most cell should not be undefined
-  //assert.notEqual(chart.cells[N - 1][0], undefined, 'chart[N - 1][0] is undefined');
-  // Top most cell should contain an item for a rule with start symbol as LHS
-  // Create the item we expect in chart[N - 1]
-  //var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0);
-  //assert.deepEqual(chart.cells[N - 1][0][expected_item.id], expected_item, 'chart[N - 1][0] does not contain full parse');
+  assert.equal(parses.length, 2, "Number of parses found should be two.");
+  var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0, 7);
+  assert.equal(parses[0].id, expected_item.id, "Item should equal (S -> NP VP, 2, 0, 7)");
+  assert.equal(parses[1].id, expected_item.id, "Item should equal (S -> NP VP, 2, 0, 7)");
 });

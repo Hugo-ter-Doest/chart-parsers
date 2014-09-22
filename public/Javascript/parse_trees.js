@@ -69,6 +69,6 @@ function init_spacetree(parse){
     //compute node positions and layout
     st.compute();
     //emulate a click on the root node.
-    //st.onClick(st.root);
+    st.onClick(st.root);
     
 }

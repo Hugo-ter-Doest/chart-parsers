@@ -58,11 +58,11 @@ var dummy = new Grammar('../data/test_grammar_for_CYK.txt', function(grammar) {
   var N = tagged_sentence.length;
   var parser = new CYK_ChartParser(grammar);
   var chart = parser.parse(tagged_sentence);
-
-  // Top most cell should not be undefined
-  assert.notEqual(chart.cells[N - 1][0], undefined, 'chart[N - 1][0] is undefined');
-  // Top most cell should contain an item for a rule with start symbol as LHS
-  // Create the item we expect in chart[N - 1]
-  var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0);
-  assert.deepEqual(chart.cells[N - 1][0][expected_item.id], expected_item, 'chart[N - 1][0] does not contain full parse');
+  
+  var parses = chart.full_parse_items(grammar.get_start_symbol());
+  
+  assert.equal(parses.length, 2, "Number of parses found should be two.");
+  var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0, 7);
+  assert.equal(parses[0].id, expected_item.id, "Item should equal (S -> NP VP, 2, 0, 7)");
+  assert.equal(parses[1].id, expected_item.id, "Item should equal (S -> NP VP, 2, 0, 7)");
 });
