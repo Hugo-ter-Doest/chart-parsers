@@ -39,7 +39,30 @@ var dummy = new Grammar('../data/math_expressions.txt', function(grammar) {
   var parses = chart.full_parse_items(grammar.get_start_symbol());
   assert.equal(parses.length, 1, "Number of parses found should be one.");
   var expected_item = new Item({'lhs': 'E', 'rhs': ['E', 'plus', 'E']}, 3, 0, 3);
-  assert.equal(parses[0].id, expected_item.id, "Full parse items does not match (E -> E + E, 3, 0, 3)");
+
+  var term_item1 = new Item({'lhs': '2', 'rhs': []}, 1, 0, 1);
+  var tag_item1 = new Item({'lhs': 'number', 'rhs': ['2']}, 1, 0, 1);
+  tag_item1.add_child(term_item1);
+  var item1 = new Item({'lhs': 'E', 'rhs': ['number']}, 1, 0, 1);
+  item1.add_child(tag_item1);
+
+  var term_item2 = new Item({'lhs': '+', 'rhs': []}, 1, 1, 2);
+  var tag_item2 = new Item({'lhs': 'plus', 'rhs': ['+']}, 1, 1, 2);
+  tag_item2.add_child(term_item2);
+
+  var term_item3 = new Item({'lhs': '3', 'rhs': []}, 1, 2, 3);
+  var tag_item3 = new Item({'lhs': 'number', 'rhs': ['3']}, 1, 2, 3);
+  tag_item3.add_child(term_item3);
+  var item3 = new Item({'lhs': 'E', 'rhs': ['number']}, 1, 2, 3);
+  item3.add_child(tag_item3);
+  
+  expected_item.add_child(item1);
+  expected_item.add_child(tag_item2);
+  expected_item.add_child(item3);
+  console.log(JSON.stringify(expected_item));
+  console.log(JSON.stringify(parses[0]));
+  
+  assert.equal(parses[0], expected_item, "Full parse items does not match (E -> E + E, 3, 0, 3)");
 
   // 2 + 3 * 4
   tagged_sentence = [['2', 'number'],
