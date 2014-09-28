@@ -17,8 +17,9 @@
 */
 
 var formidable = require('formidable');
+var fs = require('fs');
 
-var CFG = require('./CFG');
+var GrammarParser = require('./GrammarParser');
 var CYK_ChartParser = require('./CYKParser');
 var EarleyChartParser = require('./EarleyParser');
 var LeftCornerChartParser = require('./LeftCornerParser');
@@ -35,9 +36,11 @@ exports.submit_grammar = function(req, res) {
   var form = new formidable.IncomingForm();
 
   form.parse(req, function(err, fields, files) {
-    var grammar_file = files.grammar_file.path + files.grammar_file.name;
-    new CFG(files.grammar_file.path, function(grmmr) {
-      grammar = grmmr;
+    fs.readFile(files.grammar_file.path, 'utf8', function (error, grammar_text) {
+      if (error) {
+        console.log(error);
+      }
+      grammar = GrammarParser.parse(grammar_text);
       res.redirect('/input_sentence');
     });
   });
