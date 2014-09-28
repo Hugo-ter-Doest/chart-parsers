@@ -18,10 +18,10 @@
 
 var assert = require('assert');
 
-var Grammar = require('../routes/CFG');
-var LeftCornerParser = require('../routes/LeftCornerParser');
-var EarleyParser = require('../routes/EarleyParser');
-var Item = require('../routes/Item');
+var Grammar = require('../lib/CFG');
+var LeftCornerParser = require('../lib/LeftCornerParser');
+var EarleyParser = require('../lib/EarleyParser');
+var Item = require('../lib/Item');
 
 // E -> E plus E
 // E -> E minus E

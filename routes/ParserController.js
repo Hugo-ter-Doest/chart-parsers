@@ -19,10 +19,10 @@
 var formidable = require('formidable');
 var fs = require('fs');
 
-var GrammarParser = require('./GrammarParser');
-var CYK_ChartParser = require('./CYKParser');
-var EarleyChartParser = require('./EarleyParser');
-var LeftCornerChartParser = require('./LeftCornerParser');
+var GrammarParser = require('../lib/GrammarParser');
+var CYK_ChartParser = require('../lib/CYKParser');
+var EarleyChartParser = require('../lib/EarleyParser');
+var LeftCornerChartParser = require('../lib/LeftCornerParser');
 var pos = require('pos');
 var grammar;
 

@@ -18,9 +18,9 @@
 
 var assert = require('assert');
 
-var Grammar = require('../routes/CFG');
-var CYK_ChartParser = require('../routes/CYKParser');
-var Item = require('../routes/Item');
+var Grammar = require('../lib/CFG');
+var CYK_ChartParser = require('../lib/CYKParser');
+var Item = require('../lib/Item');
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP

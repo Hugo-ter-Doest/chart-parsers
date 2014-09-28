@@ -18,7 +18,7 @@
 
 var assert = require('assert');
 
-var Grammar = require('../routes/CFG');
+var Grammar = require('../lib/GrammarParser');
 
 // Load a test grammar and compare to expected structure
 //S -> NP VP
