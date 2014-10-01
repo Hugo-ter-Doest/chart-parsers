@@ -176,6 +176,7 @@ grammar =
    }
    grammar.start_symbol = grammar.production_rules[0].lhs;
    grammar.nonterminals = nonterminals;
+   grammar.is_CNF = is_CNF;
    return(grammar);
   }
 
@@ -194,7 +195,7 @@ rule =
   {
    var rule = new Rule(lhs, rhs);
    nonterminals[lhs] = true;
-   if (rule.rhs.length > 2) {
+   if ((rule.rhs.length > 2) || (rule.rhs.length === 0)) {
      is_CNF = false;
    }
    return(rule);
