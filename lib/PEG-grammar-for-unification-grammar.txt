@@ -30,9 +30,10 @@
     this.path = ids;
   }
 
-  function Rule(lhs, rhs) {
+  function Rule(lhs, rhs, head) {
    this.lhs = lhs;
    this.rhs = rhs;
+   this.head = head;
   }
 
   function Constraint(left_op, right_op) {
@@ -134,6 +135,49 @@ Grammar.prototype.compute_lc_relation = function() {
   console.log(this.lc);
 };
 
+// Computation of the head-corner relation follows the pattern of the 
+// computation of the lef-corner relation
+Grammar.prototype.compute_hc_relation = function() {
+  that = this;
+  // Compute the first order lc relation
+  this.hc = {};
+  this.production_rules.forEach(function(rule) {
+    if (!that.hc[rule.lhs]) {
+      that.hc[rule.lhs] = {};
+    }
+    if (that.is_nonterminal(rule.rhs[rule.head])) {
+      that.hc[rule.lhs][rule.rhs[rule.head]] = true;
+    }
+  });
+  // Reflexive closure
+  Object.keys(this.nonterminals).forEach(function(A){
+    if (!that.hc[A]) {
+      that.hc[A] = {};
+    }
+    that.hc[A][A] = true;
+  });
+  // Transitive closure
+  var changed;
+  do {
+    changed = false;
+    Object.keys(this.nonterminals).forEach(function(A) {
+      Object.keys(that.hc[A]).forEach(function(B) {
+        Object.keys(that.hc[B]).forEach(function(C) {
+          if (!that.hc[A][C]) {
+            // add all head corners of C to A
+            Object.keys(that.hc[C]).forEach(function(D){
+              that.hc[A][D] = true;
+              changed = true;
+            });
+          }
+        });
+      });
+    });
+  } while (changed);
+  console.log(this.hc);
+};
+
+
 Grammar.prototype.rules_with_leftmost_daughter = function (B) {
   rules = [];
 
@@ -180,9 +224,18 @@ production_rule =
 
 // A production rule must be specified on one line 
 rule =
-  lhs: nonterminal Arrow rhs: identifier_no_eol* (EOL / EOI)
+  lhs: nonterminal Arrow rhs_1: identifier_no_eol* head: (HeadIndicator identifier_no_eol HeadIndicator)? rhs_2: identifier_no_eol* (EOL / EOI)
   {
-   var rule = new Rule(lhs, rhs);
+   var rhs = [];
+   var head_pos = 0;
+
+   rhs = rhs_1;
+   if (head) {
+     head_pos = rhs_1.length;
+     rhs.push(head[1]);
+   }
+   rhs = rhs.concat(rhs_2);
+   var rule = new Rule(lhs, rhs, head_pos);
    nonterminals[lhs] = true;
    if ((rule.rhs.length > 2) || (rule.rhs.length === 0)) {
      is_CNF = false;
@@ -245,13 +298,15 @@ identifier_no_eol =
 
 // Terminals
 Arrow =
-  "->" S
+  "->" S_no_eol
 PathOpen =
   "<" S
 PathClose =
   ">" S
 Equal = 
   "=" S
+HeadIndicator = 
+  "*" S_no_eol
 
 // Blanks
 EOL =
