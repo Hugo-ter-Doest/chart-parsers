@@ -20,10 +20,12 @@ var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
 var LeftCornerParser = require('../lib/LeftCornerParser');
+var HeadCornerParser = require('../lib/HeadCornerParser');
 var EarleyParser = require('../lib/EarleyParser');
 var Item = require('../lib/Item');
 
-[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
+//[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
+[HeadCornerParser].forEach(function(ChartParser) {
   describe(ChartParser === LeftCornerParser ? 'LeftCornerParser' : 'EarleyParser', function() {
     var grammar_text;
   

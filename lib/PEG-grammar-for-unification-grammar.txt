@@ -135,6 +135,48 @@ Grammar.prototype.compute_lc_relation = function() {
   console.log(this.lc);
 };
 
+Grammar.prototype.rules_with_leftmost_daughter = function (B) {
+  rules = [];
+
+  this.production_rules.forEach(function(rule) {
+    if (rule.rhs[0] === B) {
+      rules.push(rule);
+    }
+  });
+  return(rules);
+};
+
+Grammar.prototype.is_leftcorner_of = function(B, C) {
+  if (this.lc[C]) {
+    return(this.lc[C][B]);
+  }
+  else {
+    return(false);
+  }
+};
+
+// Check if nonterminal A is head-corner of nonterminal B
+Grammar.prototype.is_headcorner_of = function(A, B) {
+  if (this.hc[B]) {
+    return(this.hc[B][A]);
+  }
+  else {
+    return(false);
+  }
+}
+ 
+// Get rules with nonterminal H as head
+Grammar.prototype.get_rules_with_head = function(H) {
+  var res = [];
+
+  this.production_rules.forEach(function(rule) {
+    if (rule.rhs[rule.head] === H) {
+      res.push(rule);
+    }
+  });
+  return(res);
+};
+
 // Computation of the head-corner relation follows the pattern of the 
 // computation of the lef-corner relation
 Grammar.prototype.compute_hc_relation = function() {
@@ -175,27 +217,6 @@ Grammar.prototype.compute_hc_relation = function() {
     });
   } while (changed);
   console.log(this.hc);
-};
-
-
-Grammar.prototype.rules_with_leftmost_daughter = function (B) {
-  rules = [];
-
-  this.production_rules.forEach(function(rule) {
-    if (rule.rhs[0] === B) {
-      rules.push(rule);
-    }
-  });
-  return(rules);
-};
-
-Grammar.prototype.is_leftcorner_of = function(B, C) {
-  if (this.lc[C]) {
-    return(this.lc[C][B]);
-  }
-  else {
-    return(false);
-  }
 };
 
 }
