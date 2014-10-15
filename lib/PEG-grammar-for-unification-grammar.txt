@@ -20,7 +20,8 @@
 
 {
   var is_CNF = true;
-  nonterminals = {};
+  var nonterminals = {};
+  var symbols = {};
 
   function Atom(val) {
     this.atom = val;
@@ -44,6 +45,7 @@
 function Grammar() {
   this.production_rules = [];
   this.nonterminals = {};
+  this.symbols = {};
   this.start_symbol = "";
   this.is_CNF = true;
 }
@@ -132,7 +134,6 @@ Grammar.prototype.compute_lc_relation = function() {
       });
     });
   } while (changed);
-  console.log(this.lc);
 };
 
 Grammar.prototype.rules_with_leftmost_daughter = function (B) {
@@ -181,18 +182,16 @@ Grammar.prototype.get_rules_with_head = function(H) {
 // computation of the lef-corner relation
 Grammar.prototype.compute_hc_relation = function() {
   that = this;
-  // Compute the first order lc relation
+  // Compute the first order hc relation
   this.hc = {};
   this.production_rules.forEach(function(rule) {
     if (!that.hc[rule.lhs]) {
       that.hc[rule.lhs] = {};
     }
-    if (that.is_nonterminal(rule.rhs[rule.head])) {
-      that.hc[rule.lhs][rule.rhs[rule.head]] = true;
-    }
+    that.hc[rule.lhs][rule.rhs[rule.head]] = true;
   });
   // Reflexive closure
-  Object.keys(this.nonterminals).forEach(function(A){
+  Object.keys(this.symbols).forEach(function(A){
     if (!that.hc[A]) {
       that.hc[A] = {};
     }
@@ -202,7 +201,7 @@ Grammar.prototype.compute_hc_relation = function() {
   var changed;
   do {
     changed = false;
-    Object.keys(this.nonterminals).forEach(function(A) {
+    Object.keys(this.symbols).forEach(function(A) {
       Object.keys(that.hc[A]).forEach(function(B) {
         Object.keys(that.hc[B]).forEach(function(C) {
           if (!that.hc[A][C]) {
@@ -216,7 +215,6 @@ Grammar.prototype.compute_hc_relation = function() {
       });
     });
   } while (changed);
-  console.log(this.hc);
 };
 
 }
@@ -231,6 +229,7 @@ grammar =
    grammar.start_symbol = grammar.production_rules[0].lhs;
    grammar.nonterminals = nonterminals;
    grammar.is_CNF = is_CNF;
+   grammar.symbols = symbols;
    return(grammar);
   }
 
@@ -256,8 +255,12 @@ rule =
      rhs.push(head[1]);
    }
    rhs = rhs.concat(rhs_2);
+   rhs.forEach(function(symbol) {
+     symbols[symbol] = true;
+   });
    var rule = new Rule(lhs, rhs, head_pos);
    nonterminals[lhs] = true;
+   symbols[lhs] = true;
    if ((rule.rhs.length > 2) || (rule.rhs.length === 0)) {
      is_CNF = false;
    }

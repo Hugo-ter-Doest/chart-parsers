@@ -24,8 +24,8 @@ var HeadCornerParser = require('../lib/HeadCornerParser');
 var EarleyParser = require('../lib/EarleyParser');
 var Item = require('../lib/Item');
 
-//[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
-[HeadCornerParser].forEach(function(ChartParser) {
+[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
+//[HeadCornerParser].forEach(function(ChartParser) {
   describe(ChartParser === LeftCornerParser ? 'LeftCornerParser' : 'EarleyParser', function() {
     var grammar_text;
   
@@ -56,7 +56,7 @@ var Item = require('../lib/Item');
                              ['+', 'plus'],
                              ['3', 'number']];
       var chart = parser.parse(tagged_sentence);
-      var parse_trees = chart.parse_trees(grammar.get_start_symbol());
+      var parse_trees = chart.parse_trees(grammar.get_start_symbol(), "item");
       expect(parse_trees.length).toEqual(1);
       expect(parse_trees[0]).toEqual('E(E(number(2())),plus(+()),E(number(3())))');
   
@@ -67,7 +67,7 @@ var Item = require('../lib/Item');
                          ['*', 'multiply'],
                          ['4', 'number']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol());
+      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "item");
       expect(parse_trees.length).toEqual(2);
       expect(parse_trees[0]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
       expect(parse_trees[1]).toEqual('E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))');
@@ -116,7 +116,7 @@ var Item = require('../lib/Item');
                          ['the', 'DET'],
                          ['telescope', 'N']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol());
+      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "item");
       
       expect(parse_trees.length).toEqual(2);
       expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
