@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Item = require('../lib/Item.js');
+var Item = require('../lib/EarleyItem.js');
 
 describe('Item', function() {
   var item;
@@ -40,11 +40,6 @@ describe('Item', function() {
   it('should add a child to the item', function () {
     item.add_child(c4);
     expect(item.children).toEqual([c1, c2, c3, c4]);
-  });
-  
-  it('should create a copy of an item', function () {
-    var copy = item.copy();
-    expect(item).toEqual(copy);
   });
   
   it('should check if an item is complete', function () {

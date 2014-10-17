@@ -21,7 +21,7 @@ var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
 var CYK_ChartParser = require('../lib/CYKParser');
-var Item = require('../lib/Item');
+var Item = require('../lib/EarleyItem');
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP

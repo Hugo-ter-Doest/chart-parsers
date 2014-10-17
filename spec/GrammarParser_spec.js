@@ -213,10 +213,10 @@ describe('GrammarParser', function() {
   
   it('should correctly parse a context-free grammar (that is not in CNF)', function () {
     var expected = {};
-    expected.production_rules = [{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 0}, 
+    expected.production_rules = [{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 1}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 1}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 1}, 
                                  {'lhs': 'E', 'rhs': ['number'], 'constraints': [], 'head': 0}];
     expected.nonterminals = {'E': true};
     expected.start_symbol = 'E';
@@ -243,7 +243,7 @@ describe('GrammarParser', function() {
   });
   
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqual({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 0});
+    expect(grammar.start_rule()).toEqual({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1});
   });
   
   it('should look up the start rule', function () {
@@ -251,10 +251,10 @@ describe('GrammarParser', function() {
   });
   
   it('should look up production rules with a given left-most daughter', function () {
-    expect(grammar.rules_with_leftmost_daughter('E')).toEqual([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 0},
-                                                               {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 0},
-                                                               {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 0},
-                                                               {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_leftmost_daughter('E')).toEqual([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1},
+                                                               {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 1},
+                                                               {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 1},
+                                                               {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 1}]);
     expect(grammar.rules_with_leftmost_daughter('number')).toEqual([{'lhs': 'E', 'rhs': ['number'], 'constraints': [], 'head': 0}]);
   });
   

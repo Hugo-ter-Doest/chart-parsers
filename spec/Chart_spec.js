@@ -19,7 +19,7 @@
 var typeOf = require('typeof');
 
 var Chart = require('../lib/Chart.js');
-var Item = require('../lib/Item.js');
+var Item = require('../lib/EarleyItem.js');
 
 describe('Chart', function() {
   var chart;
@@ -65,6 +65,6 @@ describe('Chart', function() {
   });
 
   it('should generate parse trees from the chart', function() {
-    expect(chart.parse_trees('S')).toEqual(["S(S(NP,VP),S(NP,VP),S(NP,VP))"]);
+    expect(chart.parse_trees('S', "earleyitem")).toEqual(["S(S(NP,VP),S(NP,VP),S(NP,VP))"]);
   });
 });

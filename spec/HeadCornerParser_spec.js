@@ -23,11 +23,10 @@ var LeftCornerParser = require('../lib/LeftCornerParser');
 var HeadCornerParser = require('../lib/HeadCornerParser');
 var EarleyParser = require('../lib/EarleyParser');
 
-[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
-//[HeadCornerParser].forEach(function(ChartParser) {
-  describe(ChartParser === LeftCornerParser ? 'LeftCornerParser' : 'EarleyParser', function() {
+[HeadCornerParser].forEach(function(ChartParser) {
+  describe('HeadCornerParser', function() {
     var grammar_text;
-  
+
   // E -> E plus E
   // E -> E minus E
   // E -> E divide E
@@ -55,10 +54,10 @@ var EarleyParser = require('../lib/EarleyParser');
                              ['+', 'plus'],
                              ['3', 'number']];
       var chart = parser.parse(tagged_sentence);
-      var parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
+      var parse_trees = chart.parse_trees(grammar.get_start_symbol(), "cyk_item");
       expect(parse_trees.length).toEqual(1);
       expect(parse_trees[0]).toEqual('E(E(number(2())),plus(+()),E(number(3())))');
-  
+
       // 2 + 3 * 4
       tagged_sentence = [['2', 'number'],
                          ['+', 'plus'],
@@ -66,13 +65,14 @@ var EarleyParser = require('../lib/EarleyParser');
                          ['*', 'multiply'],
                          ['4', 'number']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
+      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "cyk_item");
       expect(parse_trees.length).toEqual(2);
       expect(parse_trees[0]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
       expect(parse_trees[1]).toEqual('E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))');
+
     });
   
-  
+
   // Grammar (in ../data/test_grammar_for_CYK.txt)
   //S  -> NP VP
   //NP -> DET N
@@ -115,12 +115,12 @@ var EarleyParser = require('../lib/EarleyParser');
                          ['the', 'DET'],
                          ['telescope', 'N']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
+      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "cyk_item");
       
       expect(parse_trees.length).toEqual(2);
       expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
       expect(parse_trees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
     });
-  
+
   });
 });
