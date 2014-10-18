@@ -42,6 +42,7 @@ Methods of a grammar object are:
 * <code>get_rules_with_rhs(nt1, nt2)</code>: looks up all production rules of wich the right-hand-side consists of two nonterminals <code>nt1</code> and <code>nt2</code>; this is used by the CYK parser.
 * <code>is_leftcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is left-corner of <code>B</code>.
 * <code>is_headcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is head-corner of <code>B</code>.
+
 # Creating a chart parser
 If a grammar had been loaded a parser can be created by calling
 ```
