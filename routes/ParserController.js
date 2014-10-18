@@ -23,6 +23,7 @@ var GrammarParser = require('../lib/GrammarParser');
 var CYK_ChartParser = require('../lib/CYKParser');
 var EarleyChartParser = require('../lib/EarleyParser');
 var LeftCornerChartParser = require('../lib/LeftCornerParser');
+var HeadCornerChartParser = require('../lib/HeadCornerParser');
 var pos = require('pos');
 var grammar;
 
@@ -68,7 +69,12 @@ exports.parse_sentence = function(req, res) {
       parser = new EarleyChartParser(grammar);
     }
     else {
-      parser = new LeftCornerChartParser(grammar);
+      if (req.param("op_HeadCorner")) {
+        parser = new HeadCornerChartParser(grammar);
+      }
+      else {
+        parser = new LeftCornerChartParser(grammar);
+      }
     }
   }
 

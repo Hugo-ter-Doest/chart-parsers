@@ -67,8 +67,8 @@ var EarleyParser = require('../lib/EarleyParser');
       chart = parser.parse(tagged_sentence);
       parse_trees = chart.parse_trees(grammar.get_start_symbol(), "cyk_item");
       expect(parse_trees.length).toEqual(2);
-      expect(parse_trees[0]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
-      expect(parse_trees[1]).toEqual('E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))');
+      expect(parse_trees[1]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
+      expect(parse_trees[0]).toEqual('E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))');
 
     });
   
@@ -118,8 +118,8 @@ var EarleyParser = require('../lib/EarleyParser');
       parse_trees = chart.parse_trees(grammar.get_start_symbol(), "cyk_item");
       
       expect(parse_trees.length).toEqual(2);
-      expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
-      expect(parse_trees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
+      expect(parse_trees[1]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
+      expect(parse_trees[0]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
     });
 
   });
