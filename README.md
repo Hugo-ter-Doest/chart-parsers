@@ -1,37 +1,65 @@
 
 
-# Context-free Grammars
+# Introduction
+This is a library of chart parsers for natural language processing containing the following flavours of chart parsing:
+*Cocke Younger Kasama (CYK) Parser: an efficient purely bottom up chart parser for parsing with grammars in Chomsky Normal Form (CNF)
+* Earley Parser:  a basic chart parser based on Earley's algorithm for parsing with context-free grammars
+* Left-Corner Parser: a chart parser for parsing with top-down predictions based on the left-corner of production rules.
+* Head-Corner Parser: a chart parser for parsing with top-down predictions based on the head of production rules.
+All four parsers are created and called in the same way and return the same type of result, that is a chart with recognised items. In the next section it will be explained how grammars and parsers are used in general. After that each parser will be discussed in more detail.
+ 
+# Context-Free Grammars
 The grammar module reads context-free grammars from file, and offers some methods that are practical for parsing.
 
 The syntax of production rules is as follows (in EBNF):
 ```
 grammar =         { comment | production_rule }
-production_rule = nonterminal, [ white_space ], "->", [ white_space ], nonterminal_seq
+production_rule = nonterminal, [ white_space ], "->", [ white_space ], [nonterminal_seq] , ["*" nonterminal "*" nonterminal_seq ]
 nonterminal_seq = nonterminal, { whitespace, nonterminal }
 nonterminal =     non_whitespace_char, { non_whitespace_char }
 comment =         "//", { any_character }
 ```
-Terminals are not allowed in the grammar, because we assume these to recognised by a lexer and tagged with (lexical) categories. In the grammar these lexical categories can be seen as preterminals.
-
+Note the possibility of identifying one nonterminal as the head of the production rule. This information is used by the head-corner parser for predicting new partial parses.
+Terminals are not allowed in the grammar, because we assume these to be recognised by a lexer and tagged with (lexical) categories. In the grammar these lexical categories can be seen as preterminals.
+The grammar parsers also allows adding constraints to the production rules. This has been added for future extension of the parsers to unification-based parsing. Contraints may have two possible forms:
+```
+<nonterminal1 feature1 feature2> = atom
+<nonterminal2 feature3 feature3> = <nonterminal3 feature4>
+```
 
 #Usage
-A new grammar object is created as follows: 
+A new grammar object is created as follows. 
 ```
-var Grammar = require('./ContextFreeGrammar');
+var Grammar = require('.lib/GrammarParser');
 // Read a grammar from file
-var dummy = new Grammar(grammar_file_path, function(grammar) {
-  // do something with the grammar
-});
+var grammar = new GrammarParser.parse(grammar_text);
 ```
-The constructor is asynchronous: a callback must be provided that will be called when reading the grammar is finished.
-
 Methods of a grammar object are:
 * <code>is_nonterminal(nt)</code>: checks if symbol <code>nt</code> is a nonterminal
 * <code>rules_with_lhs(nt)</code>: returns all rules that have <code>nt</code> as left-hand-side
 * <code>start_rule()</code>: returns the first production rule of the grammar; this is used by the Earley parser
 * <code>get_start_symbol()</code>: returns the start symbol of the grammar; this is the left-hand-side nonterminal of the first production rule.
 * <code>get_rules_with_rhs(nt1, nt2)</code>: looks up all production rules of wich the right-hand-side consists of two nonterminals <code>nt1</code> and <code>nt2</code>; this is used by the CYK parser.
+* <code>is_leftcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is left-corner of <code>B</code>.
+* <code>is_headcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is head-corner of <code>B</code>.
+# Creating a chart parser
+If a grammar had been loaded a parser can be created by calling
+```
+var GrammarParser = require('.lib/GrammarParser');
+var EarleyParser = require('./lib/EarleyParser');
 
+var grammar = GrammarParser.parse(grammar_text);
+var parser = new Parser(grammar);
+var tagged_sentence = [['I', 'NP'],
+                       ['saw', 'V'],
+                       ['the', 'DET'],
+                       ['man', 'N'],
+                       ['with', 'P'],
+                       ['the', 'DET'],
+                       ['telescope', 'N']];
+var chart = parser.parse(tagged_sentence);
+```
+The structure and methods of the returned chart will be explained later.
 # CYK Chart Parser
 The CYK algorithm works with context-free grammars in Chomsky Normal Form (CNF). Production rules are of the form:
 ```
@@ -117,3 +145,9 @@ The resulting chart is an array of length N+1, and each entry contains items of 
 * children are the completed items that are used to recognise the current item
 
 Based on the children of the completed items the parse(s) of a sentence can be constructed.
+# Left-Corner Chart Parser
+
+# Head-Corner Chart Parser
+
+
+
