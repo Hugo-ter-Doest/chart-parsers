@@ -6,6 +6,7 @@ This is a library of chart parsers for natural language processing containing th
 * Earley Parser:  a basic chart parser based on Earley's algorithm for parsing with context-free grammars
 * Left-Corner Parser: a chart parser for parsing with top-down predictions based on the left-corner of production rules.
 * Head-Corner Parser: a chart parser for parsing with top-down predictions based on the head of production rules.
+
 All four parsers are created and called in the same way and return the same type of result, that is a chart with recognised items. In the next section it will be explained how grammars and parsers are used in general. After that each parser will be discussed in more detail.
  
 # Context-Free Grammars
