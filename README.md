@@ -70,7 +70,27 @@ A -> B C
 A -> a
 ```
 where A, B and C are nonterminals and a is a terminal.
-See http://en.wikipedia.org/wiki/CYK_algorithm for an explanation of the algorithm.
+
+The CYK algorithm is as follows:
+```
+let the input be a string S consisting of n characters: a1 ... an.
+let the grammar contain r nonterminal symbols R1 ... Rr.
+This grammar contains the subset Rs which is the set of start symbols.
+let P[n,n,r] be an array of booleans. Initialize all elements of P to false.
+for each i = 1 to n
+  for each unit production Rj -> ai
+    set P[i,1,j] = true
+for each i = 2 to n -- Length of span
+  for each j = 1 to n-i+1 -- Start of span
+    for each k = 1 to i-1 -- Partition of span
+      for each production RA -> RB RC
+        if P[j,k,B] and P[j+k,i-k,C] then set P[j,i,A] = true
+if any of P[1,n,x] is true (x is iterated over the set s, where s are all the indices for Rs) then
+  S is member of language
+else
+  S is not member of language
+```
+(source: Wikipedia, http://en.wikipedia.org/wiki/CYK_algorithm)
 
 Below is a simple toy grammar that is in CNF:
 ```
@@ -127,7 +147,40 @@ var chart = parser.parse(tagged_sentence);
 
 # Earley Chart Parser
 The Earley Chart Parser can parse all context-free languages and uses arbitrary context-free grammars.
-See http://en.wikipedia.org/wiki/Earley_parser for more information on the algorithm.
+
+The algorithm in pseudo code:
+```
+function EARLEY-PARSE(words, grammar)
+    ENQUEUE((γ → •S, 0), chart[0])
+    for i ← from 0 to LENGTH(words) do
+        for each state in chart[i] do
+            if INCOMPLETE?(state) then
+                if NEXT-CAT(state) is a nonterminal then
+                    PREDICTOR(state, i, grammar)         // non-terminal
+                else do
+                    SCANNER(state, i)                    // terminal
+            else do
+                COMPLETER(state, i)
+        end
+    end
+    return chart
+ 
+procedure PREDICTOR((A → α•B, i), j, grammar)
+    for each (B → γ) in GRAMMAR-RULES-FOR(B, grammar) do
+        ADD-TO-SET((B → •γ, j), chart[j])
+    end
+ 
+procedure SCANNER((A → α•B, i), j)
+    if B ⊂ PARTS-OF-SPEECH(word[j]) then
+        ADD-TO-SET((B → word[j], j), chart[j + 1])
+    end
+ 
+procedure COMPLETER((B → γ•, j), k)
+    for each (A → α•Bβ, i) in chart[j] do
+        ADD-TO-SET((A → αB•β, i), chart[k])
+    end
+```
+(Source: Wikipedia, http://en.wikipedia.org/wiki/Earley_parser)
 
 ## Usage
 The Earley parser takes a tagged sentence as argument. Example of a tagged sentence:
