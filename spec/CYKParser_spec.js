@@ -21,7 +21,7 @@ var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
 var CYK_ChartParser = require('../lib/CYKParser');
-var Item = require('../lib/EarleyItem');
+var Item = require('../lib/CYK_Item');
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP
@@ -76,9 +76,9 @@ var Item = require('../lib/EarleyItem');
       var N = tagged_sentence.length;
       var parser = new CYK_ChartParser(grammar);
       var chart = parser.parse(tagged_sentence);
-      var parses = chart.full_parse_items(grammar.get_start_symbol());
+      var parses = chart.full_parse_items(grammar.get_start_symbol(), "cyk_item");
       expect(parses.length).toEqual(2);
-      var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0, 7);
+      var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 0, 7);
       expect(parses[0].id, expected_item.id).toEqual(expected_item.id);
       expect(parses[1].id, expected_item.id).toEqual(expected_item.id);
     });

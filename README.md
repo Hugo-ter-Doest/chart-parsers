@@ -44,7 +44,7 @@ Methods of a grammar object are:
 * <code>is_headcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is head-corner of <code>B</code>.
 
 # Creating a chart parser
-If a grammar had been loaded a parser can be created by calling
+If a grammar had been loaded a parser can be created:
 ```
 var GrammarParser = require('.lib/GrammarParser');
 var EarleyParser = require('./lib/EarleyParser');
@@ -61,6 +61,7 @@ var tagged_sentence = [['I', 'NP'],
 var chart = parser.parse(tagged_sentence);
 ```
 The structure and methods of the returned chart will be explained later.
+
 # CYK Chart Parser
 The CYK algorithm works with context-free grammars in Chomsky Normal Form (CNF). Production rules are of the form:
 ```
