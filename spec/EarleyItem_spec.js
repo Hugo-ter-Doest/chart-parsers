@@ -38,7 +38,7 @@ describe('Item', function() {
   
   var c4 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 0, 0, 0);
   it('should add a child to the item', function () {
-    item.add_child(c4);
+    item.append_child(c4);
     expect(item.children).toEqual([c1, c2, c3, c4]);
   });
   
