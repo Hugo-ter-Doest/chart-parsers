@@ -11,6 +11,9 @@
     "body-parser": "*",
     "formidable": "*",
     "pos": "*",
-    "lodash" : "*"
+    "lodash" : "*",
+    "fs" : "*",
+    "log4js": "*",
+    "typeof": "*"
   }
 }

@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var assert = require('assert');
 var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
