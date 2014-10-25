@@ -51,12 +51,14 @@ function initialise(callback) {
   });
 }
 
+// Split sentence in words and punctuation
 function tokenize_sentence(sentence) {
   var tokenized = tokenizer.tokenize(sentence);
   console.log(tokenized);
   return(tokenized);
 }
 
+// Stem the words of the sentence (not used)
 function stem_sentence(sentence) {
   for (var i = 0; i < sentence.length; i++) {
     sentence[i] = natural.PorterStemmer.stem(sentence[i]);
@@ -65,8 +67,17 @@ function stem_sentence(sentence) {
   return(sentence);
 }
 
+// Tag the sentence using Wordnet
+// Wordnet 'knows' only a limited set of lexical categories:
+// n    NOUN
+// v    VERB
+// a    ADJECTIVE
+// s    ADJECTIVE SATELLITE
+// r    ADVERB 
+// If a word is not found in wordnet POS 'unknown' is assigned
 function tag_sentence(tokenized_sentence, callback) {
-  var tagged_sentence = [];
+  var tagged_sentence = new Array(tokenized_sentence.length);
+  var wordnet_results = {};
   var nr_tokens = tokenized_sentence.length;
 
   tokenized_sentence.forEach(function(token) {
@@ -79,9 +90,15 @@ function tag_sentence(tokenized_sentence, callback) {
             console.log("Lexical category of " + token + " is: " + result.pos);
           }
       });
-      tagged_sentence.push(tagged_word);
+      wordnet_results[token] = tagged_word;
       nr_tokens--;
       if (nr_tokens === 0) {
+        for (var i = 0; i < tokenized_sentence.length; i++) {
+          tagged_sentence[i] = wordnet_results[tokenized_sentence[i]];
+          if (tagged_sentence[i].length === 1) {
+            tagged_sentence[i].push('unknown');
+          }
+        }
         console.log(JSON.stringify(tagged_sentence));
         callback(tagged_sentence);
       }
