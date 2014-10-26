@@ -16,17 +16,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+
 var fs = require('fs');
 var natural = require('natural');
 var GrammarParser = require('../lib/GrammarParser');
+
+//var Parser = require('../lib/CYK_Parser');
+//var Parser = require('../lib/EarleyParser');
 var Parser = require('../lib/LeftCornerParser');
+//var Parser = require('../lib/HeadCornerParser');
 
 var sentences_file = '../data/sentences.txt';
-var grammar_file = '../data/Grammar using Brills tags.txt';
+var grammar_file = '../data/English grammar using Wordnet tags.txt';
 
+logger.setLevel('INFO');
 tokenizer = new natural.TreebankWordTokenizer();
 var wordnet = new natural.WordNet();
-var parser;
+//var parser;
 var sentences;
 
 
@@ -34,19 +42,19 @@ function initialise(callback) {
   // read sentences from file
   fs.readFile(sentences_file, 'utf8', function (error, sentences_text) {
     if (error) {
-      console.log(error);
+      logger.error(error);
     }
     sentences = sentences_text.split('\n');
     // read grammar from file
     fs.readFile(grammar_file, 'utf8', function (error, grammar_text) {
       if (error) {
-        console.log(error);
+        logger.error(error);
       }
       // parse the grammar
       var grammar = GrammarParser.parse(grammar_text);
       // create parser
-      parser = new Parser(grammar);
-      callback();
+      var parser = new Parser(grammar);
+      callback(parser);
     });
   });
 }
@@ -54,16 +62,17 @@ function initialise(callback) {
 // Split sentence in words and punctuation
 function tokenize_sentence(sentence) {
   var tokenized = tokenizer.tokenize(sentence);
-  console.log(tokenized);
+  logger.info("tokenize_sentence: " + tokenized);
   return(tokenized);
 }
 
-// Stem the words of the sentence (not used)
+// Stem the words of the sentence
+// Not used in the example, because Wordnet cannot recognise all stems
 function stem_sentence(sentence) {
   for (var i = 0; i < sentence.length; i++) {
     sentence[i] = natural.PorterStemmer.stem(sentence[i]);
   }
-  console.log("stem_sentence: " + sentence)
+  logger.info("stem_sentence: " + sentence)
   return(sentence);
 }
 
@@ -81,13 +90,13 @@ function tag_sentence(tokenized_sentence, callback) {
   var nr_tokens = tokenized_sentence.length;
 
   tokenized_sentence.forEach(function(token) {
-    console.log("tag_sentence: processing " + token);
+    logger.debug("tag_sentence: processing " + token);
     var tagged_word = [token];
     wordnet.lookup(token, function(results) {
       results.forEach(function(result) {
           if (tagged_word.lastIndexOf(result.pos) <= 0) {
             tagged_word.push(result.pos);
-            console.log("Lexical category of " + token + " is: " + result.pos);
+            logger.debug("Lexical category of " + token + " is: " + result.pos);
           }
       });
       wordnet_results[token] = tagged_word;
@@ -99,23 +108,22 @@ function tag_sentence(tokenized_sentence, callback) {
             tagged_sentence[i].push('unknown');
           }
         }
-        console.log(JSON.stringify(tagged_sentence));
+        logger.info("tag_sentence: " + JSON.stringify(tagged_sentence));
         callback(tagged_sentence);
       }
     });
   });
 }
 
-function parse_sentence(tagged_sentence) {
-  return(parser.parse(tagged_sentence));
-}
-
 (function main() {
-  initialise(function() {
-    sentences.forEach(function(sentence){
+  initialise(function(parser) {
+    sentences.forEach(function(sentence) {
       tag_sentence(tokenize_sentence(sentence), function(tagged_sentence) {
-        var chart = parse_sentence(tagged_sentence);
-        console.log(chart.parse_trees());
+        var chart = parser.parse(tagged_sentence);
+        logger.info("main: parse trees of \"" + sentence + "\":\n" + 
+                    // Head-Corner or CYK parser: pass cyk_item
+                    // Earley parser or Left-Corner parser: pass earleyitem
+                    chart.parse_trees(parser.grammar.get_start_symbol(), "earleyitem"));
       });
     });
   });
