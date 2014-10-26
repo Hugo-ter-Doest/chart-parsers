@@ -1,0 +1,9 @@
+possessive_pronoun
+mine
+yours
+his
+hers
+ours
+yours
+theirs
+its

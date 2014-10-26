@@ -1,0 +1,11 @@
+interrogative_pronoun
+hat
+which
+whom
+whose
+where
+when
+why
+how
+whether
+if

@@ -1,0 +1,14 @@
+personal_pronoun
+I
+me
+you
+he
+him
+she
+her
+it
+we
+us
+you
+they
+them

@@ -1,0 +1,10 @@
+reflexive_pronoun
+myself
+yourself
+himself
+herself
+itself
+plural
+ourselves
+yourselves
+themselves

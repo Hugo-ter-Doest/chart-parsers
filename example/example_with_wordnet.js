@@ -21,6 +21,7 @@ var logger = log4js.getLogger();
 
 var fs = require('fs');
 var natural = require('natural');
+var FunctionWordTagger = require('../lib/FunctionWordTagger');
 var GrammarParser = require('../lib/GrammarParser');
 
 //var Parser = require('../lib/CYK_Parser');
@@ -31,12 +32,12 @@ var Parser = require('../lib/LeftCornerParser');
 var sentences_file = '../data/sentences.txt';
 var grammar_file = '../data/English grammar using Wordnet tags.txt';
 
-logger.setLevel('INFO');
 tokenizer = new natural.TreebankWordTokenizer();
 var wordnet = new natural.WordNet();
 //var parser;
 var sentences;
 
+logger.setLevel('INFO');
 
 function initialise(callback) {
   // read sentences from file
@@ -54,7 +55,10 @@ function initialise(callback) {
       var grammar = GrammarParser.parse(grammar_text);
       // create parser
       var parser = new Parser(grammar);
-      callback(parser);
+      new FunctionWordTagger(function(fw_tagger) {
+        logger.debug("FW Tagger and Parser are ready");
+        callback(fw_tagger, parser);
+      });
     });
   });
 }
@@ -72,7 +76,7 @@ function stem_sentence(sentence) {
   for (var i = 0; i < sentence.length; i++) {
     sentence[i] = natural.PorterStemmer.stem(sentence[i]);
   }
-  logger.info("stem_sentence: " + sentence)
+  logger.info("stem_sentence: " + sentence);
   return(sentence);
 }
 
@@ -84,41 +88,54 @@ function stem_sentence(sentence) {
 // s    ADJECTIVE SATELLITE
 // r    ADVERB 
 // If a word is not found in wordnet POS 'unknown' is assigned
-function tag_sentence(tokenized_sentence, callback) {
-  var tagged_sentence = new Array(tokenized_sentence.length);
+function tag_sentence_wordnet(tagged_sentence, callback) {
   var wordnet_results = {};
-  var nr_tokens = tokenized_sentence.length;
+  var nr_tokens = tagged_sentence.length;
 
-  tokenized_sentence.forEach(function(token) {
-    logger.debug("tag_sentence: processing " + token);
-    var tagged_word = [token];
-    wordnet.lookup(token, function(results) {
-      results.forEach(function(result) {
+  tagged_sentence.forEach(function(tagged_word) {
+    if (tagged_word.length === 1) { // don't tag if it already has tag(s)
+      logger.debug("tag_sentence: processing " + tagged_word);
+      wordnet.lookup(tagged_word[0], function(results) {
+        results.forEach(function(result) {
           if (tagged_word.lastIndexOf(result.pos) <= 0) {
             tagged_word.push(result.pos);
-            logger.debug("Lexical category of " + token + " is: " + result.pos);
+            logger.debug("Lexical category of " + tagged_word[0] + " is: " + result.pos);
           }
-      });
-      wordnet_results[token] = tagged_word;
-      nr_tokens--;
-      if (nr_tokens === 0) {
-        for (var i = 0; i < tokenized_sentence.length; i++) {
-          tagged_sentence[i] = wordnet_results[tokenized_sentence[i]];
-          if (tagged_sentence[i].length === 1) {
-            tagged_sentence[i].push('unknown');
-          }
+        });
+  
+        nr_tokens--;
+        if (nr_tokens === 0) {
+          logger.info("tag_sentence: " + JSON.stringify(tagged_sentence));
+          callback(tagged_sentence);
         }
-        logger.info("tag_sentence: " + JSON.stringify(tagged_sentence));
-        callback(tagged_sentence);
-      }
-    });
+      });
+    }
   });
 }
 
+function tag_sentence_function_words(fw_tagger, tokenized_sentence) {
+  var tagged_sentence = [];
+  
+  logger.debug("Enter tag_sentence_function_words( " + fw_tagger + ", " + tokenized_sentence + ")");
+  tokenized_sentence.forEach(function(token) {
+    var tagged_word = [token];
+    var fw_tags = fw_tagger.tag_word(token);
+    logger.debug("tag_sentence_function_words: function word tags: " + fw_tags);
+    if (fw_tags) {
+      tagged_word = tagged_word.concat(fw_tags);
+    }
+    tagged_sentence.push(tagged_word);
+  });
+  logger.info("Exit tag_sentence_function_words: " + JSON.stringify(tagged_sentence));
+  return(tagged_sentence);
+}
+
 (function main() {
-  initialise(function(parser) {
+  initialise(function(fw_tagger, parser) {
     sentences.forEach(function(sentence) {
-      tag_sentence(tokenize_sentence(sentence), function(tagged_sentence) {
+      var tokenized_sentence = tokenize_sentence(sentence);
+      var tagged_sentence = tag_sentence_function_words(fw_tagger, tokenized_sentence);
+      tag_sentence_wordnet(tagged_sentence, function(tagged_sentence) {
         var chart = parser.parse(tagged_sentence);
         logger.info("main: parse trees of \"" + sentence + "\":\n" + 
                     // Head-Corner or CYK parser: pass cyk_item

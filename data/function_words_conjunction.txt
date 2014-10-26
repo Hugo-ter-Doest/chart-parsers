@@ -1,0 +1,15 @@
+conjunction
+and
+but
+for
+or
+nor
+yet
+so
+that,
+when
+while
+although
+because
+since
+unless
