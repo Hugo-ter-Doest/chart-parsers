@@ -1,5 +1,5 @@
 {
-  "name": "cyk_parser",
+  "name": "chart_parsers",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "body-parser": "*",
     "formidable": "*",
     "pos": "*",
-    "lodash" : "*",
+    "underscore" : "*",
     "fs" : "*",
     "log4js": "*",
     "typeof": "*"
