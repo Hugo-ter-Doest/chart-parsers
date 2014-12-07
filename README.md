@@ -210,8 +210,25 @@ S -> DET *N*
 ```
 ## Algorithm
 The parser uses the head-corners to make predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
-* CYK items are of the form <code>[A, i, j]</code> which means  
-* Goal items are of the form <code>[i, j, A]</code> which means
-* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means
+* CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
+* Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
+* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means: 
+** The right hand side of the production rule has been recognised from position i to j, and
+** The recognised part of the production can generate the sentence from position l to r.
+
+The algorithm makes use of a chart and an agenda. The algorithm itself is straighforward in that it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
+```
+function HEAD-CORNER-PARSE(sentence)
+  INITIALISE-CHART(sentence)
+  INITIALISE-AGENDA(sentence)
+  while agenda is not empty do
+    delete item current from agenda
+      if (current is not on chart) then
+        ADD-TO-CHART(current)
+        COMBINE-WITH-CHART(current)
+      end
+  end
+  return chart
+```
 
 ## Use
