@@ -212,16 +212,12 @@ Based on the children of the completed items the parse(s) of a sentence can be c
 # Head-Corner Chart Parser
 The algorithm of head corner parsing is based on the idea that the right-hand side of a production rule contains a head, a word or constituent that determines the syntactic type of the complete phrase. To make the algorithm work in each production rule the right hand-side must a symbol that is decorated as head, like this:
  ```
-S -> DET *N*
+NP -> DET *N*
 ```
+This means that N is head-corner of NP, or <code>NP >_hc N</code>. The parser uses these the head-corner relation to predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. The closure is written as <code>>_hc*</code>
 
-## Algorithm
-The parser uses these head-corners to predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
-* CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
-* Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
-* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> where the right hand side of the production rule has been recognised from position i to j, and the recognised part of the production can generate the sentence from position l to r.
-
-The algorithm makes use of a chart and an agenda. As long as items are available on the agenda, it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
+##Algorithm
+Head-corner parsing involves a complex administrative bookkeeping. It uses a chart and an agenda. As long as items are available on the agenda, it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
 ```
 function HEAD-CORNER-PARSE(sentence)
   chart = INITIALISE-CHART(sentence)
@@ -235,6 +231,11 @@ function HEAD-CORNER-PARSE(sentence)
   end
   return chart
 ```
+The following types of items are used:
+* CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
+* Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
+* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> where the right hand side of the production rule has been recognised from position i to j, and the recognised part of the production can generate the sentence from position l to r.
+
 Given a sentence a1, a2, .. , an, the following set is used to initialise the agenda; it adds goal items to the agenda for the start symbol.
 ```
 D_init_agenda = {[i, j, S]|0 <= i <= j <= n}
@@ -245,16 +246,34 @@ D_init_chart = {[A, i, i+1]| A -> a_i, 0 <= i <= n}
 ```
 These deduction rules are used for creating new items in the combine step:
 ```
-(1) D_HC = {[i, j, A], [X, i, j] |- [B -> α•X•β, i, j] | A >_hc B}
-(2) D_HC_epsilon = {[j, j, A] |- [B -> ••, j, j] | A >_hc B}
-(3) D_left_predict = {[l, r, A], [B -> αC•β•γ, k, r] |- [i, j, C] | A >_hc B, l <= i <= j <= k}
-(4) D_right_predict = {[l, r, A], [B -> α•β•Cγ, l, i] |- [j, k, C] | A >_hc B, i <= j <= k <= r}
+(1) D_HC = {[i, j, A], [X, i, j] |- [B -> α•X•β, i, j] | A >_hc* B}
+(2) D_HC_epsilon = {[j, j, A] |- [B -> ••, j, j] | A >_hc* B}
+(3) D_left_predict = {[l, r, A], [B -> αC•β•γ, k, r] |- [i, j, C] | A >_hc* B, l <= i <= j <= k}
+(4) D_right_predict = {[l, r, A], [B -> α•β•Cγ, l, i] |- [j, k, C] | A >_hc* B, i <= j <= k <= r}
 (5) D_pre_complete = {[A -> •β•, i, j] |- [A, i, j]}
-(6) D_left_complete = {[i, k, A], [X, i, j], [B -> αX•β•γ, j, k] |- [B -> α•Xβ•γ, i, k] | A >_hc B}
-(7) D_right_complete = {[i, k, A], [B -> α•β•Xγ, i, j], [X, j, k] |- [B -> α•βX•γ, i, k] | A >_hc B}
+(6) D_left_complete = {[i, k, A], [X, i, j], [B -> αX•β•γ, j, k] |- [B -> α•Xβ•γ, i, k] | A >_hc* B}
+(7) D_right_complete = {[i, k, A], [B -> α•β•Xγ, i, j], [X, j, k] |- [B -> α•βX•γ, i, k] | A >_hc* B}
 ```
-<code>>_hc</code> is the transitive reflexive closure of the head-corner relation.
 Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
 
+```
+var GrammarParser = require('GrammarParser');
+var Parser = require('HeadCornerParser');
+var tagged_sentence = [['I', 'NP'],
+                       ['saw', 'V'],
+                       ['the', 'DET'],
+                       ['man', 'N'],
+                       ['with', 'P'],
+                       ['the', 'DET'],
+                       ['telescope', 'N']];
+var grammar_text = "S -> NP *VP*\nNP -> DET *N*\nNP -> *NP* PP\nPP -> P *NP*\nVP -> *V* NP\nVP -> *VP* PP";
+
+// parse the grammar
+var grammar = GrammarParser.parse(grammar_text);
+// create parser
+var parser = new Parser(grammar);
+// parse the sentence
+var chart = parser.parse(tagged_sentence);
+```
