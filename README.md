@@ -204,6 +204,14 @@ Based on the children of the completed items the parse(s) of a sentence can be c
 # Left-Corner Chart Parser
 
 # Head-Corner Chart Parser
+The algorithm of head corner parsing is based on the idea that the right-hand side of a production rule contains a head, a word or constituent that determines the syntactic type of the complete phrase. To make the algorithm work in each production rule the right hand-side must a symbol that is decorated as head, like this:
+ ```
+S -> DET *N*
+```
+## Algorithm
+The parser uses the head-corners to make predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
+* CYK items are of the form <code>[A, i, j]</code> which means  
+* Goal items are of the form <code>[i, j, A]</code> which means
+* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means
 
-
-
+## Use
