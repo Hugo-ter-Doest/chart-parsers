@@ -208,27 +208,46 @@ The algorithm of head corner parsing is based on the idea that the right-hand si
  ```
 S -> DET *N*
 ```
+
 ## Algorithm
-The parser uses the head-corners to make predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
+The parser uses these head-corners to predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
 * CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
 * Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
 * Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means: 
 ** The right hand side of the production rule has been recognised from position i to j, and
 ** The recognised part of the production can generate the sentence from position l to r.
 
-The algorithm makes use of a chart and an agenda. The algorithm itself is straighforward in that it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
+The algorithm makes use of a chart and an agenda. As long as items are available on the agenda, it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
 ```
 function HEAD-CORNER-PARSE(sentence)
-  INITIALISE-CHART(sentence)
-  INITIALISE-AGENDA(sentence)
-  while agenda is not empty do
-    delete item current from agenda
-      if (current is not on chart) then
-        ADD-TO-CHART(current)
-        COMBINE-WITH-CHART(current)
+  chart = INITIALISE-CHART(sentence)
+  agenda = INITIALISE-AGENDA(sentence)
+  while not IS-EMPTY(agenda) do
+    current = GET-ITEM-FROM-AGENDA(agenda)
+      if not IS-ON-CHART(current) then
+        ADD-TO-CHART(chart, current)
+        COMBINE-WITH-CHART(chart, current)
       end
   end
   return chart
 ```
+Given a sentence a1, a2, .. , an, the following set is used to initialise the agenda; it adds goal items to the agenda for the start symbol.
+```
+D_init_agenda = {[i, j, S]|0 <= i <= j <= n}
+```
+This set is used to initialise the chart; for each word of the sentence appropriate CYK items are added to the chart.
+```
+D_init_chart = {[A, i, i+1]| A -> a_i, 0 <= i <= n}
+```
+These deduction rules are used for creating new items in the combine step:
+```
+D_HC = {}
+D_HC_epsilon = {}
+D_left_predict = {}
+D_right_predict = {}
+D_pre_complete = {}
+D_left_complete = {}
+D_right_complete = {}
+```
 
-## Use
+## Usage
