@@ -170,35 +170,48 @@ function EARLEY-PARSE(words, grammar)
         end
     end
     return chart
+end
  
 procedure PREDICTOR((A → α•B, i), j, grammar)
     for each (B → γ) in GRAMMAR-RULES-FOR(B, grammar) do
         ADD-TO-SET((B → •γ, j), chart[j])
     end
+end
  
 procedure SCANNER((A → α•B, i), j)
     if B ⊂ PARTS-OF-SPEECH(word[j]) then
         ADD-TO-SET((B → word[j], j), chart[j + 1])
     end
+end
  
 procedure COMPLETER((B → γ•, j), k)
     for each (A → α•Bβ, i) in chart[j] do
         ADD-TO-SET((A → αB•β, i), chart[k])
     end
+end
 ```
 (Source: Wikipedia, http://en.wikipedia.org/wiki/Earley_parser)
 
 ## Usage
-The Earley parser takes a tagged sentence as argument. Example of a tagged sentence:
+The Earley parser takes a tagged sentence as argument.
 ```
-[['I', 'Pronoun'], ['saw', 'Verb'], ['the', 'Article'], ['man', 'Noun']]
-```
+var GrammarParser = require('GrammarParser');
+var Parser = require('EarleyParser');
+var tagged_sentence = [['I', 'NP'],
+                       ['saw', 'V'],
+                       ['the', 'DET'],
+                       ['man', 'N'],
+                       ['with', 'P'],
+                       ['the', 'DET'],
+                       ['telescope', 'N']];
+var grammar_text = "S -> NP VP\nNP -> DET N\nNP -> NP PP\nPP -> P NP\nVP -> V NP\nVP -> VP PP";
 
-And here is how to parse a sentence:
-```
-var EarleyChartParser = require('./EarleyChartParser');
-var pos = require('pos');
-var chart = EarleyChartParser.earley_parse(taggedWords);
+// parse the grammar
+var grammar = GrammarParser.parse(grammar_text);
+// create parser
+var parser = new Parser(grammar);
+// parse the sentence
+var chart = parser.parse(tagged_sentence);
 ```
 The resulting chart is an array of length N+1, and each entry contains items of the form [rule, dot, from, children] where:
 * rule is the production rule; it has two members: lhs for the left-hand-side of the rule, and rhs for the right-hand-side of the rule.
@@ -207,7 +220,32 @@ The resulting chart is an array of length N+1, and each entry contains items of 
 * children are the completed items that are used to recognise the current item
 
 Based on the children of the completed items the parse(s) of a sentence can be constructed.
+
 # Left-Corner Chart Parser
+##Algorithm
+The left-corner algorithm is parses the sentence from left to right just like the Earley algorithm. The only difference is in the prediction of new items. The left-corner relation is used to optimise predictions top down. Therefore, the left-corner algorithm is called an bottom-up with top-down filtering.
+The left-corner relation is based on the left-corner of production rules. Consider the following production rule
+```
+S -> NP VP
+```
+NP is called the left-corner of S, written as <code> S >_lc NP</code>. The transitive reflexive closure, written as <code>>_lc*</code>,  is used for filtering.
+```
+function LEFT-CORNER-PARSE(sentence)
+  chart = INITIALISE-CHART(sentence)
+  agenda = INITIALISE-AGENDA(sentence)
+  for i = 0 to n do
+    for items [A → α•β, i] do
+      LC-PREDICTOR(item, chart, grammar)
+      COMPLETER(item, chart, grammar)
+    end
+  end
+  return chart
+end
+```
+
+
+##Usage
+Is identical to the Earley parser.
 
 # Head-Corner Chart Parser
 The algorithm of head corner parsing is based on the idea that the right-hand side of a production rule contains a head, a word or constituent that determines the syntactic type of the complete phrase. To make the algorithm work in each production rule the right hand-side must a symbol that is decorated as head, like this:
@@ -230,6 +268,7 @@ function HEAD-CORNER-PARSE(sentence)
       end
   end
   return chart
+end
 ```
 The following types of items are used:
 * CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
@@ -257,7 +296,7 @@ These deduction rules are used for creating new items in the combine step:
 Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
-
+The head-corner parser is created and applied as follows:
 ```
 var GrammarParser = require('GrammarParser');
 var Parser = require('HeadCornerParser');
