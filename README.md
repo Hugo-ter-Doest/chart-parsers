@@ -80,15 +80,21 @@ let P[n,n,r] be an array of booleans. Initialize all elements of P to false.
 for each i = 1 to n
   for each unit production Rj -> ai
     set P[i,1,j] = true
+  end
+end
 for each i = 2 to n -- Length of span
   for each j = 1 to n-i+1 -- Start of span
     for each k = 1 to i-1 -- Partition of span
       for each production RA -> RB RC
         if P[j,k,B] and P[j+k,i-k,C] then set P[j,i,A] = true
+      end
+    end
+end
 if any of P[1,n,x] is true (x is iterated over the set s, where s are all the indices for Rs) then
   S is member of language
 else
   S is not member of language
+end
 ```
 (source: Wikipedia, http://en.wikipedia.org/wiki/CYK_algorithm)
 
@@ -213,10 +219,7 @@ S -> DET *N*
 The parser uses these head-corners to predict new partial parses. In fact, it uses the reflexive transitive closure of the head-corner relation to create new goal items and head-corner items. Head-corner parsing involves a complex administrative bookkeeping. The following types of items are used:
 * CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
 * Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
-* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means: 
-
-** The right hand side of the production rule has been recognised from position i to j, and
-** The recognised part of the production can generate the sentence from position l to r.
+* Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> where the right hand side of the production rule has been recognised from position i to j, and the recognised part of the production can generate the sentence from position l to r.
 
 The algorithm makes use of a chart and an agenda. As long as items are available on the agenda, it takes an item from the agenda and tries to combine it with items on the chart. New items are added to the agenda. Algorithm in pseudo-code:
 ```
@@ -236,19 +239,22 @@ Given a sentence a1, a2, .. , an, the following set is used to initialise the ag
 ```
 D_init_agenda = {[i, j, S]|0 <= i <= j <= n}
 ```
-This set is used to initialise the chart; for each word of the sentence appropriate CYK items are added to the chart.
+The following set is used to initialise the chart; for each word of the sentence appropriate CYK items are added to the chart.
 ```
 D_init_chart = {[A, i, i+1]| A -> a_i, 0 <= i <= n}
 ```
 These deduction rules are used for creating new items in the combine step:
 ```
-D_HC = {}
-D_HC_epsilon = {}
-D_left_predict = {}
-D_right_predict = {}
-D_pre_complete = {}
-D_left_complete = {}
-D_right_complete = {}
+(1) D_HC = {[i, j, A], [X, i, j] |- [B -> α•X•β, i, j] | A >_hc B}
+(2) D_HC_epsilon = {[j, j, A] |- [B -> ••, j, j] | A >_hc B}
+(3) D_left_predict = {[l, r, A], [B -> αC•β•γ, k, r] |- [i, j, C] | A >_hc B, l <= i <= j <= k}
+(4) D_right_predict = {[l, r, A], [B -> α•β•Cγ, l, i] |- [j, k, C] | A >_hc B, i <= j <= k <= r}
+(5) D_pre_complete = {[A -> •β•, i, j] |- [A, i, j]}
+(6) D_left_complete = {[i, k, A], [X, i, j], [B -> αX•β•γ, j, k] |- [B -> α•Xβ•γ, i, k] | A >_hc B}
+(7) D_right_complete = {[i, k, A], [B -> α•β•Xγ, i, j], [X, j, k] |- [B -> α•βX•γ, i, k] | A >_hc B}
 ```
+<code>>_hc</code> is the transitive reflexive closure of the head-corner relation.
+Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
+
