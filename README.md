@@ -214,6 +214,7 @@ The parser uses these head-corners to predict new partial parses. In fact, it us
 * CYK items are of the form <code>[A, i, j]</code> which means that nonterminal A can produce the sentence from position i to position j.
 * Goal items are of the form <code>[l, r, A]</code> which means that the nonterminal is expected to be recognised somewhere between position l and r.
 * Head-corner items are of the form <code>[S -> NP VP, i, j, l, r] </code> which means: 
+
 ** The right hand side of the production rule has been recognised from position i to j, and
 ** The recognised part of the production can generate the sentence from position l to r.
 
