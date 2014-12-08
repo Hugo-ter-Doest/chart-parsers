@@ -51,42 +51,6 @@ The grammar parsers also allows adding constraints to the production rules. This
 <nonterminal1 feature1 feature2> = atom
 <nonterminal2 feature3 feature3> = <nonterminal3 feature4>
 ```
-
-#Usage
-A new grammar object is created as follows. 
-```
-var Grammar = require('.lib/GrammarParser');
-// Read a grammar from file
-var grammar = new GrammarParser.parse(grammar_text);
-```
-Methods of a grammar object are:
-* <code>is_nonterminal(nt)</code>: checks if symbol <code>nt</code> is a nonterminal
-* <code>rules_with_lhs(nt)</code>: returns all rules that have <code>nt</code> as left-hand-side
-* <code>start_rule()</code>: returns the first production rule of the grammar; this is used by the Earley parser
-* <code>get_start_symbol()</code>: returns the start symbol of the grammar; this is the left-hand-side nonterminal of the first production rule.
-* <code>get_rules_with_rhs(nt1, nt2)</code>: looks up all production rules of wich the right-hand-side consists of two nonterminals <code>nt1</code> and <code>nt2</code>; this is used by the CYK parser.
-* <code>is_leftcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is left-corner of <code>B</code>.
-* <code>is_headcorner_of(A, B)</code> where <code>A</code> and <code>B</code> are nonterminals: returns true if <code>A</code> is head-corner of <code>B</code>.
-
-# Creating a chart parser
-If a grammar had been loaded a parser can be created:
-```
-var GrammarParser = require('.lib/GrammarParser');
-var EarleyParser = require('./lib/EarleyParser');
-
-var grammar = GrammarParser.parse(grammar_text);
-var parser = new Parser(grammar);
-var tagged_sentence = [['I', 'NP'],
-                       ['saw', 'V'],
-                       ['the', 'DET'],
-                       ['man', 'N'],
-                       ['with', 'P'],
-                       ['the', 'DET'],
-                       ['telescope', 'N']];
-var chart = parser.parse(tagged_sentence);
-```
-The structure and methods of the returned chart will be explained later.
-
 # CYK Chart Parser
 The CYK algorithm works with context-free grammars in Chomsky Normal Form (CNF). Production rules are of the form:
 ```
