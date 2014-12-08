@@ -1,5 +1,4 @@
 
-
 # Introduction
 This is a library of chart parsers for natural language processing containing the following flavours of chart parsing:
 * Cocke Younger Kasama (CYK) Parser: an efficient purely bottom up chart parser for parsing with grammars in Chomsky Normal Form (CNF)
@@ -8,7 +7,32 @@ This is a library of chart parsers for natural language processing containing th
 * Head-Corner Parser: a chart parser for parsing with top-down predictions based on the head of production rules.
 
 All four parsers are created and called in the same way and return the same type of result, that is a chart with recognised items. In the next section it will be explained how grammars and parsers are used in general. After that each parser will be discussed in more detail.
- 
+
+#Usage
+All four parser are used in the same way: load a grammar, create a parser and parse sentences.
+```
+var GrammarParser = require('GrammarParser');
+//var Parser = require('../lib/CYK_Parser');
+//var Parser = require('../lib/EarleyParser');
+var Parser = require('../lib/LeftCornerParser');
+//var Parser = require('../lib/HeadCornerParser');
+var tagged_sentence = [['I', 'NP'],
+                       ['saw', 'V'],
+                       ['the', 'DET'],
+                       ['man', 'N'],
+                       ['with', 'P'],
+                       ['the', 'DET'],
+                       ['telescope', 'N']];
+var grammar_text = "S -> NP *VP*\nNP -> DET *N*\nNP -> *NP* PP\nPP -> P *NP*\nVP -> *V* NP\nVP -> *VP* PP";
+
+// parse the grammar
+var grammar = GrammarParser.parse(grammar_text);
+// create parser
+var parser = new Parser(grammar);
+// parse the sentence
+var chart = parser.parse(tagged_sentence);
+```
+
 # Context-Free Grammars
 The grammar module reads context-free grammars from file, and offers some methods that are practical for parsing.
 
@@ -243,10 +267,6 @@ function LEFT-CORNER-PARSE(sentence)
 end
 ```
 
-
-##Usage
-Is identical to the Earley parser.
-
 # Head-Corner Chart Parser
 The algorithm of head corner parsing is based on the idea that the right-hand side of a production rule contains a head, a word or constituent that determines the syntactic type of the complete phrase. To make the algorithm work in each production rule the right hand-side must a symbol that is decorated as head, like this:
  ```
@@ -296,23 +316,12 @@ These deduction rules are used for creating new items in the combine step:
 Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
-The head-corner parser is created and applied as follows:
+The head-corner parser is created and applied as usual; there is however one difference: the production rules of tge grammar must be decorated with heads as follows:
 ```
-var GrammarParser = require('GrammarParser');
-var Parser = require('HeadCornerParser');
-var tagged_sentence = [['I', 'NP'],
-                       ['saw', 'V'],
-                       ['the', 'DET'],
-                       ['man', 'N'],
-                       ['with', 'P'],
-                       ['the', 'DET'],
-                       ['telescope', 'N']];
-var grammar_text = "S -> NP *VP*\nNP -> DET *N*\nNP -> *NP* PP\nPP -> P *NP*\nVP -> *V* NP\nVP -> *VP* PP";
-
-// parse the grammar
-var grammar = GrammarParser.parse(grammar_text);
-// create parser
-var parser = new Parser(grammar);
-// parse the sentence
-var chart = parser.parse(tagged_sentence);
+S -> NP *VP*
+NP -> DET *N*
+NP -> *NP* PP
+PP -> P *NP*
+VP -> *V* NP
+VP -> *VP* PP
 ```
