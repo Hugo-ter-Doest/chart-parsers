@@ -219,7 +219,7 @@ end
 ```
 The deduction rules that is applied by LC-PREDICTOR is:
 ```
-
+D_lc = {[X → γ•, k, j], [A → α.Cβ,i,k] |- [B → X.δ, k, j] | B → Xδ, C >_lc* B}
 ```
 
 # Head-Corner Chart Parser
