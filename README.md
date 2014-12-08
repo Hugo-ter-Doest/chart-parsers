@@ -280,7 +280,7 @@ These deduction rules are used for creating new items in the combine step:
 Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
-The head-corner parser is created and applied as usual; there is however one difference: the production rules of tge grammar must be decorated with heads as follows:
+The head-corner parser is created and applied as usual; there is however one difference: the production rules of the grammar must be decorated with heads as follows:
 ```
 S -> NP *VP*
 NP -> DET *N*
