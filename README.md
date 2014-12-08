@@ -136,9 +136,6 @@ var tagged_sentence = [['I', 'NP'],
 var chart = parser.parse(tagged_sentence);
 ```
 
-## Developing
-* Chomsky Normal Form allows rules of the form A -> *empty* as well. Such rules cannot be loaded and I don't know if the parser can handle these.
-
 # Earley Chart Parser
 The Earley Chart Parser can parse all context-free languages and uses arbitrary context-free grammars.
 
