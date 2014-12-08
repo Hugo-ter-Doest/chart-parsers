@@ -26,6 +26,14 @@ var parser = new Parser(grammar);
 // parse the sentence
 var chart = parser.parse(tagged_sentence);
 ```
+The resulting chart is an array of length N+1, and each entry contains items of the form [rule, dot, from, children] where:
+* rule is the production rule; it has two members: lhs for the left-hand-side of the rule, and rhs for the right-hand-side of the rule.
+* dot is the position in the right hand side of the rule up to which it has been recognised. 
+* from is the origin position pointing at the position in the sentence at which recognition of this rule began.
+* children are the completed items that are used to recognise the current item
+
+Based on the children of the completed items the parse(s) of a sentence can be constructed.
+
 
 # Context-Free Grammars
 The grammar module reads context-free grammars from file, and offers some methods that are practical for parsing.
@@ -171,30 +179,6 @@ procedure COMPLETER((B → γ•, j), k)
 end
 ```
 (Adapted from: Wikipedia, http://en.wikipedia.org/wiki/Earley_parser)
-
-## Usage
-The Earley parser takes a tagged sentence as argument.
-```
-var GrammarParser = require('GrammarParser');
-var Parser = require('EarleyParser');
-var tagged_sentence = [['I', 'NP'], ['saw', 'V'], ['the', 'DET'], ['man', 'N'],
-                       ['with', 'P'], ['the', 'DET'], ['telescope', 'N']];
-var grammar_text = "S -> NP VP\nNP -> DET N\nNP -> NP PP\nPP -> P NP\nVP -> V NP\nVP -> VP PP";
-
-// parse the grammar
-var grammar = GrammarParser.parse(grammar_text);
-// create parser
-var parser = new Parser(grammar);
-// parse the sentence
-var chart = parser.parse(tagged_sentence);
-```
-The resulting chart is an array of length N+1, and each entry contains items of the form [rule, dot, from, children] where:
-* rule is the production rule; it has two members: lhs for the left-hand-side of the rule, and rhs for the right-hand-side of the rule.
-* dot is the position in the right hand side of the rule up to which it has been recognised. 
-* from is the origin position pointing at the position in the sentence at which recognition of this rule began.
-* children are the completed items that are used to recognise the current item
-
-Based on the children of the completed items the parse(s) of a sentence can be constructed.
 
 # Left-Corner Chart Parser
 ##Algorithm
