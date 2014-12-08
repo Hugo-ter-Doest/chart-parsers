@@ -181,7 +181,6 @@ end
 (Adapted from: Wikipedia, http://en.wikipedia.org/wiki/Earley_parser)
 
 # Left-Corner Chart Parser
-##Algorithm
 The left-corner algorithm is parses the sentence from left to right just like the Earley algorithm. The only difference is in the prediction of new items. The left-corner relation is used to optimise predictions top down. Therefore, the left-corner algorithm is called an bottom-up with top-down filtering.
 The left-corner relation is based on the left-corner of production rules. Consider the following production rule
 ```
