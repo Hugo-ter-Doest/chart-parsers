@@ -21,7 +21,7 @@ var logger = log4js.getLogger();
 
 var fs = require('fs');
 var natural = require('natural');
-var FunctionWordTagger = require('../lib/FunctionWordTagger');
+var FunctionWordTagger = require('function-word-tagger');
 var GrammarParser = require('../lib/GrammarParser');
 
 //var Parser = require('../lib/CYK_Parser');
