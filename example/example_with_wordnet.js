@@ -21,7 +21,8 @@ var logger = log4js.getLogger();
 
 var fs = require('fs');
 var natural = require('natural');
-var FunctionWordTagger = require('function-word-tagger');
+var Tagger = require('simple-pos-tagger');
+
 var GrammarParser = require('../lib/GrammarParser');
 
 //var Parser = require('../lib/CYK_Parser');
@@ -30,6 +31,7 @@ var Parser = require('../lib/LeftCornerParser');
 //var Parser = require('../lib/HeadCornerParser');
 
 var sentences_file = '../data/sentences.txt';
+var tagger_config_file = '/home/hugo/Workspace/chart_parsers/node_modules/simple-pos-tagger/data/English/lexicon_files.json';
 var grammar_file = '../data/English grammar using Wordnet tags.txt';
 
 tokenizer = new natural.TreebankWordTokenizer();
@@ -55,9 +57,9 @@ function initialise(callback) {
       var grammar = GrammarParser.parse(grammar_text);
       // create parser
       var parser = new Parser(grammar);
-      new FunctionWordTagger(function(fw_tagger) {
-        logger.debug("FW Tagger and Parser are ready");
-        callback(fw_tagger, parser);
+      new Tagger(tagger_config_file, function(tagger) {
+        logger.debug("POS tagger and parser are ready");
+        callback(tagger, parser);
       });
     });
   });

@@ -1,6 +1,0 @@
-demonstrative_pronoun
-this
-that
-plural
-these
-those

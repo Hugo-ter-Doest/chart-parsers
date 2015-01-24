@@ -1,5 +1,0 @@
-particle
-no
-not
-nor
-as

@@ -1,20 +1,15 @@
 {
-  "name": "chart_parsers",
-  "version": "0.0.1",
+  "name": "chart-parsers",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "./example/example_with_wordnet.js"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "body-parser": "*",
-    "formidable": "*",
-    "pos": "*",
     "underscore" : "*",
     "fs" : "*",
     "log4js": "*",
     "typeof": "*",
-    "function-word-tagger": "*"
+    "simple-pos-tagger": "*"
   }
 }

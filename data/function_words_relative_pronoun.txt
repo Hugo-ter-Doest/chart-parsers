@@ -1,6 +1,0 @@
-relative_pronoun
-who
-whom
-whose
-which
-that
