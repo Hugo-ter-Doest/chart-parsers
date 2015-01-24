@@ -1,6 +1,16 @@
 {
   "name": "chart-parsers",
-  "version": "0.0.6",
+  "version": "0.0.7",
+  "author" : {
+    "name" : "Hugo W.L. ter Doest",
+    "email" : "hwl.ter.doest@gmail.com"
+  },
+  "keywords" : [ "natural language processing", "parsing", "chart parsing", 
+                 "chart parser", "parser", "computer linguistics", 
+                 "language technology" ],
+  "licenses" : {
+    "type" : "gpl30"
+  },
   "dependencies": {
     "underscore" : "*",
     "fs" : "*",
