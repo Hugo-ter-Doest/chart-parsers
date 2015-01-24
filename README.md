@@ -1,6 +1,7 @@
-# Introduction
+#Introduction
 This is a library of chart parsers for natural language processing containing the following flavours of chart parsing:
 
+#Supported algorithms
 * Cocke Younger Kasama (CYK) Parser: an efficient purely bottom up chart parser for parsing with grammars in Chomsky Normal Form (CNF)
 * Earley Parser:  a basic chart parser based on Earley's algorithm for parsing with context-free grammars
 * Left-Corner Parser: a chart parser for parsing with top-down predictions based on the left-corner of production rules.
