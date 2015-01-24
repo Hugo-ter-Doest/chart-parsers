@@ -1,11 +1,18 @@
 # Introduction
 This is a library of chart parsers for natural language processing containing the following flavours of chart parsing:
+
 * Cocke Younger Kasama (CYK) Parser: an efficient purely bottom up chart parser for parsing with grammars in Chomsky Normal Form (CNF)
 * Earley Parser:  a basic chart parser based on Earley's algorithm for parsing with context-free grammars
 * Left-Corner Parser: a chart parser for parsing with top-down predictions based on the left-corner of production rules.
 * Head-Corner Parser: a chart parser for parsing with top-down predictions based on the head of production rules.
 
 All four parsers are created and called in the same way and return the same type of result, that is a chart with recognised items. In the next section it will be explained how grammars and parsers are used in general. After that each parser will be discussed in more detail.
+
+#Installation
+
+This module can be installed using npm as follows:
+
+npm install chart-parsers
 
 #Usage
 All four parser are used in the same way: load a grammar, create a parser and parse sentences.
