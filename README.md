@@ -1,4 +1,3 @@
-#Chart Parsers for Natural Language Processing
 This is a library of chart parsers for natural language processing. 
 
 #Supported algorithms
