@@ -1,9 +1,13 @@
 {
   "name": "chart-parsers",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author" : {
     "name" : "Hugo W.L. ter Doest",
     "email" : "hwl.ter.doest@gmail.com"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/Hugo-ter-Doest/chart-parsers.git"
   },
   "keywords" : [ "natural language processing", "parsing", "chart parsing", 
                  "chart parser", "parser", "computer linguistics", 
@@ -17,6 +21,7 @@
     "log4js": "*",
     "typeof": "*",
     "simple-pos-tagger": "*",
-    "natural": "*"
+    "natural": "*",
+    "chart-parsers": "*"
   }
 }
