@@ -16,10 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-exports.GrammarParser = require('./GrammarParser');
-exports.Chart = require('./Chart');
+exports.GrammarParser = require('./lib/GrammarParser');
+exports.Chart = require('./lib/Chart');
 
-exports.ChartParser = require('./ChartParser');
-exports.EarleyParser = require('./EarleyParser');
-exports.LeftCornerParser = require('./LeftCornerParser');
-exports.HeadCornerParser = require('./HeadCornerParser');
+exports.ChartParser = require('./lib/ChartParser');
+exports.EarleyParser = require('./lib/EarleyParser');
+exports.LeftCornerParser = require('./lib/LeftCornerParser');
+exports.HeadCornerParser = require('./lib/HeadCornerParser');
