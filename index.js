@@ -16,10 +16,32 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-exports.GrammarParser = require('./lib/GrammarParser');
-exports.Chart = require('./lib/Chart');
+module.exports.GrammarParser = require('./lib/GrammarParser');
+module.exports.Chart = require('./lib/Chart');
 
-exports.ChartParser = require('./lib/ChartParser');
-exports.EarleyParser = require('./lib/EarleyParser');
-exports.LeftCornerParser = require('./lib/LeftCornerParser');
-exports.HeadCornerParser = require('./lib/HeadCornerParser');
+CYKParser = require('./lib/CYKParser');
+EarleyParser = require('./lib/EarleyParser');
+LeftCornerParser = require('./lib/LeftCornerParser');
+HeadCornerParser = require('./lib/HeadCornerParser');
+
+function Parser(type, grammar) {
+  switch (type) {
+    case 'CYK': {
+      return(new CYKParser(grammar));
+    }
+    case 'Earley': {
+      return(new EarleyParser(grammar));
+    }
+    case 'LeftCorner': {
+      return(new LeftCornerParser(grammar));
+    }
+    case 'HeadCorner': {
+      return(new HeadCornerParser(grammar));
+    }
+    default: {
+      return(new LeftCornerParser(grammar));
+    }
+  } 
+}
+
+module.exports.Parser = Parser;
