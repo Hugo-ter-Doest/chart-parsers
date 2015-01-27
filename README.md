@@ -18,19 +18,18 @@ npm install chart-parsers
 #Usage
 All four parser are used in the same way: load a grammar, create a parser and parse sentences.
 ```
-var GrammarParser = require('GrammarParser');
-//var Parser = require('../lib/CYK_Parser');
-//var Parser = require('../lib/EarleyParser');
-var Parser = require('../lib/LeftCornerParser');
-//var Parser = require('../lib/HeadCornerParser');
+var chart_parsers = require('chart-parsers');
+var GrammarParser = chart_parsers.GrammarParser;
+var Parser = chart_parsers.Parser;
+
 var tagged_sentence = [['I', 'NP'], ['saw', 'V'], ['the', 'DET'], ['man', 'N'], 
                        ['with', 'P'], ['the', 'DET'], ['telescope', 'N']];
 var grammar_text = "S -> NP *VP*\nNP -> DET *N*\nNP -> *NP* PP\nPP -> P *NP*\nVP -> *V* NP\nVP -> *VP* PP";
 
-// parse the grammar
+// Parse the grammar
 var grammar = GrammarParser.parse(grammar_text);
-// create parser
-var parser = new Parser(grammar);
+// Create a parser; other parsing algorithms are 'Earley', 'LeftCorner', 'HeadCorner'
+var parser = new Parser('CYK', grammar);
 // parse the sentence
 var chart = parser.parse(tagged_sentence);
 ```
