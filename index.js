@@ -31,7 +31,11 @@ function ParserFactory() {}
 // Our default parserClass is EarleyParser
 ParserFactory.prototype.parserClass = EarleyParser;
 
-// Our Factory method for creating new parserinstances
+ParserFactory.prototype.setGrammar = function(grammar_text) {
+  this.grammar = GrammarParser.parse(grammar_text); 
+};
+
+// Our Factory method for creating new parser instances
 ParserFactory.prototype.createParser = function(options) {
 
    switch (options.type) {
@@ -49,9 +53,11 @@ ParserFactory.prototype.createParser = function(options) {
     }
     // defaults to EarleyParser
   } 
-  var grammar = GrammarParser.parse(options.grammar_text);
+  if (options.grammar_text) {
+    this.grammar = GrammarParser.parse(options.grammar_text);
+  }
 
-  return new this.parserClass(grammar);
+  return new this.parserClass(this.grammar);
 };
 
 module.exports = ParserFactory;
