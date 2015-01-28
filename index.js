@@ -16,32 +16,41 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-module.exports.GrammarParser = require('./lib/GrammarParser');
-module.exports.Chart = require('./lib/Chart');
+//module.exports.Chart = require('./lib/Chart');
 
 CYKParser = require('./lib/CYKParser');
 EarleyParser = require('./lib/EarleyParser');
 LeftCornerParser = require('./lib/LeftCornerParser');
 HeadCornerParser = require('./lib/HeadCornerParser');
 
-function Parser(type, grammar) {
-  switch (type) {
+function ParserFactory() {}
+
+// Define the prototypes and utilities for this factory
+
+// Our default parserClass is EarleyParser
+ParserFactory.prototype.parserClass = EarleyParser;
+
+// Our Factory method for creating new parserinstances
+ParserFactory.prototype.createParser = function(options) {
+
+   switch (options.type) {
     case 'CYK': {
-      return(new CYKParser(grammar));
+      this.parserClass = CYKParser;
     }
     case 'Earley': {
-      return(new EarleyParser(grammar));
+      this.parserClass = EarleyParser;
     }
     case 'LeftCorner': {
-      return(new LeftCornerParser(grammar));
+      this.parserClass = LeftCornerParser;
     }
     case 'HeadCorner': {
-      return(new HeadCornerParser(grammar));
+      this.parserClass = HeadCornerParser;
     }
-    default: {
-      return(new LeftCornerParser(grammar));
-    }
+    // defaults to EarleyParser
   } 
-}
+  var grammar = GrammarParser.parse(options.grammar_text);
 
-module.exports.Parser = Parser;
+  return new this.parserClass(grammar);
+};
+
+module.exports = ParserFactory;
