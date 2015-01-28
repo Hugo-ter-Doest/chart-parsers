@@ -18,14 +18,15 @@
 
 //module.exports.Chart = require('./lib/Chart');
 
-CYKParser = require('./lib/CYKParser');
-EarleyParser = require('./lib/EarleyParser');
-LeftCornerParser = require('./lib/LeftCornerParser');
-HeadCornerParser = require('./lib/HeadCornerParser');
+
+var CYKParser = require('./lib/CYKParser');
+var EarleyParser = require('./lib/EarleyParser');
+var LeftCornerParser = require('./lib/LeftCornerParser');
+var HeadCornerParser = require('./lib/HeadCornerParser');
+
+var GrammarParser = require('./lib/GrammarParser');
 
 function ParserFactory() {}
-
-// Define the prototypes and utilities for this factory
 
 // Our default parserClass is EarleyParser
 ParserFactory.prototype.parserClass = EarleyParser;
