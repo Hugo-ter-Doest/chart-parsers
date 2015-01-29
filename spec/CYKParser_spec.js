@@ -20,7 +20,10 @@ var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
 var CYK_ChartParser = require('../lib/CYKParser');
-var Item = require('../lib/CYK_Item');
+
+//var Item = require('../lib/CYK_Item');
+var ItemFactory = require('../lib/ItemFactory');
+var itemFactory = new ItemFactory();
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP
@@ -54,7 +57,7 @@ var Item = require('../lib/CYK_Item');
       fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
         expect(text).toBeDefined();
         grammar_text = text;
-        console.log(grammar_text+"!")
+        console.log(grammar_text+"!");
         done();
       });
     });
@@ -77,7 +80,9 @@ var Item = require('../lib/CYK_Item');
       var chart = parser.parse(tagged_sentence);
       var parses = chart.full_parse_items(grammar.get_start_symbol(), "cyk_item");
       expect(parses.length).toEqual(2);
-      var expected_item = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 0, 7);
+      var expected_item = itemFactory.createItem({
+        'type': 'CYK', 
+        'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']}, 'from': 0, 'to': 7});
       expect(parses[0].id, expected_item.id).toEqual(expected_item.id);
       expect(parses[1].id, expected_item.id).toEqual(expected_item.id);
     });

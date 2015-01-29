@@ -41,12 +41,15 @@ ParserFactory.prototype.createParser = function(options) {
    switch (options.type) {
     case 'CYK': {
       this.parserClass = CYKParser;
+      break;
     }
     case 'Earley': {
       this.parserClass = EarleyParser;
+      break;
     }
     case 'LeftCorner': {
       this.parserClass = LeftCornerParser;
+      break;
     }
     case 'HeadCorner': {
       this.parserClass = HeadCornerParser;
