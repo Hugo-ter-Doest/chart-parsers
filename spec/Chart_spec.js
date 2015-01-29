@@ -19,7 +19,10 @@
 var typeOf = require('typeof');
 
 var Chart = require('../lib/Chart.js');
-var Item = require('../lib/EarleyItem.js');
+
+var ItemFactory = require('../lib/ItemFactory');
+var itemFactory = new ItemFactory();
+
 
 describe('Chart', function() {
   var chart;
@@ -34,10 +37,38 @@ describe('Chart', function() {
     expect(typeOf(chart.outgoing_edges)).toEqual('array');
   });
 
-  var i1 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 0, 0, 1);
-  var i2 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 1, 1, 2);
-  var i3 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 2, 3);
-  var i4 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0, 6);
+  //var i1 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 0, 0, 1);
+  var i1 = itemFactory.createItem({
+    'type': 'Earley',
+    'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+    'dot': 0,
+    'from': 0,
+    'to': 1
+  });
+  //var i2 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 1, 1, 2);
+  var i2 = itemFactory.createItem({
+    'type': 'Earley',
+    'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+    'dot': 1,
+    'from': 1,
+    'to': 2
+  });
+  //var i3 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 2, 3);
+  var i3 = itemFactory.createItem({
+    'type': 'Earley',
+    'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+    'dot': 2,
+    'from': 2,
+    'to': 3
+  });
+  //var i4 = new Item({'lhs': 'S', 'rhs': ['NP', 'VP']}, 2, 0, 6);
+  var i4 = itemFactory.createItem({
+    'type': 'Earley',
+    'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+    'dot': 2,
+    'from': 0,
+    'to': 6
+  });
   i4.set_children([i1, i2, i3]);
 
   it('should add items to the chart', function() {

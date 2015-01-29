@@ -82,7 +82,10 @@ var itemFactory = new ItemFactory();
       expect(parses.length).toEqual(2);
       var expected_item = itemFactory.createItem({
         'type': 'CYK', 
-        'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']}, 'from': 0, 'to': 7});
+        'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+        'from': 0, 
+        'to': 7
+      });
       expect(parses[0].id, expected_item.id).toEqual(expected_item.id);
       expect(parses[1].id, expected_item.id).toEqual(expected_item.id);
     });
