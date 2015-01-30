@@ -20,8 +20,8 @@ var typeOf = require('typeof');
 
 var Chart = require('../lib/Chart.js');
 
-var ItemFactory = require('../lib/ItemFactory');
-var itemFactory = new ItemFactory();
+var ItemFactoryClass = require('../lib/ItemFactory');
+var itemFactory = new ItemFactoryClass();
 
 
 describe('Chart', function() {

@@ -1,6 +1,6 @@
 This is a library of chart parsers for natural language processing. 
 
-#Supported algorithms
+# Supported algorithms
 The following algorithms are supported:
 * Cocke Younger Kasama (CYK) Parser: an efficient purely bottom up chart parser for parsing with grammars in Chomsky Normal Form (CNF)
 * Earley Parser:  a basic chart parser based on Earley's algorithm for parsing with context-free grammars
@@ -9,13 +9,12 @@ The following algorithms are supported:
 
 All four parsers are created and called in the same way and return the same type of result, that is a chart with recognised items. In the next section it will be explained how grammars and parsers are used in general. After that each parser will be discussed in more detail.
 
-#Installation
-
+# Installation
 This module can be installed using npm as follows:
 
 npm install chart-parsers
 
-#Usage
+# Usage
 All four parser are used in the same way: load a grammar, create a parser and parse sentences.
 ```
 var ParserFactoryClass = require('chart-parsers');
