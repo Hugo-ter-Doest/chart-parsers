@@ -25,6 +25,10 @@ var CYK_ChartParser = require('../lib/CYKParser');
 var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
 
+function event_func(event_name, item) {
+  console.log(event_name + ': ' + item.id);
+}
+
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP
 //NP -> DET N
@@ -50,43 +54,43 @@ var itemFactory = new ItemFactory();
 //P -> on
 //P -> in
 
-  describe('CYK Parser', function() {
-    var grammar_text;
-    
-    it('should read a text file', function(done) {
-      fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
-        expect(text).toBeDefined();
-        grammar_text = text;
-        console.log(grammar_text+"!");
-        done();
-      });
-    });
+describe('CYK Parser', function() {
+  var grammar_text;
 
-    var grammar;
-    it('should parse the text file with the grammar', function() {
-      grammar = GrammarParser.parse(grammar_text);
+  it('should read a text file', function(done) {
+    fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
+      expect(text).toBeDefined();
+      grammar_text = text;
+      console.log(grammar_text+"!");
+      done();
     });
-    
-    it('should parse a sentence', function() {
-      var tagged_sentence = [['I', 'NP'],
-                             ['saw', 'V'],
-                             ['the', 'DET'],
-                             ['man', 'N'],
-                             ['with', 'P'],
-                             ['the', 'DET'],
-                             ['telescope', 'N']];
-      var N = tagged_sentence.length;
-      var parser = new CYK_ChartParser(grammar);
-      var chart = parser.parse(tagged_sentence);
-      var parses = chart.full_parse_items(grammar.get_start_symbol(), "cyk_item");
-      expect(parses.length).toEqual(2);
-      var expected_item = itemFactory.createItem({
-        'type': 'CYK', 
-        'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
-        'from': 0, 
-        'to': 7
-      });
-      expect(parses[0].id, expected_item.id).toEqual(expected_item.id);
-      expect(parses[1].id, expected_item.id).toEqual(expected_item.id);
+  });
+
+  var grammar;
+  it('should parse the text file with the grammar', function() {
+    grammar = GrammarParser.parse(grammar_text);
+  });
+
+  it('should parse a sentence', function() {
+    var tagged_sentence = [['I', 'NP'],
+                           ['saw', 'V'],
+                           ['the', 'DET'],
+                           ['man', 'N'],
+                           ['with', 'P'],
+                           ['the', 'DET'],
+                           ['telescope', 'N']];
+    var N = tagged_sentence.length;
+    var parser = new CYK_ChartParser(grammar);
+    var chart = parser.parse(tagged_sentence, event_func);
+    var parses = chart.full_parse_items(grammar.get_start_symbol(), "cyk_item");
+    expect(parses.length).toEqual(2);
+    var expected_item = itemFactory.createItem({
+      'type': 'CYK', 
+      'rule': {'lhs': 'S', 'rhs': ['NP', 'VP']},
+      'from': 0, 
+      'to': 7
     });
+    expect(parses[0].id, expected_item.id).toEqual(expected_item.id);
+    expect(parses[1].id, expected_item.id).toEqual(expected_item.id);
+  });
 });

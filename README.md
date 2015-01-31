@@ -11,8 +11,9 @@ All four parsers are created and called in the same way and return the same type
 
 # Installation
 This module can be installed using npm as follows:
-
+```
 npm install chart-parsers
+```
 
 # Usage
 All four parser are used in the same way: load a grammar, create a parser and parse sentences.

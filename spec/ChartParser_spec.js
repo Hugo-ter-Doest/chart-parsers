@@ -23,6 +23,10 @@ var LeftCornerParser = require('../lib/LeftCornerParser');
 var HeadCornerParser = require('../lib/HeadCornerParser');
 var EarleyParser = require('../lib/EarleyParser');
 
+function event_func(event_name, item) {
+  console.log(event_name + ': ' + item.id);
+}
+
 [LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
 //[HeadCornerParser].forEach(function(ChartParser) {
   describe(ChartParser === LeftCornerParser ? 'LeftCornerParser' : 'EarleyParser', function() {
@@ -54,7 +58,7 @@ var EarleyParser = require('../lib/EarleyParser');
       var tagged_sentence = [['2', 'number'],
                              ['+', 'plus'],
                              ['3', 'number']];
-      var chart = parser.parse(tagged_sentence);
+      var chart = parser.parse(tagged_sentence, event_func);
       var parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
       expect(parse_trees.length).toEqual(1);
       expect(parse_trees[0]).toEqual('E(E(number(2())),plus(+()),E(number(3())))');
@@ -65,7 +69,7 @@ var EarleyParser = require('../lib/EarleyParser');
                          ['3', 'number'],
                          ['*', 'multiply'],
                          ['4', 'number']];
-      chart = parser.parse(tagged_sentence);
+      chart = parser.parse(tagged_sentence, event_func);
       parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
       expect(parse_trees.length).toEqual(2);
       expect(parse_trees[0]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
@@ -114,7 +118,7 @@ var EarleyParser = require('../lib/EarleyParser');
                          ['with', 'P'],
                          ['the', 'DET'],
                          ['telescope', 'N']];
-      chart = parser.parse(tagged_sentence);
+      chart = parser.parse(tagged_sentence, event_func);
       parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
       
       expect(parse_trees.length).toEqual(2);
