@@ -29,8 +29,8 @@ describe('Chart', function() {
   var size = 6;
   
   it('should create an empty chart', function() {
-    function event_func(item) {
-      console.log(item.id);
+    function event_func(event_name, item) {
+      //console.log(item.id);
     }
     chart = new Chart(size, event_func);
     expect(chart.N).toEqual(size);

@@ -204,7 +204,6 @@ describe('GrammarParser', function() {
 //E -> number
   it('should read another text file', function(done) {
     fs.readFile('data/math_expressions.txt', 'utf8', function (error, text) {
-              console.log("right before");
       expect(text).toBeDefined();
       grammar_text = text;
       done();

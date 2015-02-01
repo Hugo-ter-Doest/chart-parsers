@@ -25,7 +25,7 @@ var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
 
 function event_func(event_name, item) {
-  console.log(event_name + ': ' + item.id);
+  //console.log(event_name + ': ' + item.id);
 }
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
@@ -60,7 +60,6 @@ describe('CYK Parser', function() {
     fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
       expect(text).toBeDefined();
       grammar_text = text;
-      console.log(grammar_text+"!");
       done();
     });
   });

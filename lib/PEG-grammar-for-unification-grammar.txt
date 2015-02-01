@@ -52,13 +52,13 @@ function Grammar() {
 
 //Checks if B is a nonterminal
 Grammar.prototype.is_nonterminal = function(B) {
-  console.log("Checking if " + B + " is a nonterminal: " + this.nonterminals[B]);
+  //console.log("Checking if " + B + " is a nonterminal: " + this.nonterminals[B]);
   return (this.nonterminals[B]);
 };
 
 //Checks if B is a (pre)terminal
 Grammar.prototype.is_terminal = function(B) {
-  console.log("Checking if " + B + " is a (pre)terminal: " + !this.nonterminals[B]);
+  //console.log("Checking if " + B + " is a (pre)terminal: " + !this.nonterminals[B]);
   return (!this.nonterminals[B]);
 };
 
