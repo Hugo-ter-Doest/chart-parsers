@@ -16,48 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var CYKParser = require('./lib/CYKParser');
-var EarleyParser = require('./lib/EarleyParser');
-var LeftCornerParser = require('./lib/LeftCornerParser');
-var HeadCornerParser = require('./lib/HeadCornerParser');
-
-var GrammarParser = require('./lib/GrammarParser');
-
-function ParserFactory() {}
-
-// Our default parserClass is EarleyParser
-ParserFactory.prototype.parserClass = EarleyParser;
-
-ParserFactory.prototype.setGrammar = function(grammar_text) {
-  this.grammar = GrammarParser.parse(grammar_text); 
-};
-
-// Our Factory method for creating new parser instances
-ParserFactory.prototype.createParser = function(options) {
-
-   switch (options.type) {
-    case 'CYK': {
-      this.parserClass = CYKParser;
-      break;
-    }
-    case 'Earley': {
-      this.parserClass = EarleyParser;
-      break;
-    }
-    case 'LeftCorner': {
-      this.parserClass = LeftCornerParser;
-      break;
-    }
-    case 'HeadCorner': {
-      this.parserClass = HeadCornerParser;
-    }
-    // defaults to EarleyParser
-  } 
-  if (options.grammar_text) {
-    this.grammar = GrammarParser.parse(options.grammar_text);
-  }
-
-  return new this.parserClass(this.grammar);
-};
+var ParserFactory = require('./lib/ParserFactory');
 
 module.exports = ParserFactory;

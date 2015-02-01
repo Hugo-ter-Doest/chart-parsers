@@ -1,5 +1,5 @@
 /*
-    Unit test for LeftCornerParser.js and EarleyParser.js
+    Unit test for Earley, LeftCorner and HeadCorner parser
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
@@ -18,50 +18,72 @@
 
 var fs = require('fs');
 
-var GrammarParser = require('../lib/GrammarParser');
-var LeftCornerParser = require('../lib/LeftCornerParser');
-var HeadCornerParser = require('../lib/HeadCornerParser');
-var EarleyParser = require('../lib/EarleyParser');
+var ParserFactoryClass = require('../index');
+var parserFactory = new ParserFactoryClass();
 
 function event_func(event_name, item) {
-  console.log(event_name + ': ' + item.id);
+  //console.log(event_name + ': ' + item.id);
 }
 
-[LeftCornerParser, EarleyParser].forEach(function(ChartParser) {
-//[HeadCornerParser].forEach(function(ChartParser) {
-  describe(ChartParser === LeftCornerParser ? 'LeftCornerParser' : 'EarleyParser', function() {
+['Earley', 'LeftCorner', 'HeadCorner'].forEach(function(parserType) {
+  describe(parserType, function() {
+
+    beforeEach(function() {
+      this.addMatchers({
+        toBeArray: function(array) {
+          this.message = function() {
+            return "Expected " + this.actual + " to be array " + array + ".";
+          };
+          var arraysAreSame = function(x, y) {
+            var arraysAreSame = (x.length === y.length);
+            if (arraysAreSame) {
+              for(var i; i < x.length; i++)
+                 if(x[i] !== y[i])
+                    arraysAreSame = false;
+              return arraysAreSame;
+            }
+            else {
+              return(false);
+            }
+          };
+          return arraysAreSame(this.actual, array);
+        }
+      });
+    });
+    
     var grammar_text;
   
-  // E -> E plus E
-  // E -> E minus E
-  // E -> E divide E
-  // E -> E multiply E
-  // E -> number  
+    // E -> E plus E
+    // E -> E minus E
+    // E -> E divide E
+    // E -> E multiply E
+    // E -> number  
     it('should read a text file', function(done) {
       fs.readFile('data/math_expressions.txt', 'utf8', function (error, text) {
         expect(text).toBeDefined();
         grammar_text = text;
-        console.log(grammar_text+"!");
         done();
       });
     });
     
     var grammar;
     it('should parse the text file with the grammar', function() {
-      grammar = GrammarParser.parse(grammar_text);
+      //grammar = GrammarParser.parse(grammar_text);
+      parserFactory.setGrammar(grammar_text);
     });
     
     it('should parse a sentence', function() {
-      var parser = new ChartParser(grammar);
+      //var parser = new ChartParser(grammar);
+      var parser = parserFactory.createParser({'type': parserType});
     
       // 2 + 3
       var tagged_sentence = [['2', 'number'],
                              ['+', 'plus'],
                              ['3', 'number']];
       var chart = parser.parse(tagged_sentence, event_func);
-      var parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
-      expect(parse_trees.length).toEqual(1);
-      expect(parse_trees[0]).toEqual('E(E(number(2())),plus(+()),E(number(3())))');
+      var parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+        (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
+      expect(parse_trees).toBeArray(['E(E(number(2())),plus(+()),E(number(3())))']);
   
       // 2 + 3 * 4
       tagged_sentence = [['2', 'number'],
@@ -70,10 +92,14 @@ function event_func(event_name, item) {
                          ['*', 'multiply'],
                          ['4', 'number']];
       chart = parser.parse(tagged_sentence, event_func);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
-      expect(parse_trees.length).toEqual(2);
-      expect(parse_trees[0]).toEqual('E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))');
-      expect(parse_trees[1]).toEqual('E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))');
+      parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+        (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
+      parse_trees.sort();
+      expected_parse_trees = [
+        'E(E(E(number(2())),plus(+()),E(number(3()))),multiply(*()),E(number(4())))',
+        'E(E(number(2())),plus(+()),E(E(number(3())),multiply(*()),E(number(4()))))'
+      ].sort();
+      expect(parse_trees).toBeArray(expected_parse_trees);
     });
   
   
@@ -109,8 +135,12 @@ function event_func(event_name, item) {
     });
     
     it('should parse the text file with the grammar', function() {
-      grammar = GrammarParser.parse(grammar_text);
-      parser = new ChartParser(grammar);
+      //grammar = GrammarParser.parse(grammar_text);
+      parserFactory.setGrammar(grammar_text);
+      //parser = new ChartParser(grammar);
+    });
+    it('should parse a sentence', function() {
+      parser = parserFactory.createParser({'type': parserType});
       tagged_sentence = [['I', 'NP'],
                          ['saw', 'V'],
                          ['the', 'DET'],
@@ -119,12 +149,17 @@ function event_func(event_name, item) {
                          ['the', 'DET'],
                          ['telescope', 'N']];
       chart = parser.parse(tagged_sentence, event_func);
-      parse_trees = chart.parse_trees(grammar.get_start_symbol(), "earleyitem");
-      
-      expect(parse_trees.length).toEqual(2);
-      expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
-      expect(parse_trees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
+      parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+        (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
+      parse_trees.sort();
+      //expect(parse_trees.length).toEqual(2);
+      //expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
+      //expect(parse_trees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
+      expected_parse_trees = [
+        'S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))',
+        'S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))'
+      ].sort();
+      expect(parse_trees).toBeArray(expected_parse_trees);
     });
-  
   });
 });

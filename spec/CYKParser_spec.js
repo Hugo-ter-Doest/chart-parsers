@@ -18,10 +18,9 @@
 
 var fs = require('fs');
 
-var GrammarParser = require('../lib/GrammarParser');
-var CYK_ChartParser = require('../lib/CYKParser');
+var ParserFactoryClass = require('../index');
+var parserFactory = new ParserFactoryClass();
 
-//var Item = require('../lib/CYK_Item');
 var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
 
@@ -68,7 +67,7 @@ describe('CYK Parser', function() {
 
   var grammar;
   it('should parse the text file with the grammar', function() {
-    grammar = GrammarParser.parse(grammar_text);
+    parserFactory.setGrammar(grammar_text);
   });
 
   it('should parse a sentence', function() {
@@ -80,9 +79,9 @@ describe('CYK Parser', function() {
                            ['the', 'DET'],
                            ['telescope', 'N']];
     var N = tagged_sentence.length;
-    var parser = new CYK_ChartParser(grammar);
+    var parser = parserFactory.createParser({'type': 'CYK'});
     var chart = parser.parse(tagged_sentence, event_func);
-    var parses = chart.full_parse_items(grammar.get_start_symbol(), "cyk_item");
+    var parses = chart.full_parse_items(parser.grammar.get_start_symbol(), "cyk_item");
     expect(parses.length).toEqual(2);
     var expected_item = itemFactory.createItem({
       'type': 'CYK', 
