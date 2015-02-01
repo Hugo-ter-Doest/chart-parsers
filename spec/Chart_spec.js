@@ -91,10 +91,10 @@ describe('Chart', function() {
     expect(chart.get_items_to(3)).toEqual([i3]);
     expect(chart.nr_items_to(3)).toEqual(1);
     expect(chart.get_complete_items_from_to(2, 3)).toEqual([i3]);
-    expect(chart.full_parse_items()).toEqual([]);
+    expect(chart.full_parse_items('S', 'earleyitem')).toEqual([]);
     chart.add_item(i4);
     expect(chart.get_complete_items_from_to(0, 6)).toEqual([i4]);
-    expect(chart.full_parse_items('S')).toEqual([i4]);
+    expect(chart.full_parse_items('S', 'earleyitem')).toEqual([i4]);
     expect(chart.nr_of_items()).toEqual(4);
   });
 
