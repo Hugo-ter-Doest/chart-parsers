@@ -1,6 +1,6 @@
 {
   "name": "chart-parsers",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "author" : {
     "name" : "Hugo W.L. ter Doest",
     "email" : "hwl.ter.doest@gmail.com"
@@ -21,7 +21,6 @@
     "log4js": "*",
     "typeof": "*",
     "simple-pos-tagger": "*",
-    "natural": "*",
-    "chart-parsers": "*"
+    "natural": "*"
   }
 }
