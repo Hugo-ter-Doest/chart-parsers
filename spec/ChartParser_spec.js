@@ -66,9 +66,7 @@ function event_func(event_name, item) {
       });
     });
     
-    var grammar;
     it('should parse the text file with the grammar', function() {
-      //grammar = GrammarParser.parse(grammar_text);
       parserFactory.setGrammar(grammar_text);
     });
     

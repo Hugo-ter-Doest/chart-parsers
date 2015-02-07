@@ -1,5 +1,5 @@
 /*
-    Parser factory to create different types of parsers
+    Index file
     Copyright (C) 2014 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
