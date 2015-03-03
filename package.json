@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "underscore" : "*",
-    "fs" : "*",
     "log4js": "*",
     "typeof": "*",
     "simple-pos-tagger": "*",
