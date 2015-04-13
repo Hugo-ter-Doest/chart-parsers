@@ -1,10 +1,10 @@
-S -> NP VP
+S -> NP *VP*
 <NP number> = <VP number>
 
-NP -> Det Nominal
+NP -> Det *Nominal*
 <NP head> = <Nominal head>
-<Det head agree> = <Nominal head agree>
+<Det head agreement> = <Nominal head agreement>
 
-VP -> Verb NP
+VP -> *Verb* NP
 <VP head> = <Verb head>
 <VP head subcat> = transitive
