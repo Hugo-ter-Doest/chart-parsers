@@ -26,14 +26,14 @@ describe('ProductionRule', function() {
 
   it('should create a production rule with unification constraints', function() {
     var rule = new ProductionRule('S', ['NP', 'VP'], 1);
-    var path1 = ['NP', 'agreement', 'number'];
-    var path2 = ['VP', 'agreement', 'number'];
+    var path2 = ['NP', 'agreement', 'number'];
+    var path1 = ['VP', 'agreement', 'number'];
     var constraint1 = new Constraint(path1, path2);
-    var type_lattice = new TypeLattice({});
     var path3 = ['S', 'head'];
     var path4 = ['VP', 'head'];
     var constraint2 = new Constraint(path3, path4);
-    
+
+    var type_lattice = new TypeLattice({});
     rule.process_constraints([constraint1, constraint2], type_lattice);
     
     //expect().toEqual(true);
