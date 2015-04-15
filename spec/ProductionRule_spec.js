@@ -21,6 +21,7 @@ var ProductionRule = require('../lib/ProductionRule');
 var Constraint = require('../lib/Constraint');
 var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
 var TypeLattice = require(fs_base + 'TypeLattice');
+var Type = require(fs_base + 'Type');
 
 describe('ProductionRule', function() {
 
@@ -32,9 +33,15 @@ describe('ProductionRule', function() {
     var path3 = ['S', 'head'];
     var path4 = ['VP', 'head'];
     var constraint2 = new Constraint(path3, path4);
+    var path5 = ['NP', 'agreement'];
+    var path6 = 'agreement';
+    var constraint3 = new Constraint(path5, path6);
 
     var type_lattice = new TypeLattice({});
-    rule.process_constraints([constraint1, constraint2], type_lattice);
+    var agreement = new Type('agreement', [type_lattice.bottom]);
+    type_lattice.add_type(agreement);
+    
+    rule.process_constraints([constraint1, constraint2, constraint3], type_lattice);
     
     //expect().toEqual(true);
     console.log('Feature structure: ' + JSON.stringify(rule.fs, null, 2));
