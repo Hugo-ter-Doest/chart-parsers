@@ -20,6 +20,7 @@
 var ProductionRule = require('../lib/ProductionRule');
 var Constraint = require('../lib/Constraint');
 var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
+var AppropriateFunction = require(fs_base + 'AppropriateFunction');
 var TypeLattice = require(fs_base + 'TypeLattice');
 var Type = require(fs_base + 'Type');
 
@@ -40,6 +41,17 @@ describe('ProductionRule', function() {
     var type_lattice = new TypeLattice({});
     var agreement = new Type('agreement', [type_lattice.bottom]);
     type_lattice.add_type(agreement);
+    
+    var approp = new AppropriateFunction();
+    approp.add_mapping('BOTTOM', 'agreement', 'agreement');
+    approp.add_mapping('BOTTOM', 'number', 'BOTTOM');
+    approp.add_mapping('BOTTOM', 'VP', 'BOTTOM');
+    approp.add_mapping('BOTTOM', 'agreement', 'BOTTOM');
+    approp.add_mapping('BOTTOM', 'NP', 'BOTTOM');
+    approp.add_mapping('BOTTOM', 'S', 'BOTTOM');
+    approp.add_mapping('BOTTOM', 'head', 'BOTTOM');
+
+    type_lattice.appropriate_function = approp;
     
     rule.process_constraints([constraint1, constraint2, constraint3], type_lattice);
     
