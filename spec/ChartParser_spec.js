@@ -21,10 +21,6 @@ var fs = require('fs');
 var ParserFactoryClass = require('../index');
 var parserFactory = new ParserFactoryClass();
 
-function event_func(event_name, item) {
-  //console.log(event_name + ': ' + item.id);
-}
-
 ['Earley', 'LeftCorner', 'HeadCorner'].forEach(function(parserType) {
   describe(parserType, function() {
 
@@ -78,7 +74,7 @@ function event_func(event_name, item) {
       var tagged_sentence = [['2', 'number'],
                              ['+', 'plus'],
                              ['3', 'number']];
-      var chart = parser.parse(tagged_sentence, event_func);
+      var chart = parser.parse(tagged_sentence);
       var parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       expect(parse_trees).toBeArray(['E(E(number(2())),plus(+()),E(number(3())))']);
@@ -89,7 +85,7 @@ function event_func(event_name, item) {
                          ['3', 'number'],
                          ['*', 'multiply'],
                          ['4', 'number']];
-      chart = parser.parse(tagged_sentence, event_func);
+      chart = parser.parse(tagged_sentence);
       parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
@@ -146,7 +142,7 @@ function event_func(event_name, item) {
                          ['with', 'P'],
                          ['the', 'DET'],
                          ['telescope', 'N']];
-      chart = parser.parse(tagged_sentence, event_func);
+      chart = parser.parse(tagged_sentence);
       parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
