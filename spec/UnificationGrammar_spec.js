@@ -17,6 +17,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var fs = require('fs');
+
+var fs_base = '/home/hugo/Workspace/feature_structures/lib';
+var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
+var lexiconParser = require(fs_base + 'LexiconParser');
+
+var grammarParser = require('../lib/GrammarParser');
+
 var base = '/home/hugo/Workspace/chart_parser/data/UG/';
 
 var lexicon_file = base + 'UG_lexicon.txt';
@@ -26,23 +34,36 @@ var sentences_file = base + 'UG_sentences.txt';
 
 describe('Unification grammar chain', function() {
 
+  var type_lattice;
+  var lexicon;
+  var grammar;
+  var sentences;
+  
   it('should correctly read a type lattice', function() {
-    
+    fs.readFile(type_lattice_file, 'utf8', function (error, text) {
+      // Parse the type lattice
+      type_lattice = typeLatticeParser.parse(text);
+    });
   });
   
   it('should correctly read a lexicon', function() {
-    
+    fs.readFile(lexicon_file, 'utf8', function (error, text) {
+      // Parse the lexicon
+      lexicon = lexiconParser.parse(text, {type_lattice: type_lattice});
+    });
   });
   
   it('should correctly read a unification grammar', function() {
-    
+      fs.readFile(grammar_file, 'utf8', function (error, text) {
+        // Parse the grammar
+        grammar = grammarParser.parse(text, {type_lattice: type_lattice});
+      });
   });
   
   it('should correctly parse a set of sentences using unification grammar', function() {
     // Read sentences from file
-    
+
     // Parse sentences and compare with result
   });
-  
 });
   

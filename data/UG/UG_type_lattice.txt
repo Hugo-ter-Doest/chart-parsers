@@ -1,4 +1,13 @@
+Approp POS category Determiner
+Approp POS head BOTTOM
+Approp BOTTOM agreement agreement
+Approp agreement number singular
+Approp POS category Noun
+Approp agreement gender masculin
+Approp POS category Verb
+Approp BOTTOM tense present
 Approp BOTTOM subcat transitive
+
 Type POS (BOTTOM)
 Type present (BOTTOM)
 Type transitive (BOTTOM)

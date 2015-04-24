@@ -1,6 +1,6 @@
 [the] ->
 [POS
- category: Det
+ category: Determiner
  head: [BOTTOM
         agreement: [agreement
                     number: singular
