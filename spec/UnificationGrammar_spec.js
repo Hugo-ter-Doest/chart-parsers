@@ -19,6 +19,9 @@
 
 var fs = require('fs');
 
+var natural = require('natural');
+var tokenizer = new natural.WordTokenizer();
+
 var fs_base = '/home/hugo/Workspace/feature_structures/lib';
 var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
 var lexiconParser = require(fs_base + 'LexiconParser');
@@ -62,8 +65,16 @@ describe('Unification grammar chain', function() {
   
   it('should correctly parse a set of sentences using unification grammar', function() {
     // Read sentences from file
-
-    // Parse sentences and compare with result
+      fs.readFile(sentences_file, 'utf8', function (error, text) {
+        // Parse sentences and compare with result
+        var sentences = text.split('\n');
+        sentences.forEach(function(sentence) {
+          // Tokenize sentence
+          var words = tokenizer.tokenize(sentence);
+          // Tag sentence
+          
+        });
+      });
   });
 });
   
