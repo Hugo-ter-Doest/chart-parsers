@@ -26,7 +26,8 @@ var fs_base = '/home/hugo/Workspace/feature_structures/lib';
 var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
 var lexiconParser = require(fs_base + 'LexiconParser');
 
-var grammarParser = require('../lib/GrammarParser');
+var ParserFactory = require('../lib/parserFactory');
+var parserFactory = new ParserFactory();
 
 var base = '/home/hugo/Workspace/chart_parser/data/UG/';
 
@@ -39,7 +40,7 @@ describe('Unification grammar chain', function() {
 
   var type_lattice;
   var lexicon;
-  var grammar;
+  var parser;
   var sentences;
   
   it('should correctly read a type lattice', function() {
@@ -56,10 +57,11 @@ describe('Unification grammar chain', function() {
     });
   });
   
-  it('should correctly read a unification grammar', function() {
+  it('should correctly create a unification-based parser', function() {
       fs.readFile(grammar_file, 'utf8', function (error, text) {
-        // Parse the grammar
-        grammar = grammarParser.parse(text, {type_lattice: type_lattice});
+        // Set and parse the grammar
+        parserFactory.setGrammar(text);
+        parser = parserFactory.createParser({'type': parserType});
       });
   });
   
@@ -72,7 +74,9 @@ describe('Unification grammar chain', function() {
           // Tokenize sentence
           var words = tokenizer.tokenize(sentence);
           // Tag sentence
-          
+          var tagged_sentence = lexicon.tag_sentence(words);
+          // Parse sentence
+          parse_result = parser.parse(tagged_sentence);
         });
       });
   });
