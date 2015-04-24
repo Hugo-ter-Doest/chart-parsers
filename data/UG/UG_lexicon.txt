@@ -1,0 +1,40 @@
+[the] ->
+[POS
+ category: Det
+ head: [BOTTOM
+        agreement: [agreement
+                    number: singular
+                   ]
+       ]
+]
+
+[man] ->
+[POS
+ category: Noun
+ agreement: [agreement
+             number: singular
+             gender: masculin
+            ]
+]
+
+[uses] ->
+[POS
+ category: Verb
+ head: [BOTTOM
+        agreement: [agreement
+                    number: singular
+                   ]
+        tense: present
+        subcat: transitive
+       ]
+]
+
+[telescope] ->
+[POS
+ category: Noun
+ head: [BOTTOM
+        agreement: [agreement
+                    number: singular
+                   ]
+       ]
+]

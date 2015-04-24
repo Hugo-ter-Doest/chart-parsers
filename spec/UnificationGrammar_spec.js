@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var base = '/home/hugo/Workspace/chart_parser/data/';
+var base = '/home/hugo/Workspace/chart_parser/data/UG/';
 
 var lexicon_file = base + 'UG_lexicon.txt';
 var type_lattice_file = base + 'UG_lattice.txt';
@@ -39,7 +39,9 @@ describe('Unification grammar chain', function() {
   });
   
   it('should correctly parse a set of sentences using unification grammar', function() {
+    // Read sentences from file
     
+    // Parse sentences and compare with result
   });
   
 });

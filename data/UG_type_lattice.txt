@@ -1,2 +1,0 @@
-Approp BOTTOM subcat transitive
-Type transitive (BOTTOM)

@@ -1,0 +1,12 @@
+Approp BOTTOM subcat transitive
+Type POS (BOTTOM)
+Type present (BOTTOM)
+Type transitive (BOTTOM)
+Type Noun (BOTTOM)
+Type Verb (BOTTOM)
+Type Determiner (BOTTOM)
+Type agreement (BOTTOM)
+Type number (agreement)
+Type singular (number)
+Type gender (agreement)
+Type masculin (gender)
