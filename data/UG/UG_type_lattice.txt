@@ -7,7 +7,7 @@ Approp agreement gender masculin
 Approp POS category Verb
 Approp BOTTOM tense present
 Approp BOTTOM subcat transitive
-
+Approp POS agreement agreement
 Type POS (BOTTOM)
 Type present (BOTTOM)
 Type transitive (BOTTOM)

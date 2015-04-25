@@ -47,44 +47,52 @@ describe('Unification grammar chain', function() {
   beforeEach(function(done) { 
     fs.readFile(type_lattice_file, 'utf8', function (error, text) {
       if (error) {
-        throw error;
+        console.log(error);
       }
       // Parse the type lattice
       type_lattice = typeLatticeParser.parse(text);
+      console.log('beforeEach: parsed the type lattice');
+      console.log(type_lattice.pretty_print());
       fs.readFile(lexicon_file, 'utf8', function (error, text) {
         if (error) {
-          throw error;
+          console.log(error);
         }
         // Parse the lexicon
-        lexicon = lexiconParser.parse(text, {type_lattice: type_lattice});
+        lexicon = lexiconParser.parse(text, {'type_lattice': type_lattice});
+        console.log(lexicon.pretty_print());
         fs.readFile(grammar_file, 'utf8', function (error, text) {
           if (error) {
-            throw error;
+            console.log(error);
           }
           // Set and parse the grammar
           parserFactory.setGrammar(text);
+          console.log('beforeEach: parsed the grammar');
           parser = parserFactory.createParser({'type': parserType});
+          console.log('beforeEach: created the parser');
           // Read sentences from file
           fs.readFile(sentences_file, 'utf8', function (error, text) {
             if (error) {
-              throw error;
+              console.log(error);
             }
             // Parse sentences and compare with result
-            var sentences = text.split('\n');
-            console.log(sentences);
+            sentences = text.split('\n');
+            console.log('beforeEach: read test sentences, # ' + sentences.length);
             done();
           });
         });
       });
     });
   });
-  
+
+  console.log('beforeEach executed: sentences ' + sentences);
+
   it('should correctly parse a set of sentences using unification grammar', function() {
     sentences.forEach(function(sentence) {
       // Tokenize sentence
       var words = tokenizer.tokenize(sentence);
       // Tag sentence
       var tagged_sentence = lexicon.tag_sentence(words);
+      console.log(tagged_sentence);
       // Parse sentence
       var parse_result = parser.parse(tagged_sentence);
       console.log(parse_result);
