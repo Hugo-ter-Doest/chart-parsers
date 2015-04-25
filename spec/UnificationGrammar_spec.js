@@ -22,17 +22,18 @@ var fs = require('fs');
 var natural = require('natural');
 var tokenizer = new natural.WordTokenizer();
 
-var fs_base = '/home/hugo/Workspace/feature_structures/lib';
+var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
 var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
 var lexiconParser = require(fs_base + 'LexiconParser');
 
-var ParserFactory = require('../lib/parserFactory');
+var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
+var parserType = 'Earley';
 
-var base = '/home/hugo/Workspace/chart_parser/data/UG/';
+var base = '/home/hugo/Workspace/chart_parsers/data/UG/';
 
 var lexicon_file = base + 'UG_lexicon.txt';
-var type_lattice_file = base + 'UG_lattice.txt';
+var type_lattice_file = base + 'UG_type_lattice.txt';
 var grammar_file = base + 'UG_grammar.txt';
 var sentences_file = base + 'UG_sentences.txt';
 
@@ -43,42 +44,51 @@ describe('Unification grammar chain', function() {
   var parser;
   var sentences;
   
-  it('should correctly read a type lattice', function() {
+  beforeEach(function(done) { 
     fs.readFile(type_lattice_file, 'utf8', function (error, text) {
+      if (error) {
+        throw error;
+      }
       // Parse the type lattice
       type_lattice = typeLatticeParser.parse(text);
-    });
-  });
-  
-  it('should correctly read a lexicon', function() {
-    fs.readFile(lexicon_file, 'utf8', function (error, text) {
-      // Parse the lexicon
-      lexicon = lexiconParser.parse(text, {type_lattice: type_lattice});
-    });
-  });
-  
-  it('should correctly create a unification-based parser', function() {
-      fs.readFile(grammar_file, 'utf8', function (error, text) {
-        // Set and parse the grammar
-        parserFactory.setGrammar(text);
-        parser = parserFactory.createParser({'type': parserType});
+      fs.readFile(lexicon_file, 'utf8', function (error, text) {
+        if (error) {
+          throw error;
+        }
+        // Parse the lexicon
+        lexicon = lexiconParser.parse(text, {type_lattice: type_lattice});
+        fs.readFile(grammar_file, 'utf8', function (error, text) {
+          if (error) {
+            throw error;
+          }
+          // Set and parse the grammar
+          parserFactory.setGrammar(text);
+          parser = parserFactory.createParser({'type': parserType});
+          // Read sentences from file
+          fs.readFile(sentences_file, 'utf8', function (error, text) {
+            if (error) {
+              throw error;
+            }
+            // Parse sentences and compare with result
+            var sentences = text.split('\n');
+            console.log(sentences);
+            done();
+          });
+        });
       });
+    });
   });
   
   it('should correctly parse a set of sentences using unification grammar', function() {
-    // Read sentences from file
-      fs.readFile(sentences_file, 'utf8', function (error, text) {
-        // Parse sentences and compare with result
-        var sentences = text.split('\n');
-        sentences.forEach(function(sentence) {
-          // Tokenize sentence
-          var words = tokenizer.tokenize(sentence);
-          // Tag sentence
-          var tagged_sentence = lexicon.tag_sentence(words);
-          // Parse sentence
-          parse_result = parser.parse(tagged_sentence);
-        });
-      });
+    sentences.forEach(function(sentence) {
+      // Tokenize sentence
+      var words = tokenizer.tokenize(sentence);
+      // Tag sentence
+      var tagged_sentence = lexicon.tag_sentence(words);
+      // Parse sentence
+      var parse_result = parser.parse(tagged_sentence);
+      console.log(parse_result);
+    });
   });
 });
   
