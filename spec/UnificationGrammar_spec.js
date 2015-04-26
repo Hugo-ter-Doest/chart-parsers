@@ -26,6 +26,8 @@ var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
 var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
 var lexiconParser = require(fs_base + 'LexiconParser');
 
+var GrammarParser = require('../lib/GrammarParser');
+
 var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
 var parserType = 'Earley';
@@ -41,6 +43,7 @@ describe('Unification grammar chain', function() {
 
   var type_lattice;
   var lexicon;
+  var grammar;
   var parser;
   var sentences;
   
@@ -64,10 +67,10 @@ describe('Unification grammar chain', function() {
           if (error) {
             console.log(error);
           }
-          // Set and parse the grammar
-          parserFactory.setGrammar(text);
-          console.log('beforeEach: parsed the grammar');
-          parser = parserFactory.createParser({'type': parserType});
+          // Parse the grammar
+          grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
+          // Create the parser
+          parser = parserFactory.createParser({'type': parserType, 'grammar': grammar});
           console.log('beforeEach: created the parser');
           // Read sentences from file
           fs.readFile(sentences_file, 'utf8', function (error, text) {
@@ -76,13 +79,14 @@ describe('Unification grammar chain', function() {
             }
             // Parse sentences and compare with result
             sentences = text.split('\n');
-            console.log('beforeEach: read test sentences, # ' + sentences.length);
+            console.log('beforeEach: read ' + sentences.length + ' test sentences');
             done();
           });
         });
       });
     });
   });
+
 
   console.log('beforeEach executed: sentences ' + sentences);
 
@@ -99,4 +103,3 @@ describe('Unification grammar chain', function() {
     });
   });
 });
-  
