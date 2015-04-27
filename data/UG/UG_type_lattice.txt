@@ -10,6 +10,16 @@ Approp BOTTOM subcat transitive
 Approp POS agreement agreement
 Approp BOTTOM NP number
 Approp BOTTOM VP number
+Approp BOTTOM head number
+Approp BOTTOM VP number
+Approp BOTTOM Determiner POS
+Approp BOTTOM head BOTTOM
+Approp BOTTOM NP BOTTOM
+Approp BOTTOM VP BOTTOM
+Approp BOTTOM Noun POS
+Approp BOTTOM Verb POS
+Approp BOTTOM agreement BOTTOM
+Approp BOTTOM number BOTTOM
 Type POS (BOTTOM)
 Type present (BOTTOM)
 Type transitive (BOTTOM)

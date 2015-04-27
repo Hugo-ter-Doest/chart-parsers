@@ -69,8 +69,9 @@ describe('Unification grammar chain', function() {
           }
           // Parse the grammar
           grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
+          console.log(grammar.pretty_print());
           // Create the parser
-          parser = parserFactory.createParser({'type': parserType, 'grammar': grammar});
+          parser = parserFactory.createParser({'type': parserType, 'grammar': grammar, 'type_lattice': type_lattice});
           console.log('beforeEach: created the parser');
           // Read sentences from file
           fs.readFile(sentences_file, 'utf8', function (error, text) {
