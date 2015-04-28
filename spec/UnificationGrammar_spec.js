@@ -32,7 +32,7 @@ var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
 var parserType = 'Earley';
 
-var base = '/home/hugo/Workspace/chart_parsers/data/UG/';
+var base = '/home/hugo/Workspace/chart-parsers/data/UG/';
 
 var lexicon_file = base + 'UG_lexicon.txt';
 var type_lattice_file = base + 'UG_type_lattice.txt';

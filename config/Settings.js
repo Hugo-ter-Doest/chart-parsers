@@ -26,24 +26,5 @@ exports.event_function = function(event_name, item) {
   //console.log(event_name + ': ' + item.id);
 };
 
-// Logging settings per module
-exports.loggingLevels = {
-  Agenda:           'ERROR',
-  CYKParser:        'ERROR',
-  CYK_Item:         'ERROR',
-  Chart:            'ERROR',
-  ChartParser:      'ERROR',
-  Constraint:       'DEBUG',
-  DoubleDottedItem: 'ERROR',
-  EarleyItem:       'ERROR',
-  EarleyParser:     'ERROR',
-  GoalItem:         'ERROR',
-  Grammar:          'DEBUG',
-  GrammarParser:    'DEBUG',
-  HeadCornerParser: 'ERROR',
-  ItemFactory:      'ERROR',
-  LeftCornerParser: 'ERROR',
-  ParserFactory:    'ERROR',
-  ProductionRule:   'DEBUG'
-};
+exports.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
 
