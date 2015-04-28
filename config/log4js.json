@@ -1,0 +1,89 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "category": "Agenda",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "CYKParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "CYK_Item",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "Chart",
+      "level": "DEBUG"
+    },
+    {
+      "type": "console",
+      "category": "ChartParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "Constraint",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "DoubleDottedItem",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "EarleyItem",
+      "level": "DEBUG"
+    },
+    {
+      "type": "console",
+      "category": "EarleyParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "GoalItem",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "Grammar",
+      "level": "DEBUG"
+    },
+    {
+      "type": "console",
+      "category": "GrammarParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "HeadCornerParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "ItemFactory",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "LeftCornerParser",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "ParserFactory",
+      "level": "ERROR"
+    },
+    {
+      "type": "console",
+      "category": "ProductionRule",
+      "level": "ERROR"
+    }
+]
+}
