@@ -2,88 +2,91 @@
   "appenders": [
     {
       "type": "console",
-      "category": "Agenda",
-      "level": "ERROR"
+      "category": "Agenda"
     },
     {
       "type": "console",
-      "category": "CYKParser",
-      "level": "ERROR"
+      "category": "CYKParser"
     },
     {
       "type": "console",
-      "category": "CYK_Item",
-      "level": "ERROR"
+      "category": "CYK_Item"
     },
     {
       "type": "console",
-      "category": "Chart",
-      "level": "DEBUG"
+      "category": "Chart"
     },
     {
       "type": "console",
-      "category": "ChartParser",
-      "level": "ERROR"
+      "category": "ChartParser"
     },
     {
       "type": "console",
-      "category": "Constraint",
-      "level": "ERROR"
+      "category": "Constraint"
     },
     {
       "type": "console",
-      "category": "DoubleDottedItem",
-      "level": "ERROR"
+      "category": "DoubleDottedItem"
     },
     {
       "type": "console",
-      "category": "EarleyItem",
-      "level": "DEBUG"
+      "category": "EarleyItem"
     },
     {
       "type": "console",
-      "category": "EarleyParser",
-      "level": "ERROR"
+      "category": "EarleyParser"
     },
     {
       "type": "console",
-      "category": "GoalItem",
-      "level": "ERROR"
+      "category": "GoalItem"
     },
     {
       "type": "console",
-      "category": "Grammar",
-      "level": "DEBUG"
+      "category": "Grammar"
     },
     {
       "type": "console",
-      "category": "GrammarParser",
-      "level": "ERROR"
+      "category": "GrammarParser"
     },
     {
       "type": "console",
-      "category": "HeadCornerParser",
-      "level": "ERROR"
+      "category": "HeadCornerParser"
     },
     {
       "type": "console",
-      "category": "ItemFactory",
-      "level": "ERROR"
+      "category": "ItemFactory"
     },
     {
       "type": "console",
-      "category": "LeftCornerParser",
-      "level": "ERROR"
+      "category": "LeftCornerParser"
     },
     {
       "type": "console",
-      "category": "ParserFactory",
-      "level": "ERROR"
+      "category": "ParserFactory"
     },
     {
       "type": "console",
-      "category": "ProductionRule",
-      "level": "ERROR"
+      "category": "ProductionRule"
     }
-]
+  ],
+  "levels": {
+    "Agenda": "ERROR",
+    "CYKParser": "ERROR",
+    "CYK_Item": "ERROR",
+    "Chart": "ERROR",
+    "ChartParser": "ERROR",
+    "Constraint": "ERROR",
+    "DoubleDottedItem": "ERROR",
+    "EarleyItem": "ERROR",
+    "EarleyParser": "DEBUG",
+    "GoalItem": "ERROR",
+    "Grammar": "ERROR",
+    "GrammarParser": "ERROR",
+    "HeadCornerParser": "ERROR",
+    "ItemFactory": "ERROR",
+    "LeftCornerParser": "ERROR",
+    "ParserFactory": "ERROR",
+    "ProductionRule": "DEBUG"
+  },
+  "replaceConsole": true
 }
