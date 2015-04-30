@@ -1,6 +1,6 @@
 S -> NP *VP*
-<NP number> = <VP number>
-<S subject> = <NP head>
+<NP head agreement number> = <VP head agreement number>
+<VP subject> = <NP head>
 <S action> = <VP head>
 
 NP -> Determiner *Noun*
@@ -9,4 +9,4 @@ NP -> Determiner *Noun*
 
 VP -> *Verb* NP
 <VP head> = <Verb head>
-<VP head subcat> = transitive
+<Verb head subcat> = transitive

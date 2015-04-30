@@ -26,6 +26,6 @@ exports.event_function = function(event_name, item) {
   //console.log(event_name + ': ' + item.id);
 };
 
-//exports.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
-exports.log4js_config = '/Eclipse Workspace/chart_parsers/config/log4js.json';
+exports.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
+//exports.log4js_config = '/Eclipse Workspace/chart_parsers/config/log4js.json';
 
