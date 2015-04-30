@@ -22,7 +22,9 @@ var fs = require('fs');
 var natural = require('natural');
 var tokenizer = new natural.WordTokenizer();
 
-var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
+//var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
+//var fs_base = '/e/Eclipse Workspace/feature-structures/lib/';
+var fs_base = 'E:\\Eclipse Workspace\\feature-structures\\lib\\';
 var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
 var lexiconParser = require(fs_base + 'LexiconParser');
 
