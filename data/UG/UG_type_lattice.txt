@@ -8,6 +8,7 @@ Approp POS category Verb
 Approp BOTTOM tense present
 Approp BOTTOM subcat transitive
 Approp POS agreement agreement
+Approp BOTTOM agreement agreement
 Approp BOTTOM NP number
 Approp BOTTOM VP number
 Approp BOTTOM head number

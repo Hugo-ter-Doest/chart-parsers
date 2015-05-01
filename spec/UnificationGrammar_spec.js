@@ -17,6 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var settings = require('../config/Settings');
+
+var log4js = require('log4js');
+log4js.configure(settings.log4js_config);
+var logger = log4js.getLogger('EarleyItem');
+
 var fs = require('fs');
 
 var natural = require('natural');
@@ -56,6 +62,7 @@ describe('Unification grammar chain', function() {
       }
       // Parse the type lattice
       type_lattice = typeLatticeParser.parse(text);
+      type_lattice.appropriate_function = null;
       console.log('beforeEach: parsed the type lattice');
       console.log(type_lattice.pretty_print());
       fs.readFile(lexicon_file, 'utf8', function (error, text) {
@@ -99,10 +106,15 @@ describe('Unification grammar chain', function() {
       var words = tokenizer.tokenize(sentence);
       // Tag sentence
       var tagged_sentence = lexicon.tag_sentence(words);
-      console.log(tagged_sentence);
+      logger.debug(tagged_sentence);
       // Parse sentence
       var parse_result = parser.parse(tagged_sentence);
-      console.log(parse_result);
+      parse_result.full_parse_items(grammar.get_start_symbol(), 'earleyitem').forEach(function(item) {
+        logger.debug(item.pretty_print());
+        item.children.forEach(function(c) {
+          logger.debug(c.pretty_print());
+        });
+      });
     });
   });
 });
