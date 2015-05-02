@@ -78,7 +78,7 @@
     "Constraint": "ERROR",
     "DoubleDottedItem": "ERROR",
     "EarleyItem": "DEBUG",
-    "EarleyParser": "DEBUG",
+    "EarleyParser": "ERROR",
     "GoalItem": "ERROR",
     "Grammar": "ERROR",
     "GrammarParser": "ERROR",
@@ -86,7 +86,7 @@
     "ItemFactory": "ERROR",
     "LeftCornerParser": "ERROR",
     "ParserFactory": "ERROR",
-    "ProductionRule": "DEBUG"
+    "ProductionRule": "ERROR"
   },
   "replaceConsole": true
 }

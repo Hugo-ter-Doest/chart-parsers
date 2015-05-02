@@ -11,10 +11,12 @@
 [man] ->
 [POS
  category: Noun
- agreement: [agreement
-             number: singular
-             gender: masculin
-            ]
+ head: [BOTTOM
+        agreement: [agreement
+                    number: singular
+                    gender: masculin
+                   ]
+       ]
 ]
 
 [uses] ->
@@ -22,7 +24,7 @@
  category: Verb
  head: [BOTTOM
         agreement: [agreement
-                    number: singular
+                    number: plural
                    ]
         tense: present
         subcat: transitive

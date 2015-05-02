@@ -78,10 +78,10 @@ describe('Unification grammar chain', function() {
           }
           // Parse the grammar
           grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
-          console.log(grammar.pretty_print());
+          logger.debug(grammar.pretty_print());
           // Create the parser
           parser = parserFactory.createParser({'type': parserType, 'grammar': grammar, 'type_lattice': type_lattice});
-          console.log('beforeEach: created the parser');
+          //console.log('beforeEach: created the parser');
           // Read sentences from file
           fs.readFile(sentences_file, 'utf8', function (error, text) {
             if (error) {
@@ -89,7 +89,7 @@ describe('Unification grammar chain', function() {
             }
             // Parse sentences and compare with result
             sentences = text.split('\n');
-            console.log('beforeEach: read ' + sentences.length + ' test sentences');
+            logger.debug('beforeEach: read ' + sentences.length + ' test sentences');
             done();
           });
         });
@@ -98,7 +98,7 @@ describe('Unification grammar chain', function() {
   });
 
 
-  console.log('beforeEach executed: sentences ' + sentences);
+  logger.debug('beforeEach executed: sentences ' + sentences);
 
   it('should correctly parse a set of sentences using unification grammar', function() {
     sentences.forEach(function(sentence) {
