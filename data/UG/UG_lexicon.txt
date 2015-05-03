@@ -24,7 +24,7 @@
  category: Verb
  head: [BOTTOM
         agreement: [agreement
-                    number: plural
+                    number: singular
                    ]
         tense: present
         subcat: transitive
