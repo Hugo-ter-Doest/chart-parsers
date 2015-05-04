@@ -38,7 +38,8 @@ var GrammarParser = require('../lib/GrammarParser');
 
 var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
-var parserType = 'Earley';
+//var parserType = 'Earley';
+var parserType = 'LeftCorner';
 
 var base = '/home/hugo/Workspace/chart-parsers/data/UG/';
 
