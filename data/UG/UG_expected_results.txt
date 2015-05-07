@@ -1,0 +1,34 @@
+[0] ->
+[BOTTOM
+ S: [BOTTOM
+     head: [BOTTOM
+            agreement: [BOTTOM
+                        number: BOTTOM
+                       ]
+           ]
+     subject: [987] [BOTTOM
+                     agreement: [agreement
+                                 number: singular
+                                 gender: masculin
+                                ]
+                    ]
+     action: [993] [BOTTOM
+                    subcat: transitive
+                    object: [BOTTOM
+                             agreement: [agreement
+                                         number: singular
+                                        ]
+                            ]
+                    agreement: [agreement
+                                number: singular
+                               ]
+                    tense: present
+                   ]
+    ]
+ VP: [BOTTOM
+      head: [993]
+     ]
+ NP: [BOTTOM
+      head: [987]
+     ]
+]

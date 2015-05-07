@@ -48,7 +48,8 @@ var grammar_file = base + 'UG_grammar.txt';
 var sentences_file = base + 'UG_sentences.txt';
 var results_file = base + 'UG_expected_results.txt';
 
-var parser_types = ['Earley', 'LeftCorner'];
+//var parser_types = ['Earley', 'LeftCorner'];
+var parser_types = ['HeadCorner'];
 parser_types.forEach(function(parserType) {
   describe('Unification grammar chain', function() {
 
