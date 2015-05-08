@@ -76,7 +76,7 @@
     "Chart": "ERROR",
     "ChartParser": "ERROR",
     "Constraint": "ERROR",
-    "DoubleDottedItem": "ERROR",
+    "DoubleDottedItem": "DEBUG",
     "EarleyItem": "DEBUG",
     "EarleyParser": "ERROR",
     "GoalItem": "ERROR",
