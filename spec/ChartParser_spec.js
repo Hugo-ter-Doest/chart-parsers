@@ -16,10 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var settings = require('../config/Settings');
+settings.UNIFICATION  = false;
+
 var fs = require('fs');
 
 var ParserFactoryClass = require('../index');
 var parserFactory = new ParserFactoryClass();
+
+var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var math_grammar_file = path + 'math_expressions.txt';
+var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
 
 ['Earley', 'LeftCorner', 'HeadCorner'].forEach(function(parserType) {
   describe(parserType, function() {
@@ -55,7 +62,7 @@ var parserFactory = new ParserFactoryClass();
     // E -> E multiply E
     // E -> number  
     it('should read a text file', function(done) {
-      fs.readFile('data/math_expressions.txt', 'utf8', function (error, text) {
+      fs.readFile(math_grammar_file, 'utf8', function (error, text) {
         expect(text).toBeDefined();
         grammar_text = text;
         done();
@@ -122,7 +129,7 @@ var parserFactory = new ParserFactoryClass();
   //P -> on
   //P -> in
     it('should read a text file', function(done) {
-      fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
+      fs.readFile(CYK_grammar_file, 'utf8', function (error, text) {
         grammar_text = text;
         done();
       });

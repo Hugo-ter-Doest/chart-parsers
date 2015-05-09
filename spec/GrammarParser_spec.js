@@ -19,14 +19,41 @@
 var fs = require('fs');
 var GrammarParser = require('../lib/GrammarParser');
 
+var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var minimal_grammar_file = path + 'minimal_grammar.txt';
+var grammar_for_CFG_file = path + 'test_grammar_for_CFG.txt';
+var math_grammar_file = path + 'math_expressions.txt';
 
 describe('GrammarParser', function() {
   var grammar_text;
   var grammar;
   
+  beforeEach(function() {
+      this.addMatchers({
+        toEqualProductionRules: function(array) {
+          this.message = function() {
+            return "Expected " + this.actual + " to be array " + array + ".";
+          };
+          var arraysAreSame = function(x, y) {
+            var arraysAreSame = (x.length === y.length);
+            if (arraysAreSame) {
+              for(var i; i < x.length; i++)
+                 if(x[i] !== y[i])
+                    arraysAreSame = false;
+              return arraysAreSame;
+            }
+            else {
+              return(false);
+            }
+          };
+          return arraysAreSame(this.actual, array);
+        }
+      });
+    });
+    
 //S ->
   it('should read a text file', function(done) {
-    fs.readFile('data/minimal_grammar.txt', 'utf8', function (error, text) {
+    fs.readFile(minimal_grammar_file, 'utf8', function (error, text) {
       expect(text).toBeDefined();
       grammar_text = text;
       done();
@@ -34,12 +61,12 @@ describe('GrammarParser', function() {
   });
   it('should correctly parse a minial grammar consisting of the rule S -> (empty)', function () {
     var expected = {};
-    expected.production_rules = [{'lhs': 'S', 'rhs': [], 'constraints': [], 'head': 0}];
+    expected.production_rules = [ { 'lhs' : 'S', 'rhs' : [  ], 'head' : 0, 'fs' : null } ];
     expected.nonterminals = {'S': true};
     expected.start_symbol = 'S';
     expected.is_CNF = false;
     grammar = GrammarParser.parse(grammar_text);
-    expect(grammar.production_rules).toEqual(expected.production_rules);
+    expect(grammar.production_rules).toEqualProductionRules(expected.production_rules);
     expect(grammar.nonterminals).toEqual(expected.nonterminals);
     expect(grammar.is_CNF).toEqual(expected.is_CNF);
     expect(grammar.start_symbol).toEqual(expected.start_symbol);
@@ -60,7 +87,7 @@ describe('GrammarParser', function() {
   });
   
   it('should look up rules with left-hand-side S', function () {
-    expect(grammar.rules_with_lhs('S')).toEqual([{'lhs': 'S', 'rhs': [], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_lhs('S')).toEqualProductionRules([ { lhs : 'S', rhs : [  ], head : 0, fs : null } ]);
   });
   
   it('should look up the start rule', function () {
@@ -84,7 +111,7 @@ describe('GrammarParser', function() {
 //VP -> VBP NP
 //VP -> work
   it('should read another text file', function(done) {
-    fs.readFile('data/test_grammar_for_CFG.txt', 'utf8', function (error, text) {
+    fs.readFile(grammar_for_CFG_file, 'utf8', function (error, text) {
       expect(text).toBeDefined();
       grammar_text = text;
       done();
@@ -203,7 +230,7 @@ describe('GrammarParser', function() {
 //E -> E multiply E
 //E -> number
   it('should read another text file', function(done) {
-    fs.readFile('data/math_expressions.txt', 'utf8', function (error, text) {
+    fs.readFile(math_grammar_file, 'utf8', function (error, text) {
       expect(text).toBeDefined();
       grammar_text = text;
       done();

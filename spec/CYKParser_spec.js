@@ -1,6 +1,6 @@
 /*
     Unit test for CYKParser.js
-    Copyright (C) 2014 Hugo W.L. ter Doest
+    Copyright (C) 2015 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var settings = require('../config/Settings');
+settings.UNIFICATION  =false;
+
 var fs = require('fs');
 
 var ParserFactoryClass = require('../index');
@@ -24,9 +27,9 @@ var parserFactory = new ParserFactoryClass();
 var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
 
-function event_func(event_name, item) {
-  //console.log(event_name + ': ' + item.id);
-}
+var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var lexicon_file = '';
+var grammar_file = path + 'test_grammar_for_CYK.txt';
 
 // Grammar (in ../data/test_grammar_for_CYK.txt)
 //S  -> NP VP
@@ -57,7 +60,7 @@ describe('CYK Parser', function() {
   var grammar_text;
 
   it('should read a text file', function(done) {
-    fs.readFile('data/test_grammar_for_CYK.txt', 'utf8', function (error, text) {
+    fs.readFile(grammar_file, 'utf8', function (error, text) {
       expect(text).toBeDefined();
       grammar_text = text;
       done();
@@ -78,8 +81,8 @@ describe('CYK Parser', function() {
                            ['the', 'DET'],
                            ['telescope', 'N']];
     var N = tagged_sentence.length;
-    var parser = parserFactory.createParser({'type': 'CYK'});
-    var chart = parser.parse(tagged_sentence, event_func);
+    var parser = parserFactory.createParser({type: 'CYK'});
+    var chart = parser.parse(tagged_sentence);
     var parses = chart.full_parse_items(parser.grammar.get_start_symbol(), "cyk_item");
     expect(parses.length).toEqual(2);
     var expected_item = itemFactory.createItem({

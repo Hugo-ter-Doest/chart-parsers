@@ -1,0 +1,16 @@
+// Lexicon
+//DET -> the
+//NP -> I
+//N -> man
+//N -> telescope
+//P -> with
+//V -> saw
+//N -> cat
+//N -> dog
+//N -> pig
+//N -> hill
+//N -> park
+//N -> roof
+//P -> from
+//P -> on
+//P -> in
