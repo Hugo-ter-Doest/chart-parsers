@@ -67,9 +67,49 @@
     {
       "type": "console",
       "category": "ProductionRule"
+    },
+        {
+      "type": "console",
+      "category": "AppropriateFunction"
+    },
+    {
+      "type": "console",
+      "category": "FeatureStructureFactory"
+    },
+    {
+      "type": "console",
+      "category": "Lexicon"
+    },
+    {
+      "type": "console",
+      "category": "LexiconParser"
+    },
+    {
+      "type": "console",
+      "category": "Type"
+    },
+    {
+      "type": "console",
+      "category": "TypeLattice"
+    },
+    {
+      "type": "console",
+      "category": "TypeLatticeParser"
+    },
+    {
+      "type": "console",
+      "category": "TypedFeatureStructure"
     }
   ],
   "levels": {
+    "AppropriateFunction": "ERROR",
+    "FeatureStructureFactory": "ERROR",
+    "Lexicon": "DEBUG",
+    "LexiconParser": "DEBUG",
+    "Type": "ERROR",
+    "TypeLattice": "WARN",
+    "TypeLatticeParser": "ERROR",
+    "TypedFeatureStructure": "DEBUG",
     "Agenda": "ERROR",
     "CYKParser": "ERROR",
     "CYK_Item": "ERROR",

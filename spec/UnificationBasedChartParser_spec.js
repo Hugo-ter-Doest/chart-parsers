@@ -27,26 +27,21 @@ var fs = require('fs');
 var natural = require('natural');
 var tokenizer = new natural.WordTokenizer();
 
-var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
-//var fs_base = '/e/Eclipse Workspace/feature-structures/lib/';
-//var fs_base = 'E:\\Eclipse Workspace\\feature-structures\\lib\\';
-var typeLatticeParser = require(fs_base + 'TypeLatticeParser');
-var lexiconParser = require(fs_base + 'LexiconParser');
+var typeLatticeParser = require('../lib/TypeLatticeParser');
+var lexiconParser = require('../lib/LexiconParser');
 
 var GrammarParser = require('../lib/GrammarParser');
 
 var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
-//var parserType = 'Earley';
-var parserType = 'LeftCorner';
 
 var base = '/home/hugo/Workspace/chart-parsers/data/UG/';
 
-var lexicon_file = base + 'UG_lexicon.txt';
+var lexicon_file =      base + 'UG_lexicon.txt';
 var type_lattice_file = base + 'UG_type_lattice.txt';
-var grammar_file = base + 'UG_grammar.txt';
-var sentences_file = base + 'UG_sentences.txt';
-var results_file = base + 'UG_expected_results.txt';
+var grammar_file =      base + 'UG_grammar.txt';
+var sentences_file =    base + 'UG_sentences.txt';
+var results_file =      base + 'UG_expected_results.txt';
 
 var parser_types = ['Earley', 'LeftCorner', 'HeadCorner'];
 parser_types.forEach(function(parserType) {
@@ -62,7 +57,7 @@ parser_types.forEach(function(parserType) {
     beforeEach(function(done) { 
       fs.readFile(type_lattice_file, 'utf8', function (error, text) {
         if (error) {
-          console.log(error);
+          logger.debug(error);
         }
         // Parse the type lattice
         type_lattice = typeLatticeParser.parse(text);
@@ -71,14 +66,14 @@ parser_types.forEach(function(parserType) {
         console.log(type_lattice.pretty_print());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
-            console.log(error);
+            logger.debug(error);
           }
           // Parse the lexicon
           lexicon = lexiconParser.parse(text, {'type_lattice': type_lattice});
           console.log(lexicon.pretty_print());
           fs.readFile(grammar_file, 'utf8', function (error, text) {
             if (error) {
-              console.log(error);
+              logger.debug(error);
             }
             // Parse the grammar
             grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
@@ -89,7 +84,7 @@ parser_types.forEach(function(parserType) {
             // Read sentences from file
             fs.readFile(sentences_file, 'utf8', function (error, text) {
               if (error) {
-                console.log(error);
+                logger.debug(error);
               }
               // Parse sentences and compare with result
               sentences = text.split('\n');

@@ -1,0 +1,52 @@
+[huis] ->
+[POS
+ category: noun
+ agreement: [agreement
+             number: singular
+             gender: neutrum
+            ]
+]
+
+[het] ->
+[POS
+ category: determiner
+ agreement: [agreement
+             number: singular
+             gender: neutrum
+            ]
+]
+
+[is] ->
+[POS
+ category: verb
+ agreement: [agreement
+             number: singular
+            ]
+ tense: present
+]
+
+[groot] ->
+[POS
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
+[test] -> 
+[BOTTOM
+ f: [45] [BOTTOM
+          k: w
+          h: v
+         ]
+ g: [45]
+]
+
+[test] -> 
+[BOTTOM
+ f: [45] [BOTTOM
+          k: [23] w
+          h: [23]
+         ]
+ g: [45]
+]

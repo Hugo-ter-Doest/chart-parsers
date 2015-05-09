@@ -16,6 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// Separator used in AppropriateFunction to concatenate triples 
+// (type, feature, type)
+exports.appropriateSeparator = ':';
+
 // If true the chart parsers apply unification in parsing
 // At completion steps feature structures are unified
 exports.UNIFICATION = true;
@@ -27,5 +31,4 @@ exports.event_function = function(event_name, item) {
 };
 
 exports.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
-//exports.log4js_config = '/Eclipse Workspace/chart_parsers/config/log4js.json';
 
