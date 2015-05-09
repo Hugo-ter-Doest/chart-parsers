@@ -246,3 +246,107 @@ PP -> P *NP*
 VP -> *V* NP
 VP -> *VP* PP
 ```
+
+# Feature Structures
+
+This module provides a class for typed feature structures, unification. Furthermore it allows reading a lexicon and taggging.
+
+## Usage of types
+A type is an object with a name and zero or more super types:
+```
+var Type = require('../lib/Type');
+var agreement = new Type('agreement', []);
+var person = new Type('person', [agreement]);
+```
+
+## Usage of type lattice
+```
+var TypeLattice = require('../lib/TypeLattice');
+var typeLattice = new TypeLattice();
+var Type = require('../lib/Type');
+
+var agreement = new Type('agreement', []);
+  
+typeLattice.add_type(agreement);
+  
+var person = new Type('person', [agreement]);
+var first = new Type('first', [person]);
+var second = new Type('second', [person]);
+var third = new Type('third', [person]);
+
+typeLattice.add_type(person);
+typeLattice.add_type(first);
+typeLattice.add_type(second);
+typeLattice.add_type(third);
+```
+Once a type lattice has been created the least upper bound of two types can be 
+determined:
+```
+var lub = type1.lub(type2, type_lattice);
+```
+Checking if one type subsumes another type is done as follows:
+```
+if (type1.subsumes(type2, type_lattice)) {
+  console.log(type1.pretty_print() + ' subsumes ' + type2.pretty_print());
+}
+```
+
+## Creating typed feature structures
+Feature structures can be created programmatically from JSON objects and by 
+specification in a PATRII like language. Typed feature structures are specified 
+with respect to a type lattice.
+
+Here is how to create feature structures from JSON objects:
+```
+var FeatureStructureFactory = require('../lib/FeatureStructureFactory');
+var featureStructureFactory = new FeatureStructureFactory();
+
+featureStructureFactory.set_type_lattice(typeLattice);
+
+var dag_verb = {
+  'type': 'verb',
+  'literal': 'walks',
+  'agreement' : {
+    'type': 'agreement',
+    'person': 'third',
+    'number': 'singular'
+  }
+};
+  
+var dag_noun = {
+  'type': 'noun',
+  'literal': 'man',
+  'agreement': {
+    'type': 'agreement',
+    'person': 'third',
+    'number': 'singular'
+  }
+};
+
+var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
+console.log(fs_verb.pretty_print());
+var fs_noun = featureStructureFactory.createFeatureStructure({'dag': dag_noun});
+console.log(fs_noun.pretty_print());
+```
+
+Feature structures can be specified in a lexicon as well. 
+```
+[home] ->
+[POS
+ category: noun
+ agreement: [agreement
+             number: singular
+             gender: neutrum
+            ]
+]
+```
+The module LexiconParser reads lexicon as follows:
+```
+
+```
+
+## Unification of feature structures
+Todo
+
+## Algorithm
+Todo
