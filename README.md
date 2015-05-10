@@ -18,9 +18,9 @@ npm install chart-parsers
 # Usage
 All four parser are used in the same way: load a grammar, create a parser and parse sentences.
 ```
-var ParserFactoryClass = require('chart-parsers');
-var parserFactory = new ParserFactoryClass();
-var GrammarParser = chart_parsers.GrammarParser;
+var GrammarParser = require('GrammarParser');
+var ParserFactory = require('ParserFactory');
+var parserFactory = new ParserFactory();
 
 var tagged_sentence = [['I', 'NP'], ['saw', 'V'], ['the', 'DET'], ['man', 'N'], 
                        ['with', 'P'], ['the', 'DET'], ['telescope', 'N']];
