@@ -21,6 +21,7 @@ settings.UNIFICATION  = false;
 
 var fs = require('fs');
 
+var GrammarParser = require('../lib/GrammarParser');
 var ParserFactoryClass = require('../index');
 var parserFactory = new ParserFactoryClass();
 
@@ -52,7 +53,7 @@ var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
           return arraysAreSame(this.actual, array);
         }
       });
-    });
+    }); 
     
     var grammar_text;
   
@@ -69,13 +70,14 @@ var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
       });
     });
     
+    var grammar;
     it('should parse the text file with the grammar', function() {
-      parserFactory.setGrammar(grammar_text);
+      grammar = GrammarParser.parse(grammar_text);
     });
     
     it('should parse a sentence', function() {
       //var parser = new ChartParser(grammar);
-      var parser = parserFactory.createParser({'type': parserType});
+      var parser = parserFactory.createParser({grammar: grammar, type: parserType});
     
       // 2 + 3
       var tagged_sentence = [['2', 'number'],
@@ -136,12 +138,10 @@ var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
     });
     
     it('should parse the text file with the grammar', function() {
-      //grammar = GrammarParser.parse(grammar_text);
-      parserFactory.setGrammar(grammar_text);
-      //parser = new ChartParser(grammar);
+      grammar = GrammarParser.parse(grammar_text);
     });
     it('should parse a sentence', function() {
-      parser = parserFactory.createParser({'type': parserType});
+      parser = parserFactory.createParser({grammar: grammar, type: parserType});
       tagged_sentence = [['I', 'NP'],
                          ['saw', 'V'],
                          ['the', 'DET'],
@@ -164,3 +164,4 @@ var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
     });
   });
 });
+

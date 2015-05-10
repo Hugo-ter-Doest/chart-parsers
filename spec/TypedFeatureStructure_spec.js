@@ -241,7 +241,6 @@ describe('Typed Feature Structure class', function() {
     var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
     var fs4 = fs3.copy(type_lattice_2);
     // Feature structures should be equal up to the labels
-    expect(fs3.pretty_print().replace( /\[\d+\]/g, '[newvalue]')).toEqual(fs4.pretty_print().replace( /\[\d+\]/g, '[newvalue]'));
-    //expect(fs3.is_equal_to(fs4)).toEqual(true);
+    expect(fs3.is_equal_to(fs4)).toEqual(true);
   });
 });

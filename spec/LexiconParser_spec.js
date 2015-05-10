@@ -31,6 +31,8 @@ var lexicon_file = basedir + 'example_lexicon.txt';
 var type_lattice_file = basedir + 'type_lattice.txt';
 
 describe('Lexicon parser', function() {
+  var lexicon;
+  var type_lattice;
   it('Should parse a lexicon with type specification and words with feature structures', function() {
     // Read a file with type lattice
     fs.readFile(type_lattice_file, 'utf8', function (error, data) {
@@ -38,17 +40,21 @@ describe('Lexicon parser', function() {
         logger.debug(error);
       }
       // parse the type lattice
-      var type_lattice = type_lattice_parser.parse(data);
+      type_lattice = type_lattice_parser.parse(data);
       logger.debug(type_lattice.pretty_print());
-      // Read a file with lexicon
-      fs.readFile(lexicon_file, 'utf8', function (error, data) {
-        if (error) {
-          logger.debug(error);
-        }
-        // Parse the lexicon        
-        // The type lattice is passed with an options variable
-        var result = lexicon_parser.parse(data, {type_lattice: type_lattice});
-      });
+    });
+  });
+  it('Should parse a lexicon with type specification and words with feature structures', function(done) {
+    // Read a file with lexicon
+    fs.readFile(lexicon_file, 'utf8', function (error, data) {
+      if (error) {
+        logger.debug(error);
+      }
+      // Parse the lexicon        
+      // The type lattice is passed with an options variable
+      lexicon = lexicon_parser.parse(data, {type_lattice: type_lattice});
+      done();
+      expect(lexicon.size()).toEqual(5);
     });
   });
 });

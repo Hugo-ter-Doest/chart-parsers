@@ -19,6 +19,8 @@
 var fs = require('fs');
 var GrammarParser = require('../lib/GrammarParser');
 
+//var TFS = require('../lib/TypedFeatureStructure');
+
 var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
 var minimal_grammar_file = path + 'minimal_grammar.txt';
 var grammar_for_CFG_file = path + 'test_grammar_for_CFG.txt';
@@ -38,7 +40,7 @@ describe('GrammarParser', function() {
             var arraysAreSame = (x.length === y.length);
             if (arraysAreSame) {
               for(var i; i < x.length; i++)
-                 if(x[i] !== y[i])
+                 if(!x[i].is_equal_to(y[i]))
                     arraysAreSame = false;
               return arraysAreSame;
             }
@@ -47,6 +49,12 @@ describe('GrammarParser', function() {
             }
           };
           return arraysAreSame(this.actual, array);
+        },
+        toEqualProductionRule: function(rule) {
+          this.message = function() {
+            return "Expected " + JSON.stringify(this.actual) + " to be production rule " + JSON.stringify(rule) + ".";
+          };
+          return (this.actual.is_equal_to(rule));
         }
       });
     });
@@ -91,7 +99,7 @@ describe('GrammarParser', function() {
   });
   
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqual({'lhs': 'S', 'rhs': [], 'constraints': [], 'head': 0});
+    expect(grammar.start_rule()).toEqualProductionRule({ lhs : 'S', rhs : [  ], head : 0, fs : null });
   });
 
   it('should look up the start symbol', function () {
@@ -119,16 +127,16 @@ describe('GrammarParser', function() {
   });
   it('should correctly parse a grammar in CNF', function () {
     var expected = {};
-    expected.production_rules = [{'lhs': 'S', 'rhs': ['NP', 'VP'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'NP', 'rhs': ['DT', 'NN'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'PP', 'rhs': ['IN', 'NP'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'constraints': [], 'head': 0}, 
-                                 {'lhs': 'VP', 'rhs': ['work'], 'constraints': [], 'head': 0}];
+    expected.production_rules = [ { lhs : 'S', rhs : [ 'NP', 'VP' ], head : 0, fs : null }, 
+                                  { lhs : 'NP', rhs : [ 'DT', 'NN' ], head : 0, fs : null }, 
+                                  { lhs : 'PP', rhs : [ 'IN', 'NP' ], head : 0, fs : null }, 
+                                  { lhs : 'VP', rhs : [ 'VBP', 'NP' ], head : 0, fs : null }, 
+                                  { lhs : 'VP', rhs : [ 'work' ], head : 0, fs : null } ];
     expected.nonterminals = {'S': true, 'NP': true, 'PP': true, 'VP': true};
     expected.start_symbol = 'S';
     expected.is_CNF = true;
     grammar = GrammarParser.parse(grammar_text);
-    expect(grammar.production_rules).toEqual(expected.production_rules);
+    expect(grammar.production_rules).toEqualProductionRules(expected.production_rules);
     expect(grammar.nonterminals).toEqual(expected.nonterminals);
     expect(grammar.is_CNF).toEqual(expected.is_CNF);
     expect(grammar.start_symbol).toEqual(expected.start_symbol);
@@ -167,24 +175,24 @@ describe('GrammarParser', function() {
   });
   
   it('should look up rules with left-hand-side S', function () {
-    expect(grammar.rules_with_lhs('S')).toEqual([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_lhs('S')).toEqualProductionRules([ { lhs : 'S', rhs : [ 'NP', 'VP' ], head : 0, fs : null } ]);
   });
 
   it('should look up rules with left-hand-side NP', function () {
-    expect(grammar.rules_with_lhs('NP')).toEqual([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_lhs('NP')).toEqualProductionRules([ { lhs : 'NP', rhs : [ 'DT', 'NN' ], head : 0, fs : null } ]);
   });
   
   it('should look up rules with left-hand-side PP', function () {
-    expect(grammar.rules_with_lhs('PP')).toEqual([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_lhs('PP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, 'fs': null}]);
   });
   
   it('should look up rules with left-hand-side VP', function () {
-    expect(grammar.rules_with_lhs('VP')).toEqual([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'constraints': [], 'head': 0},
-                                                  {'lhs': 'VP', 'rhs': ['work'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_lhs('VP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, 'fs': null},
+                                                  {'lhs': 'VP', 'rhs': ['work'], 'head': 0, 'fs': null}]);
   });
 
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqual({'lhs': 'S', 'rhs': ['NP', 'VP'], 'constraints': [], 'head': 0});
+    expect(grammar.start_rule()).toEqualProductionRules({'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, 'fs': null});
   });
   
   it('should look up the start symbol', function () {
@@ -192,19 +200,19 @@ describe('GrammarParser', function() {
   });
 
   it('should look up production rules based on right hand side symbols (for CYK)', function () {
-    expect(grammar.get_rules_with_rhs('NP', 'VP')).toEqual([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqual([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'constraints': [], 'head': 0}]);
-    expect(grammar.get_rules_with_rhs('IN', 'NP')).toEqual([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.get_rules_with_rhs('VBP', 'NP')).toEqual([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqual([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'constraints': [], 'head': 0}]);
+    expect(grammar.get_rules_with_rhs('NP', 'VP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
+    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
+    expect(grammar.get_rules_with_rhs('IN', 'NP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.get_rules_with_rhs('VBP', 'NP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
   });
 
   it('should look up production rules with a given left-most daughter', function () {
-    expect(grammar.rules_with_leftmost_daughter('NP')).toEqual([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.rules_with_leftmost_daughter('DT')).toEqual([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'constraints': [], 'head': 0}]);
-    expect(grammar.rules_with_leftmost_daughter('IN')).toEqual([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.rules_with_leftmost_daughter('VBP')).toEqual([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'constraints': [], 'head': 0}]);
-    expect(grammar.rules_with_leftmost_daughter('work')).toEqual([{'lhs': 'VP', 'rhs': ['work'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_leftmost_daughter('NP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
+    expect(grammar.rules_with_leftmost_daughter('DT')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
+    expect(grammar.rules_with_leftmost_daughter('IN')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.rules_with_leftmost_daughter('VBP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.rules_with_leftmost_daughter('work')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['work'], 'head': 0, fs: null}]);
   });
 
   it('should test left-corner relations', function () {
@@ -239,16 +247,16 @@ describe('GrammarParser', function() {
   
   it('should correctly parse a context-free grammar (that is not in CNF)', function () {
     var expected = {};
-    expected.production_rules = [{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 1}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 1}, 
-                                 {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 1}, 
-                                 {'lhs': 'E', 'rhs': ['number'], 'constraints': [], 'head': 0}];
+    expected.production_rules = [{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'head': 1, 'fs': null}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'head': 1, 'fs': null}, 
+                                 {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'head': 1, 'fs': null}, 
+                                 {'lhs': 'E', 'rhs': ['number'], 'head': 1, 'fs': null}];
     expected.nonterminals = {'E': true};
     expected.start_symbol = 'E';
     expected.is_CNF = false;
     grammar = GrammarParser.parse(grammar_text);
-    expect(grammar.production_rules).toEqual(expected.production_rules);
+    expect(grammar.production_rules).toEqualProductionRules(expected.production_rules);
     expect(grammar.nonterminals).toEqual(expected.nonterminals);
     expect(grammar.is_CNF).toEqual(expected.is_CNF);
     expect(grammar.start_symbol).toEqual(expected.start_symbol);
@@ -269,19 +277,19 @@ describe('GrammarParser', function() {
   });
   
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqual({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1});
+    expect(grammar.start_rule()).toEqualProductionRule({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null});
   });
   
-  it('should look up the start rule', function () {
+  it('should look up the start symbol', function () {
     expect(grammar.get_start_symbol()).toEqual('E');
   });
   
   it('should look up production rules with a given left-most daughter', function () {
-    expect(grammar.rules_with_leftmost_daughter('E')).toEqual([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'constraints': [], 'head': 1},
-                                                               {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'constraints': [], 'head': 1},
-                                                               {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'constraints': [], 'head': 1},
-                                                               {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'constraints': [], 'head': 1}]);
-    expect(grammar.rules_with_leftmost_daughter('number')).toEqual([{'lhs': 'E', 'rhs': ['number'], 'constraints': [], 'head': 0}]);
+    expect(grammar.rules_with_leftmost_daughter('E')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null},
+                                                               {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'head': 1, 'fs': null},
+                                                               {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'head': 1, 'fs': null},
+                                                               {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'head': 1, 'fs': null}]);
+    expect(grammar.rules_with_leftmost_daughter('number')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['number'], 'head': 0, 'fs': null}]);
   });
   
   it('should test left-corner relations', function () {
