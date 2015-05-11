@@ -23,19 +23,20 @@ var fs = require('fs');
 var natural = require('natural');
 var Tagger = require('simple-pos-tagger');
 
-var ParserFactoryClass = require('../index');
-var parserFactory = new ParserFactoryClass();
+var ChartParsers = require('../index');
+var parserFactory = new ChartParsers.ParserFactory();
+var GrammarParser = ChartParsers.GrammarParser;
 
-var sentences_file = '../data/sentences.txt';
-var tagger_config_file = '/home/hugo/Workspace/chart_parsers/node_modules/simple-pos-tagger/data/English/lexicon_files.json';
-var grammar_file = '../data/English grammar using Wordnet tags.txt';
+var path = '/home/hugo/Workspace/chart-parsers/';
+var sentences_file =      path + 'data/Example with Wordnet/sentences.txt';
+var tagger_config_file =  path + 'node_modules/simple-pos-tagger/data/English/lexicon_files.json';
+var grammar_file =        path + 'data/Example with Wordnet/English grammar using Wordnet tags.txt';
 
 tokenizer = new natural.TreebankWordTokenizer();
 var wordnet = new natural.WordNet();
-//var parser;
 var sentences;
 
-logger.setLevel('INFO');
+logger.setLevel('DEBUG');
 
 function initialise(callback) {
   // read sentences from file
@@ -50,9 +51,9 @@ function initialise(callback) {
         logger.error(error);
       }
       // parse the grammar
-      parserFactory.setGrammar(grammar_text);
+      var grammar = GrammarParser.parse(grammar_text);
       // create parser
-      var parser = parserFactory.createParser({'type': 'Earley'});
+      var parser = parserFactory.createParser({'type': 'Earley', 'grammar': grammar});
       new Tagger(tagger_config_file, function(tagger) {
         logger.debug("POS tagger and parser are ready");
         callback(tagger, parser);
@@ -128,17 +129,13 @@ function tag_sentence_function_words(fw_tagger, tokenized_sentence) {
   return(tagged_sentence);
 }
 
-function event_func(event_name, item) {
-  //console.log(event_name + ': ' + item.id);
-}
-
 (function main() {
   initialise(function(fw_tagger, parser) {
     sentences.forEach(function(sentence) {
       var tokenized_sentence = tokenize_sentence(sentence);
       var tagged_sentence = tag_sentence_function_words(fw_tagger, tokenized_sentence);
       tag_sentence_wordnet(tagged_sentence, function(tagged_sentence) {
-        var chart = parser.parse(tagged_sentence, event_func);
+        var chart = parser.parse(tagged_sentence);
         logger.info("main: parse trees of \"" + sentence + "\":\n" + 
                     // Head-Corner or CYK parser: pass cyk_item
                     // Earley parser or Left-Corner parser: pass earleyitem

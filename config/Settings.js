@@ -22,7 +22,7 @@ exports.appropriateSeparator = ':';
 
 // If true the chart parsers apply unification in parsing
 // At completion steps feature structures are unified
-exports.UNIFICATION = true;
+exports.UNIFICATION = false;
 
 // The event function is called by Agenda and Chart when items are added
 // Agenda and Chart are event emitters

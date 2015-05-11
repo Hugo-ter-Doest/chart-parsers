@@ -1,6 +1,6 @@
 /*
     Index file
-    Copyright (C) 2014 Hugo W.L. ter Doest
+    Copyright (C) 2015 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,6 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// This index.js exports the necessary classes for using unification-based
+// chart parsers
+
+var TypeLatticeParser = require('./lib/TypeLatticeParser');
+var GrammarParser = require('./lib/GrammarParser');
+var LexiconParser = require('./lib/LexiconParser');
 var ParserFactory = require('./lib/ParserFactory');
 
-module.exports = ParserFactory;
+module.exports.TypeLatticeParser = TypeLatticeParser;
+module.exports.LexiconParser = LexiconParser;
+module.exports.GrammarParser = GrammarParser;
+module.exports.ParserFactory = ParserFactory;

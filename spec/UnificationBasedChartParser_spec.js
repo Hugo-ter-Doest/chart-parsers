@@ -20,7 +20,7 @@ var settings = require('../config/Settings');
 
 var log4js = require('log4js');
 log4js.configure(settings.log4js_config);
-var logger = log4js.getLogger('DoubleDottedItem');
+var logger = log4js.getLogger('CYK_Item');
 
 var fs = require('fs');
 
@@ -43,7 +43,7 @@ var grammar_file =      base + 'UG_grammar.txt';
 var sentences_file =    base + 'UG_sentences.txt';
 var results_file =      base + 'UG_expected_results.txt';
 
-var parser_types = ['Earley', 'LeftCorner', 'HeadCorner'];
+var parser_types = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
 parser_types.forEach(function(parserType) {
   describe('Unification grammar chain', function() {
 

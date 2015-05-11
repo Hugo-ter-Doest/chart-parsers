@@ -22,14 +22,16 @@ settings.UNIFICATION  = false;
 var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
-var ParserFactoryClass = require('../index');
-var parserFactory = new ParserFactoryClass();
+var ChartParsers = require('../index');
+var parserFactory = new ChartParsers.ParserFactory();
 
 var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
 var math_grammar_file = path + 'math_expressions.txt';
 var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
 
-['Earley', 'LeftCorner', 'HeadCorner'].forEach(function(parserType) {
+var parserTypes = ['Earley', 'LeftCorner', 'HeadCorner'];
+
+parserTypes.forEach(function(parserType) {
   describe(parserType, function() {
 
     beforeEach(function() {

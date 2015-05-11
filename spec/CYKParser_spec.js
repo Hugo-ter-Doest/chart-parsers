@@ -23,8 +23,8 @@ var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
 
-var ParserFactoryClass = require('../index');
-var parserFactory = new ParserFactoryClass();
+var ChartParsers = require('../index');
+var parserFactory = new ChartParsers.ParserFactory();
 
 var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
