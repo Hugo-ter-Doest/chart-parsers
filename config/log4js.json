@@ -99,6 +99,10 @@
     {
       "type": "console",
       "category": "TypedFeatureStructure"
+    },
+    {
+      "type": "console",
+      "category": "ExampleWithWordnet"
     }
   ],
   "levels": {
@@ -126,7 +130,8 @@
     "ItemFactory": "ERROR",
     "LeftCornerParser": "ERROR",
     "ParserFactory": "ERROR",
-    "ProductionRule": "ERROR"
+    "ProductionRule": "ERROR",
+    "ExampleWithWordnet": "INFO"
   },
   "replaceConsole": true
 }

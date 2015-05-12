@@ -1,6 +1,6 @@
 /*
     Example of a chain of tokenizer, wordnet tagger and parser
-    Copyright (C) 2014 Hugo W.L. ter Doest
+    Copyright (C) 2015 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,8 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var settings = require('../config/Settings');
 var log4js = require('log4js');
-var logger = log4js.getLogger();
+log4js.configure(settings.log4js_config);
+var logger = log4js.getLogger('ExampleWithWordnet');
+// Log level is  set in ../config/log4js.json
 
 var fs = require('fs');
 var natural = require('natural');
@@ -35,8 +38,6 @@ var grammar_file =        path + 'data/Example with Wordnet/English grammar usin
 tokenizer = new natural.TreebankWordTokenizer();
 var wordnet = new natural.WordNet();
 var sentences;
-
-logger.setLevel('DEBUG');
 
 function initialise(callback) {
   // read sentences from file
@@ -92,23 +93,21 @@ function tag_sentence_wordnet(tagged_sentence, callback) {
   var nr_tokens = tagged_sentence.length;
 
   tagged_sentence.forEach(function(tagged_word) {
-    if (tagged_word.length === 1) { // don't tag if it already has tag(s)
-      logger.debug("tag_sentence: processing " + tagged_word);
-      wordnet.lookup(tagged_word[0], function(results) {
-        results.forEach(function(result) {
-          if (tagged_word.lastIndexOf(result.pos) <= 0) {
-            tagged_word.push(result.pos);
-            logger.debug("Lexical category of " + tagged_word[0] + " is: " + result.pos);
-          }
-        });
-  
-        nr_tokens--;
-        if (nr_tokens === 0) {
-          logger.info("tag_sentence: " + JSON.stringify(tagged_sentence));
-          callback(tagged_sentence);
+    logger.debug("tag_sentence: processing " + tagged_word);
+    wordnet.lookup(tagged_word[0], function(results) {
+      results.forEach(function(result) {
+        if (tagged_word.lastIndexOf(result.pos) <= 0) {
+          tagged_word.push(result.pos);
+          logger.debug("Lexical category of " + tagged_word[0] + " is: " + result.pos);
         }
       });
-    }
+
+      nr_tokens--;
+      if (nr_tokens === 0) {
+        logger.info("Exit tag_sentence_wordnet: " + JSON.stringify(tagged_sentence));
+        callback(tagged_sentence);
+      }
+    });
   });
 }
 
@@ -137,9 +136,9 @@ function tag_sentence_function_words(fw_tagger, tokenized_sentence) {
       tag_sentence_wordnet(tagged_sentence, function(tagged_sentence) {
         var chart = parser.parse(tagged_sentence);
         logger.info("main: parse trees of \"" + sentence + "\":\n" + 
-                    // Head-Corner or CYK parser: pass cyk_item
-                    // Earley parser or Left-Corner parser: pass earleyitem
-                    chart.parse_trees(parser.grammar.get_start_symbol(), "earleyitem"));
+          // Head-Corner or CYK parser: pass cyk_item
+          // Earley parser or Left-Corner parser: pass earleyitem
+          chart.parse_trees(parser.grammar.get_start_symbol(), "earleyitem"));
       });
     });
   });
