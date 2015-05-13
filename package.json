@@ -10,8 +10,9 @@
     "url" : "git://github.com/Hugo-ter-Doest/chart-parsers.git"
   },
   "keywords" : [ "natural language processing", "parsing", "chart parsing", 
-                 "chart parser", "parser", "computer linguistics", 
-                 "language technology" ],
+                 "chart parser", "parser", "unification-based grammar",
+                 "feature structure", "typed feature structure",
+                 "type lattice", "type hierarchy"],
   "licenses" : {
     "type" : "gpl30"
   },
