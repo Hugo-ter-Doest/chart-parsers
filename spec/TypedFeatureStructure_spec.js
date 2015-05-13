@@ -242,5 +242,7 @@ describe('Typed Feature Structure class', function() {
     var fs4 = fs3.copy(type_lattice_2);
     // Feature structures should be equal up to the labels
     expect(fs3.is_equal_to(fs4)).toEqual(true);
+    logger.debug(fs3.pretty_print());
+    logger.debug(fs4.pretty_print());
   });
 });
