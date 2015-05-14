@@ -54,7 +54,7 @@ function initialise(callback) {
       // parse the grammar
       var grammar = GrammarParser.parse(grammar_text);
       // create parser
-      var parser = parserFactory.createParser({'type': 'Earley', 'grammar': grammar});
+      var parser = parserFactory.createParser({type: 'Earley', grammar: grammar, unification: false});
       new Tagger(tagger_config_file, function(tagger) {
         logger.debug("POS tagger and parser are ready");
         callback(tagger, parser);

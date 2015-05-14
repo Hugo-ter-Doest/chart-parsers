@@ -16,19 +16,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var config = {};
+
 // Separator used in AppropriateFunction to concatenate triples 
 // (type, feature, type)
-exports.appropriateSeparator = ':';
+config.appropriateSeparator = ':';
 
 // If true the chart parsers apply unification in parsing
 // At completion steps feature structures are unified
-exports.UNIFICATION = false;
+config.UNIFICATION = false;
 
 // The event function is called by Agenda and Chart when items are added
 // Agenda and Chart are event emitters
-exports.event_function = function(event_name, item) {
+config.event_function = function(event_name, item) {
   //console.log(event_name + ': ' + item.id);
 };
 
-exports.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
+config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
 
+GLOBAL.config = config;
+
+module.exports = config;

@@ -79,7 +79,7 @@ parser_types.forEach(function(parserType) {
             grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
             logger.debug(grammar.pretty_print());
             // Create the parser
-            parser = parserFactory.createParser({'type': parserType, 'grammar': grammar, 'type_lattice': type_lattice});
+            parser = parserFactory.createParser({'type': parserType, grammar: grammar, unification: true, type_lattice: type_lattice});
             //console.log('beforeEach: created the parser');
             // Read sentences from file
             fs.readFile(sentences_file, 'utf8', function (error, text) {
