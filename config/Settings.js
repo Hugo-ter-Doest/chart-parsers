@@ -26,6 +26,9 @@ config.appropriateSeparator = ':';
 // At completion steps feature structures are unified
 config.UNIFICATION = false;
 
+// Whether or not to apply the appropriate function to feature structures
+config.APPROPRIATE_FUNCTION = true;
+
 // The event function is called by Agenda and Chart when items are added
 // Agenda and Chart are event emitters
 config.event_function = function(event_name, item) {

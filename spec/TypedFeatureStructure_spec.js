@@ -141,7 +141,7 @@ describe('Typed Feature Structure class', function() {
       }
     };
   
-    featureStructureFactory.set_type_lattice(typeLattice);
+    featureStructureFactory.setTypeLattice(typeLattice);
     var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
     console.log(fs_verb.pretty_print());
     
@@ -210,7 +210,7 @@ describe('Typed Feature Structure class', function() {
   };
   
   it('Should create a feature structure from a JSON object and unify these', function() {
-    featureStructureFactory.set_type_lattice(type_lattice_2);
+    featureStructureFactory.setTypeLattice(type_lattice_2);
     var fs1 = featureStructureFactory.createFeatureStructure({'dag': dag1});
     console.log(JSON.stringify(fs1, null, 2));
     console.log(fs1.pretty_print());
@@ -224,7 +224,7 @@ describe('Typed Feature Structure class', function() {
   });
  
   it('Should create a feature structure from a JSON object and unify these', function() {
-    featureStructureFactory.set_type_lattice(type_lattice_2);
+    featureStructureFactory.setTypeLattice(type_lattice_2);
     var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
     console.log(JSON.stringify(fs3, null, 2));
     console.log(fs3.pretty_print());
@@ -237,7 +237,7 @@ describe('Typed Feature Structure class', function() {
   });
   
   it('Should copy feature structures correctly', function() {
-    featureStructureFactory.set_type_lattice(type_lattice_2);
+    featureStructureFactory.setTypeLattice(type_lattice_2);
     var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
     var fs4 = fs3.copy(type_lattice_2);
     // Feature structures should be equal up to the labels
