@@ -112,10 +112,9 @@ parser_types.forEach(function(parserType) {
         logger.debug(tagged_sentence);
         // Parse sentence
         var parse_result = parser.parse(tagged_sentence);
-        expected_fs = results.get_word(0)[0];
+        expected_fs = results.getWord(0)[0];
         parse_result.get_complete_items_from_to(0, 5).forEach(function(item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
-          //expected_fs = results.get_word(index)[0];
           logger.debug(expected_fs.pretty_print());
           logger.debug(item.data.fs.pretty_print());
           expect(item.data.fs.is_equal_to(expected_fs, type_lattice)).toEqual(true);
