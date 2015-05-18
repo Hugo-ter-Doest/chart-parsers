@@ -29,7 +29,7 @@ var grammar_text = "S -> NP *VP*\nNP -> DET *N*\nNP -> *NP* PP\nPP -> P *NP*\nVP
 // Set the grammar
 var grammar = GrammarParser.parse(grammar_text);
 // Create a parser; other parsing algorithms are 'Earley', 'LeftCorner', 'HeadCorner'
-var parser = parserFactory.createParser({grammar: grammar, type: 'CYK');
+var parser = parserFactory.createParser({grammar: grammar, type: 'CYK'});
 // parse the sentence
 var chart = parser.parse(tagged_sentence);
 ```
