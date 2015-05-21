@@ -121,7 +121,7 @@
     "ChartParser": "ERROR",
     "Constraint": "ERROR",
     "DoubleDottedItem": "ERROR",
-    "EarleyItem": "ERROR",
+    "EarleyItem": "DEBUG",
     "EarleyParser": "ERROR",
     "GoalItem": "ERROR",
     "Grammar": "ERROR",

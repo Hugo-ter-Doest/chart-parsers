@@ -149,7 +149,7 @@ describe('Typed Feature Structure class', function() {
     console.log(fs_noun.pretty_print());
     
     var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
-    console.log(fs_verb_noun.pretty_print());
+    console.log(fs_verb_noun.prettyPrint());
     
     var fs_rule = featureStructureFactory.createFeatureStructure({'dag': dag_rule});
     console.log(fs_rule.pretty_print());
