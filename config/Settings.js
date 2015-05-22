@@ -24,7 +24,7 @@ config.appropriateSeparator = ':';
 
 // If true the chart parsers apply unification in parsing
 // At completion steps feature structures are unified
-config.UNIFICATION = true;
+config.UNIFICATION = false;
 
 // Whether or not to apply the appropriate function to feature structures
 config.APPROPRIATE_FUNCTION = true;

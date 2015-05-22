@@ -66,14 +66,14 @@ parser_types.forEach(function(parserType) {
         console.log(type_lattice.pretty_print());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
-            logger.debug(error);
+            logger.error(error);
           }
           // Parse the lexicon
           lexicon = lexiconParser.parse(text, {'type_lattice': type_lattice});
-          console.log(lexicon.pretty_print());
+          logger.debug(lexicon.prettyPrint());
           fs.readFile(grammar_file, 'utf8', function (error, text) {
             if (error) {
-              logger.debug(error);
+              logger.error(error);
             }
             // Parse the grammar
             grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
@@ -82,6 +82,7 @@ parser_types.forEach(function(parserType) {
             parser = parserFactory.createParser({'type': parserType, grammar: grammar, unification: true, type_lattice: type_lattice});
             //console.log('beforeEach: created the parser');
             // Read sentences from file
+
             fs.readFile(sentences_file, 'utf8', function (error, text) {
               if (error) {
                 logger.debug(error);
@@ -108,10 +109,10 @@ parser_types.forEach(function(parserType) {
         // Tokenize sentence
         var words = tokenizer.tokenize(sentence);
         // Tag sentence
-        var tagged_sentence = lexicon.tag_sentence(words);
-        logger.debug(tagged_sentence);
+        var taggedSentence = lexicon.tagSentence(words);
+        logger.debug(taggedSentence);
         // Parse sentence
-        var parse_result = parser.parse(tagged_sentence);
+        var parse_result = parser.parse(taggedSentence);
         expected_fs = results.getWord(0)[0];
         parse_result.get_complete_items_from_to(0, 5).forEach(function(item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);

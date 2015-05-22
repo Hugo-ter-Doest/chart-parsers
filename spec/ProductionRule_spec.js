@@ -17,12 +17,17 @@
 */
 
 
+var settings = require('../config/Settings');
+
+var log4js = require('log4js');
+log4js.configure(settings.log4js_config);
+var logger = log4js.getLogger('ProductionRule');
+
 var ProductionRule = require('../lib/ProductionRule');
 var Constraint = require('../lib/Constraint');
-var fs_base = '/home/hugo/Workspace/feature-structures/lib/';
-var AppropriateFunction = require(fs_base + 'AppropriateFunction');
-var TypeLattice = require(fs_base + 'TypeLattice');
-var Type = require(fs_base + 'Type');
+var AppropriateFunction = require('../lib/AppropriateFunction');
+var TypeLattice = require('../lib/TypeLattice');
+var Type = require('../lib/Type');
 
 describe('ProductionRule', function() {
 
