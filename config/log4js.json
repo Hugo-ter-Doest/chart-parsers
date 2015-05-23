@@ -116,7 +116,7 @@
     "TypedFeatureStructure": "ERROR",
     "Agenda": "ERROR",
     "CYKParser": "ERROR",
-    "CYK_Item": "ERROR",
+    "CYK_Item": "DEBUG",
     "Chart": "ERROR",
     "ChartParser": "ERROR",
     "Constraint": "ERROR",

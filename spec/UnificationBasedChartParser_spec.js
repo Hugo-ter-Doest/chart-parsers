@@ -79,7 +79,10 @@ parser_types.forEach(function(parserType) {
             grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
             logger.debug(grammar.pretty_print());
             // Create the parser
-            parser = parserFactory.createParser({'type': parserType, grammar: grammar, unification: true, type_lattice: type_lattice});
+            parser = parserFactory.createParser({type: parserType, 
+              grammar: grammar, 
+              unification: true, 
+              type_lattice: type_lattice});
             //console.log('beforeEach: created the parser');
             // Read sentences from file
 
@@ -113,11 +116,11 @@ parser_types.forEach(function(parserType) {
         logger.debug(taggedSentence);
         // Parse sentence
         var parse_result = parser.parse(taggedSentence);
-        expected_fs = results.getWord(0)[0];
+        expected_fs = results.getWord('0')[0];
         parse_result.get_complete_items_from_to(0, 5).forEach(function(item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
           logger.debug(expected_fs.pretty_print());
-          logger.debug(item.data.fs.pretty_print());
+          logger.debug('This is THE FS: ' + item.data.fs.pretty_print());
           expect(item.data.fs.is_equal_to(expected_fs, type_lattice)).toEqual(true);
         });
       });
