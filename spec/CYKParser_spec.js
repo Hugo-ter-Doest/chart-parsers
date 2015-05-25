@@ -17,8 +17,6 @@
 */
 
 var settings = require('../config/Settings');
-settings.UNIFICATION  =false;
-
 var fs = require('fs');
 
 var GrammarParser = require('../lib/GrammarParser');
@@ -82,7 +80,11 @@ describe('CYK Parser', function() {
                            ['the', 'DET'],
                            ['telescope', 'N']];
     var N = tagged_sentence.length;
-    var parser = parserFactory.createParser({grammar: grammar, type: 'CYK'});
+    var parser = parserFactory.createParser({
+      grammar: grammar, 
+      type: 'CYK',
+      unification: false,
+      listOfCategories: true});
     var chart = parser.parse(tagged_sentence);
     var parses = chart.full_parse_items(parser.grammar.get_start_symbol(), "cyk_item");
     expect(parses.length).toEqual(2);

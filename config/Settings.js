@@ -29,6 +29,10 @@ config.UNIFICATION = true;
 // Whether or not to apply the appropriate function to feature structures
 config.APPROPRIATE_FUNCTION = true;
 
+// A tagged sentence is a word followed bij a list of categories or a 
+// list of feature structures
+config.LIST_OF_CATEGORIES = false;
+
 // The event function is called by Agenda and Chart when items are added
 // Agenda and Chart are event emitters
 config.event_function = function(event_name, item) {
