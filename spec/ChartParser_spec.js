@@ -17,7 +17,6 @@
 */
 
 var settings = require('../config/Settings');
-settings.UNIFICATION  = false;
 
 var fs = require('fs');
 
@@ -79,7 +78,12 @@ parserTypes.forEach(function(parserType) {
     
     it('should parse a sentence', function() {
       //var parser = new ChartParser(grammar);
-      var parser = parserFactory.createParser({grammar: grammar, type: parserType});
+      var parser = parserFactory.createParser({
+        grammar: grammar, 
+        type: parserType,
+        unification: false,
+        listOfCategories: true
+      });
     
       // 2 + 3
       var tagged_sentence = [['2', 'number'],
@@ -143,7 +147,12 @@ parserTypes.forEach(function(parserType) {
       grammar = GrammarParser.parse(grammar_text);
     });
     it('should parse a sentence', function() {
-      parser = parserFactory.createParser({grammar: grammar, type: parserType});
+      parser = parserFactory.createParser({
+        grammar: grammar, 
+        type: parserType,
+        unification: false,
+        listOfCategories: true
+      });
       tagged_sentence = [['I', 'NP'],
                          ['saw', 'V'],
                          ['the', 'DET'],
