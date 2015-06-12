@@ -37,8 +37,8 @@ describe('Type lattice', function() {
 
   it('Should calculate least upper bounds correctly', function() {
 
-    expect(performance.lub(ballet, typeLattice)).toEqual(typeLattice.top);
-    expect(ballet.lub(performance, typeLattice)).toEqual(typeLattice.top);
+    expect(performance.lub(ballet, typeLattice)).toEqual(ballet);
+    expect(ballet.lub(performance, typeLattice)).toEqual(ballet);
     expect(performance.lub(play, typeLattice)).toEqual(play);
     expect(play.lub(performance, typeLattice)).toEqual(play);
     expect(play.lub(concert, typeLattice)).toEqual(musical);
