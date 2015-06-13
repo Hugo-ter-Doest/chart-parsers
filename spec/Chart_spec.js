@@ -75,9 +75,9 @@ describe('Chart', function() {
   i4.set_children([i1, i2, i3]);
 
   it('should add items to the chart', function() {
-    chart.add_item(i1);
-    chart.add_item(i2);
-    chart.add_item(i3);
+    chart.addItem(i1);
+    chart.addItem(i2);
+    chart.addItem(i3);
     expect(chart.get_items_from_to(0, 1)).toEqual([i1]);
     expect(chart.get_items_from_to(1, 2)).toEqual([i2]);
     expect(chart.get_items_from_to(2, 3)).toEqual([i3]);
@@ -92,7 +92,7 @@ describe('Chart', function() {
     expect(chart.nr_items_to(3)).toEqual(1);
     expect(chart.get_complete_items_from_to(2, 3)).toEqual([i3]);
     expect(chart.full_parse_items('S', 'earleyitem')).toEqual([]);
-    chart.add_item(i4);
+    chart.addItem(i4);
     expect(chart.get_complete_items_from_to(0, 6)).toEqual([i4]);
     expect(chart.full_parse_items('S', 'earleyitem')).toEqual([i4]);
     expect(chart.nr_of_items()).toEqual(4);
