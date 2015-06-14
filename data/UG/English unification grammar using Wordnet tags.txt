@@ -1,0 +1,611 @@
+// Author: Hugo W.L. ter Doest
+// This work is licensed under a Creative Commons Attribution Share-Alike 4.0 License. - See more at: http://creativecommons.org/licenses/by-sa/4.0/
+
+// Based on: http://www.scientificpsychic.com/grammar/enggram1.html
+// Formalism: Context-free Grammar
+
+Z -> EnglishSentence
+<Z SynSem> = <EnglishSentence SynSem>
+
+
+// <English Sentence> = <Simple Sentence> | <Compound Sentence>
+EnglishSentence -> SimpleSentence
+<EnglishSentence SynSem SentenceType> = SimpleSentence
+<EnglishSentence SynSem> = <SimpleSentence SynSem>
+
+EnglishSentence -> CompoundSentence
+<EnglishSentence SynSem> = <CompoundSentence SynSem>
+<SimpleSentence SynSem SentenceType> = CompoundSentence
+
+
+// <Simple Sentence> = <Declarative Sentence> | <Interrogative Sentence> | 
+//                     <Imperative Sentence> | <Conditional Sentence>
+SimpleSentence -> DeclarativeSentence
+<SimpleSentence SynSem> = <DeclarativeSentence SynSem>
+<SimpleSentence SynSem SentenceType> = DeclarativeSentence
+
+SimpleSentence -> InterrogativeSentence
+<SimpleSentence SynSem> = <DeclarativeSentence SynSem>
+<SimpleSentence SynSem SentenceType> = InterrogativeSentence
+
+SimpleSentence -> ImperativeSentence
+<SimpleSentence SynSem> = <ImperativeSentence SynSem>
+<SimpleSentence SynSem SentenceType> = ImperativeSentence
+
+SimpleSentence -> ConditionalSentence
+<SimpleSentence SynSem> = <ImperativeSentence SynSem>
+<SimpleSentence SynSem SentenceType> = ConditionalSentence
+
+SimpleSentence -> NounPhrase
+<SimpleSentence SynSem> = <NounPhrase SynSem>
+<SimpleSentence SynSem SentenceType> = NounPhrase
+
+SimpleSentence -> PrepositionalPhrase
+<SimpleSentence SynSem> = <PrepositionalPhrase SynSem>
+<SimpleSentence SynSem SentenceType> = PrepositionalPhrase
+
+
+// <Compound Sentence> = <Simple Sentence> <conjunction> <Simple Sentence> |
+//                       "EITHER" <Declarative Sentence> "or" <Declarative Sentence> |
+//                       "EITHER" <Imperative Sentence> "or" <Imperative Sentence>
+CompoundSentence -> SimpleSentence_1 *CC* SimpleSentence_2
+<CompoundSentence SynSem Conjunction Type> = <CC Type>
+<CompoundSentence SynSem Conjunction Clause1> = <SimpleSentence_1 SynSem>
+<CompoundSentence SynSem Conjunction Clause2> = <SimpleSentence_2 SynSem>
+
+CompoundSentence -> EITHER DeclarativeSentence_1 *OR* DeclarativeSentence_2
+<CompoundSentence SynSem Conjunction Type> = EitherOr
+<CompoundSentence SynSem Conjunction Clause1> = <DeclarativeSentence_1 SynSem>
+<CompoundSentence SynSem Conjunction Clause2> = <DeclarativeSentence_2 SynSem>
+
+CompoundSentence -> EITHER ImperativeSentence_1 *OR* ImperativeSentence_2
+<CompoundSentence SynSem Conjunction Type> = EitherOr
+<CompoundSentence SynSem Conjunction Clause1> = <ImperativeSentence_1 SynSem>
+<CompoundSentence SynSem Conjunction Clause2> = <ImperativeSentence_2 SynSem>
+
+
+// <Declarative Sentence> = <Subject> <Predicate>
+DeclarativeSentence -> Subject Predicate
+
+// <Interrogative Sentence> = <Declarative Sentence>"?"
+InterrogativeSentence -> Subject *Predicate* PUNCT_QM
+
+// <Interrogative Sentence> = "Who" <Predicate>"?"
+// Where the verb of the Predicate is in 3rd person form.
+InterrogativeSentence -> WHO *Predicate* PUNCT_QM
+
+// ("What" |"Which") [<adverb>* <adjective>] <noun> <Predicate>"?"
+InterrogativeSentence -> WHAT NOUN *Predicate* PUNCT_QM
+InterrogativeSentence -> WHAT ADV_ADJ NOUN *Predicate* PUNCT_QM
+
+InterrogativeSentence -> WHICH NOUN *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH ADV_ADJ NOUN *Predicate* PUNCT_QM
+
+WhWord -> interrogative_pronoun
+WhWord -> WHAT
+WhWord -> WHEN
+WhWord -> WHERE
+WhWord -> WHO
+WhWord -> TO WHOM
+WhWord -> WHY
+WhWord -> HOW
+
+// <Interrogative Sentence> = ["What" |"When" |"Where" |"Who" |"To whom" |"Why"]
+//   ("do" |"does" |"don't" |"doesn't" |"did" |"didn't") <Subject> <Predicate>"?"
+// The verb of the Predicate must be infinitive (Vinf).
+InterrogativeSentence -> DO Subject *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
+
+InterrogativeSentence -> WhWord DO Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> DOES Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord DOES Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> DONT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord DONT Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> DOESNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord DOESNT Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> DID Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord DID Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> DIDNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord DIDNT Subject *Predicate* PUNCT_QM
+
+// <Interrogative Sentence> = "Which" [<noun phrase>] 
+// ("do" |"does" |"don't" |"doesn't" |"did" |"didn't") <Subject> <Predicate>"?"
+// The verb of the Predicate must be infinitive (Vinf).
+InterrogativeSentence -> WHICH NounPhrase DO Subject Predicate PUNCT_QM
+InterrogativeSentence -> WHICH NounPhrase DOES Subject Predicate PUNCT_QM
+InterrogativeSentence -> WHICH NounPhrase DONT Subject Predicate PUNCT_QM
+InterrogativeSentence -> WHICH NounPhrase DOESNT Subject Predicate PUNCT_QM
+InterrogativeSentence -> WHICH NounPhrase DID Subject Predicate PUNCT_QM
+InterrogativeSentence -> WHICH NounPhrase DIDNT Subject Predicate PUNCT_QM
+
+// <Interrogative Sentence> = ["What" |"Which" |"When" |"Where" |"Who" |"To whom" |"Why"]
+//             ("will" |"won't") <Subject> <Predicate>"?" 
+// The verb in the Predicate must must follow these patterns:
+//       "have" <Vpastp>
+//       "have" "been" <Ving>
+//       "be" <Ving>
+//       <Vinf>
+InterrogativeSentence -> WILL Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WILL Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WILL Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> WONT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WONT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WONT Subject *Predicate* PUNCT_QM
+
+// <Interrogative Sentence> = 
+//             ["What" |"Which" |"When" |"Where" |"Who" |"To whom" | "Why"]
+//             ("has" |"have" |"hasn't" |"haven't")
+//             <Subject> <Predicate>"?"
+// Verb in the Predicate must be past participle <Vpastp>
+InterrogativeSentence -> HAS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord HAS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH HAS Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> HAVE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord HAVE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH HAVE Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> HASNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord HASNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH HASNT Subject *Predicate* PUNCT_QM
+
+InterrogativeSentence -> HAVENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord HAVENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH HAVENT Subject *Predicate* PUNCT_QM
+
+// <Interrogative Sentence> = 
+//   ["What" |"Which" |"When" |"Where" |"Who" |"To whom" | "Why"]
+//             ("are" |"is" |"was" |"were" |
+//             "aren't" |"isn't" |"wasn't" |"weren't")
+//             <Subject>
+//             [<adverb>* <adjective> | <prep phr>* | <Predicate>]"?"
+// Verb in the Predicate must be present participle <Ving> or past participle <Vpastp>
+// ARE
+InterrogativeSentence -> *ARE* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *ARE* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *ARE* Subject PUNCT_QM
+
+InterrogativeSentence -> *ARE* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *ARE* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *ARE* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *ARE* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *ARE* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *ARE* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> ARE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord ARE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH ARE Subject *Predicate* PUNCT_QM
+
+// IS
+InterrogativeSentence -> *IS* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *IS* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *IS* Subject PUNCT_QM
+
+InterrogativeSentence -> *IS* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *IS* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *IS* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *IS* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *IS* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *IS* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> IS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord IS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH IS Subject *Predicate* PUNCT_QM
+
+// WAS
+InterrogativeSentence -> *WAS* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *WAS* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *WAS* Subject PUNCT_QM
+
+InterrogativeSentence -> *WAS* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *WAS* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *WAS* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *WAS* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *WAS* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *WAS* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> WAS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WAS Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WAS Subject *Predicate* PUNCT_QM
+
+// WERE
+InterrogativeSentence -> *WERE* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *WERE* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *WERE* Subject PUNCT_QM
+
+InterrogativeSentence -> *WERE* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *WERE* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *WERE* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *WERE* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *WERE* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *WERE* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> WERE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WERE Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WERE Subject *Predicate* PUNCT_QM
+
+// ARENT
+InterrogativeSentence -> *ARENT* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *ARENT* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *ARENT* Subject PUNCT_QM
+
+InterrogativeSentence -> *ARENT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *ARENT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *ARENT* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *ARENT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *ARENT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *ARENT* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> ARENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord ARENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH ARENT Subject *Predicate* PUNCT_QM
+
+// ISNT
+InterrogativeSentence -> *ISNT* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *ISNT* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *ISNT* Subject PUNCT_QM
+
+InterrogativeSentence -> *ISNT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *ISNT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *ISNT* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *ISNT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *ISNT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *ISNT* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> ISNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord ISNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH ISNT Subject *Predicate* PUNCT_QM
+
+// WASNT
+InterrogativeSentence -> *WASNT* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *WASNT* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *WASNT* Subject PUNCT_QM
+
+InterrogativeSentence -> *WASNT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *WASNT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *WASNT* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *WASNT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *WASNT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *WASNT* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> WASNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WASNT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WASNT Subject *Predicate* PUNCT_QM
+
+// WERENT
+InterrogativeSentence -> *WERENT* Subject PUNCT_QM
+InterrogativeSentence -> WhWord *WERENT* Subject PUNCT_QM
+InterrogativeSentence -> WHICH *WERENT* Subject PUNCT_QM
+
+InterrogativeSentence -> *WERENT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WhWord *WERENT* Subject ADV_ADJ PUNCT_QM
+InterrogativeSentence -> WHICH *WERENT* Subject ADV_ADJ PUNCT_QM
+
+InterrogativeSentence -> *WERENT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WhWord *WERENT* Subject PrepositionalPhrases PUNCT_QM
+InterrogativeSentence -> WHICH *WERENT* Subject PrepositionalPhrases PUNCT_QM
+
+InterrogativeSentence -> WERENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord WERENT Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WHICH WERENT Subject *Predicate* PUNCT_QM
+
+// <Imperative Sentence> = <Predicate> = <verb>  <complement>
+// Imperative sentences consist of Predicates that only contain verbs in 
+// infinitive form; verb phrases are not allowed.
+ImperativeSentence -> Predicate 
+
+// <Dependent Clause> = ("if" | "when") <Declarative Sentence>
+DEPENDENT_CLAUSE -> *IF* DeclarativeSentence
+DEPENDENT_CLAUSE -> *WHEN* DeclarativeSentence
+
+// <Independent Clause> = <Declarative Sentence> | <Interrogative Sentence>
+INDEPENDENT_CLAUSE -> DeclarativeSentence
+INDEPENDENT_CLAUSE -> InterrogativeSentence
+
+// <Conditional Sentence> = 
+//    <Dependent Clause>"," <Independent Clause> |
+//    <Independent Clause> <Dependent Clause>
+ConditionalSentence -> DEPENDENT_CLAUSE *PUNCT_COMMA* INDEPENDENT_CLAUSE
+ConditionalSentence -> *INDEPENDENT_CLAUSE* DEPENDENT_CLAUSE
+
+// <Subject> = <simple Subject> | <compound Subject>
+Subject -> SIMPLE_Subject
+Subject -> COMPOUND_Subject
+
+// <simple Subject> = <noun phrase> | <nominative personal pronoun>
+SIMPLE_Subject -> NounPhrase
+SIMPLE_Subject -> PRP
+
+// <compound Subject> = <simple Subject> ("and" | "or") <simple Subject>
+COMPOUND_Subject -> SIMPLE_Subject *AND* SIMPLE_Subject
+COMPOUND_Subject -> SIMPLE_Subject *OR* SIMPLE_Subject
+
+// <compound Subject> = "EITHER" <simple Subject> "or" <simple Subject>
+COMPOUND_Subject -> EITHER SIMPLE_Subject *OR* SIMPLE_Subject
+
+// <compound Subject> = "NEITHER" <simple Subject> "nor" <simple Subject> 
+COMPOUND_Subject -> NEITHER SIMPLE_Subject *NOR* SIMPLE_Subject
+
+// <noun phrase> = "the" <specific proper noun>
+NounPhrase -> *THE* NNP
+NounPhrase -> *THE* NNPS
+
+// <noun phrase> = <proper noun>
+NounPhrase -> NNP
+NounPhrase -> NNPS
+
+// <noun phrase> = <non-personal pronoun>
+
+// <noun phrase> = <article> [<adverb>* <adjective>] <noun>
+// Added rules for optional article
+NounPhrase -> NOUN
+NounPhrase -> ADV_ADJ *NOUN*
+NounPhrase -> determiner *NOUN*
+NounPhrase -> determiner ADV_ADJ *NOUN*
+
+// <noun phrase> = [<adverb>* <adjective>] <noun-plural>
+NounPhrase -> NOUN_PLURAL
+NounPhrase -> ADV_ADJ NOUN_PLURAL
+
+// <noun phrase> = <proper noun-possessive> [<adverb>* <adjective>] <noun>
+NounPhrase -> NNP POS *NOUN*
+NounPhrase -> NNP POS ADV_ADJ *NOUN*
+
+// <noun phrase> = <personal possessive adjective> [<adverb>* <adjective>] <noun>
+NounPhrase -> PRP$ *NOUN*
+NounPhrase -> PRP$ ADV_ADJ *NOUN*
+
+// <article> <common noun-possessive> [<adverb>* <adjective>] <noun> 
+NounPhrase -> determiner NOUN POS *NOUN*
+NounPhrase -> determiner NOUN POS ADV_ADJ *NOUN*
+
+// Combination of adverbs and adjectives
+ADV_ADJ -> ADJECTIVES
+ADV_ADJ -> ADVERBS *ADJECTIVES*
+
+// One or more adverbs
+ADVERBS -> *RB* ADVERBS
+ADVERBS -> r
+
+ADJECTIVES -> ADJECTIVE CC ADJECTIVES
+ADJECTIVES -> *JJ* ADJECTIVES
+ADJECTIVES -> a
+ADJECTIVES -> s
+
+// <noun> = <noun> [<prep phr>*]
+NOUN -> n
+NOUN -> *n* PrepositionalPhrases
+//NOUN -> NNS
+//NOUN -> *NNS* PrepositionalPhrases
+
+// <Predicate> = (<verb> | <verb phrase>) <complement>
+Predicate -> VERB
+Predicate -> VerbPhrase
+Predicate -> *VERB* COMPLEMENT 
+Predicate -> *VerbPhrase* COMPLEMENT
+// PP ambiguity
+Predicate -> *VERB* COMPLEMENT PrepositionalPhrases
+Predicate -> *VerbPhrase* COMPLEMENT PrepositionalPhrases
+
+// <complement> = [[<indirect object>] <object>]
+COMPLEMENT -> OBJECT
+COMPLEMENT -> INDIRECT_OBJECT *OBJECT*
+
+// <complement> = [<adverb>* <adjective>]
+COMPLEMENT -> ADV_ADJ
+
+// <complement> = [<prep phr>*] |
+COMPLEMENT -> PrepositionalPhrases
+
+// <complement> = ["to" <Vinf> [<object>]]
+COMPLEMENT -> TO *VB*
+COMPLEMENT -> TO *VB* OBJECT
+
+// <complement> = [<Ving>] 
+COMPLEMENT -> VBG
+
+// <indirect object> = <object> = <simple object> | <compound object> 
+INDIRECT_OBJECT -> OBJECT
+OBJECT -> SIMPLE_OBJECT
+OBJECT -> COMPOUND_OBJECT
+
+// <compound object> = <simple object> ("and" | "or") <simple object>
+COMPOUND_OBJECT ->  SIMPLE_OBJECT *CC* COMPOUND_OBJECT
+
+// <simple object> = <noun phrase> | <objective personal pronoun>
+SIMPLE_OBJECT -> NounPhrase
+SIMPLE_OBJECT -> PRP
+
+// <prep phr> = <preposition> <object>
+PrepositionalPhrases -> preposition *OBJECT*
+PrepositionalPhrases -> TO *OBJECT*
+PrepositionalPhrases -> preposition *OBJECT* PrepositionalPhrases
+PrepositionalPhrases -> TO *OBJECT* PrepositionalPhrases
+
+// Verb phrase
+// <verb> = <V1s> |<V2s> |<V3s> |<V1p> |<V2p> |<V3p> |<Vpast> |<linking verb>
+VERB -> v
+//VERB -> VBP
+//VERB -> VBZ
+//VERB -> VBD
+//VERB -> LINKING_VERB
+
+//<linking verb> = "am" |"are" |"is" | "was"| "were" | "look" | "looks" |
+// "looked" | "become" | "became" | "become" | ...
+// Also known as copulae; in Dutch called "koppelwerkwoorden"
+LINKING_VERB -> AM
+LINKING_VERB -> ARE
+LINKING_VERB -> IS
+LINKING_VERB -> WAS
+LINKING_VERB -> LOOK
+LINKING_VERB -> LOOKS
+LINKING_VERB -> LOOKED
+LINKING_VERB -> BECOME
+LINKING_VERB -> BECAME
+
+//<verb phrase> = ("had" |"have" |"has") ["not"] <Vpastp>
+VerbPhrase -> HAD *VBN*
+VerbPhrase -> HAVE *VBN*
+VerbPhrase -> HAS *VBN*
+VerbPhrase -> HAD NOT *VBN*
+VerbPhrase -> HAVE NOT *VBN*
+VerbPhrase -> HAS NOT *VBN*
+
+//<verb phrase> = ("had" |"have" |"has") ["not"] "been" [<Vpastp> | <Ving>]
+VerbPhrase -> HAD BEEN *VBN*
+VerbPhrase -> HAVE BEEN *VBN*
+VerbPhrase -> HAS BEEN *VBN*
+VerbPhrase -> HAD NOT BEEN *VBN*
+VerbPhrase -> HAVE NOT BEEN *VBN*
+VerbPhrase -> HAS NOT BEEN *VBN*
+VerbPhrase -> HAD BEEN *VBG*
+VerbPhrase -> HAVE BEEN *VBG*
+VerbPhrase -> HAS BEEN *VBG*
+VerbPhrase -> HAD NOT BEEN *VBG*
+VerbPhrase -> HAVE NOT BEEN *VBG*
+VerbPhrase -> HAS NOT BEEN *VBG*
+
+//<verb phrase> = <auxV> ["not"] "have" <Vpastp>
+VerbPhrase -> AUX_VERB HAVE *VBN*
+VerbPhrase -> AUX_VERB NOT HAVE *VBN*
+
+//<verb phrase> = <auxV> ["not"] "have" "been" [<Vpastp> | <Ving>]
+VerbPhrase -> AUX_VERB HAVE BEEN *VBN*
+VerbPhrase -> AUX_VERB not HAVE BEEN *VBN*
+VerbPhrase -> AUX_VERB HAVE BEEN *VBG*
+VerbPhrase -> AUX_VERB not HAVE BEEN *VBG*
+
+//<verb phrase> = <auxV> ["not"] "be" [<Vpastp> | <Ving>]
+VerbPhrase -> AUX_VERB BE *VBN*
+VerbPhrase -> AUX_VERB NOT BE *VBN*
+VerbPhrase -> AUX_VERB BE *VBG*
+VerbPhrase -> AUX_VERB NOT BE *VBG*
+
+//<verb phrase> = <auxV> ["not"] <Vinf>
+VerbPhrase -> AUX_VERB *VB*
+VerbPhrase -> AUX_VERB NOT *VB*
+
+// <auxV> = "must" | "may" |"might" | "will" |"would" |"shall" |
+//       "should" |"can" |"could"
+AUX_VERB -> MUST
+AUX_VERB -> MAY
+AUX_VERB -> MIGHT
+AUX_VERB -> WILL
+AUX_VERB -> WOULD
+AUX_VERB -> SHALL
+AUX_VERB -> SHOULD
+AUX_VERB -> CAN
+AUX_VERB -> COULD
+
+//<verb phrase> = "ought" ("to" | "not") <Vinf>
+VerbPhrase -> OUGHT TO *VB*
+VerbPhrase -> OUGHT NOT *VB*
+
+//<verb phrase> = "ought" ("to" | "not") "be" [<Vpastp> | <Ving>]
+VerbPhrase -> OUGHT TO BE *VBN*
+VerbPhrase -> OUGHT NOT BE *VBN*
+VerbPhrase -> OUGHT TO BE *VBG*
+VerbPhrase -> OUGHT NOT BE *VBG*
+VerbPhrase -> OUGHT TO *BE*
+VerbPhrase -> OUGHT NOT *BE*
+
+//<verb phrase> = "ought" ("to" | "not") "have" <Vpastp>
+VerbPhrase -> OUGHT TO HAVE *VBN*
+VerbPhrase -> OUGHT NOT HAVE *VBN*
+
+//<verb phrase> = "ought" ("to" | "not") "have" "been" [<Vpastp> | <Ving>]
+VerbPhrase -> OUGHT TO HAVE BEEN *VBN*
+VerbPhrase -> OUGHT NOT HAVE BEEN *VBN*
+VerbPhrase -> OUGHT TO HAVE BEEN *VBG*
+VerbPhrase -> OUGHT NOT HAVE BEEN *VBG*
+VerbPhrase -> OUGHT TO HAVE *BEEN*
+VerbPhrase -> OUGHT NOT HAVE *BEEN*
+
+//<verb phrase> = ("do" |"does" |"did") ["not"] [<Vinf>]
+VerbPhrase -> DO *VB*
+VerbPhrase -> DOES *VB*
+VerbPhrase -> DID *VB*
+VerbPhrase -> DO NOT *VB*
+VerbPhrase -> DOES NOT *VB*
+VerbPhrase -> DID NOT *VB*
+
+//<verb phrase> = ("am" |"are" |"is" |"was" |"were") ["not"] [<Vpastp> | <Ving>]
+VerbPhrase -> AM *VBN*
+VerbPhrase -> ARE *VBN*
+VerbPhrase -> IS *VBN*
+VerbPhrase -> WAS *VBN*
+VerbPhrase -> WERE *VBN*
+VerbPhrase -> AM *VBG*
+VerbPhrase -> ARE *VBG*
+VerbPhrase -> IS *VBG*
+VerbPhrase -> WAS *VBG*
+VerbPhrase -> WERE *VBG*
+VerbPhrase -> AM NOT *VBN*
+VerbPhrase -> ARE NOT *VBN*
+VerbPhrase -> IS NOT *VBN*
+VerbPhrase -> WAS NOT *VBN*
+VerbPhrase -> WERE NOT *VBN*
+VerbPhrase -> AM NOT *VBG*
+VerbPhrase -> ARE NOT *VBG*
+VerbPhrase -> IS NOT *VBG*
+VerbPhrase -> WAS NOT *VBG*
+VerbPhrase -> WERE NOT *VBG*
+
+//<verb phrase> = ("am" |"are" |"is" |"was" |"were") ["not"] "being" [<Vpastp>]
+VerbPhrase -> AM BEING *VBN*
+VerbPhrase -> ARE BEING *VBN*
+VerbPhrase -> IS BEING *VBN*
+VerbPhrase -> WAS BEING *VBN*
+VerbPhrase -> WERE BEING *VBN*
+VerbPhrase -> AM BEING *VBG*
+VerbPhrase -> ARE BEING *VBG*
+VerbPhrase -> IS BEING *VBG*
+VerbPhrase -> WAS BEING *VBG*
+VerbPhrase -> WERE BEING *VBG*
+VerbPhrase -> AM BEING NOT *VBN*
+VerbPhrase -> ARE BEING NOT *VBN*
+VerbPhrase -> IS BEING NOT *VBN*
+VerbPhrase -> WAS BEING NOT *VBN*
+VerbPhrase -> WERE BEING NOT *VBN*
+VerbPhrase -> AM BEING NOT *VBG*
+VerbPhrase -> ARE BEING NOT *VBG*
+VerbPhrase -> IS BEING NOT *VBG*
+VerbPhrase -> WAS BEING NOT *VBG*
+VerbPhrase -> WERE BEING NOT *VBG*
+
+//<verb phrase> = ("am" |"are" |"is" |"was" |"were") ["not"] "going" "to" [<Vinf>]
+VerbPhrase -> AM GOING TO *VB*
+VerbPhrase -> ARE GOING TO *VB*
+VerbPhrase -> IS GOING TO *VB*
+VerbPhrase -> WAS GOING TO *VB*
+VerbPhrase -> WERE GOING TO *VB*
+VerbPhrase -> AM GOING TO *VB*
+VerbPhrase -> ARE GOING TO *VB*
+VerbPhrase -> IS GOING TO *VB*
+VerbPhrase -> WAS GOING TO *VB*
+VerbPhrase -> WERE GOING TO *VB*
+VerbPhrase -> AM NOT GOING TO *VB*
+VerbPhrase -> ARE NOT GOING TO *VB*
+VerbPhrase -> IS NOT GOING TO *VB*
+VerbPhrase -> WAS NOT GOING TO *VB*
+VerbPhrase -> WERE NOT GOING TO *VB*
+VerbPhrase -> AM NOT GOING TO *VB*
+VerbPhrase -> ARE NOT GOING TO *VB*
+VerbPhrase -> IS NOT GOING TO *VB*
+VerbPhrase -> WAS NOT GOING TO *VB*
+VerbPhrase -> WERE NOT GOING TO *VB*
