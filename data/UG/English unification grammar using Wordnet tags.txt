@@ -99,6 +99,10 @@ InterrogativeSentence -> DO Subject *Predicate* PUNCT_QM
 <Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
 
 InterrogativeSentence -> WhWord DO Subject *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<InterrogativeSentence SynSem WhWord> = <WhWord SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
 
 InterrogativeSentence -> DOES Subject *Predicate* PUNCT_QM
 InterrogativeSentence -> WhWord DOES Subject *Predicate* PUNCT_QM
