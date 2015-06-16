@@ -65,17 +65,33 @@ CompoundSentence -> EITHER ImperativeSentence_1 *OR* ImperativeSentence_2
 
 
 // <Declarative Sentence> = <Subject> <Predicate>
-DeclarativeSentence -> Subject Predicate
+DeclarativeSentence -> Subject *Predicate*
+<DeclarativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
+
 
 // <Interrogative Sentence> = <Declarative Sentence>"?"
 InterrogativeSentence -> Subject *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
+
 
 // <Interrogative Sentence> = "Who" <Predicate>"?"
 // Where the verb of the Predicate is in 3rd person form.
 InterrogativeSentence -> WHO *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <WHO SynSem>
+<Predicate SynSem Head Agreement Person> = Third
+
 
 // ("What" |"Which") [<adverb>* <adjective>] <noun> <Predicate>"?"
 InterrogativeSentence -> WHAT NOUN *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Head Agreement Person> = Third
+
 InterrogativeSentence -> WHAT ADV_ADJ NOUN *Predicate* PUNCT_QM
 
 InterrogativeSentence -> WHICH NOUN *Predicate* PUNCT_QM
