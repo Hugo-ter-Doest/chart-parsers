@@ -31,22 +31,22 @@ describe('Type lattice parser', function() {
       var agreement = type_lattice.get_type_by_name('agreement');
       //Approp POS agreement agreement
       var POS = type_lattice.get_type_by_name('POS');
-      expect(type_lattice.appropriate_function.is_appropriate(POS, 'agreement', agreement)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(POS, 'agreement', agreement)).toEqual(true);
       //Approp agreement number plural
       var plural = type_lattice.get_type_by_name('plural');
-      expect(type_lattice.appropriate_function.is_appropriate(agreement, 'number', plural)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(agreement, 'number', plural)).toEqual(true);
       //Approp agreement number singular
       var singular = type_lattice.get_type_by_name('singular');
-      expect(type_lattice.appropriate_function.is_appropriate(agreement, 'number', singular)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(agreement, 'number', singular)).toEqual(true);
       //Approp agreement gender masculin
       var masculin = type_lattice.get_type_by_name('masculin');
-      expect(type_lattice.appropriate_function.is_appropriate(agreement, 'gender', masculin)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', masculin)).toEqual(true);
       //Approp agreement gender feminin
       var feminin = type_lattice.get_type_by_name('feminin');
-      expect(type_lattice.appropriate_function.is_appropriate(agreement, 'gender', feminin)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', feminin)).toEqual(true);
       //Approp agreement gender neutrum
       var neutrum = type_lattice.get_type_by_name('neutrum');
-      expect(type_lattice.appropriate_function.is_appropriate(agreement, 'gender', neutrum)).toEqual(true);
+      expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', neutrum)).toEqual(true);
 
       var bottom = type_lattice.get_type_by_name('BOTTOM');
       expect(agreement.subsumes(bottom)).toEqual(true);

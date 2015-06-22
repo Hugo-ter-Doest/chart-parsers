@@ -48,13 +48,13 @@ describe('ProductionRule', function() {
     type_lattice.add_type(agreement);
     
     var approp = new AppropriateFunction();
-    approp.add_mapping('BOTTOM', 'agreement', 'agreement');
-    approp.add_mapping('BOTTOM', 'number', 'BOTTOM');
-    approp.add_mapping('BOTTOM', 'VP', 'BOTTOM');
-    approp.add_mapping('BOTTOM', 'agreement', 'BOTTOM');
-    approp.add_mapping('BOTTOM', 'NP', 'BOTTOM');
-    approp.add_mapping('BOTTOM', 'S', 'BOTTOM');
-    approp.add_mapping('BOTTOM', 'head', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'agreement', 'agreement');
+    approp.addMapping('BOTTOM', 'number', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'VP', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'agreement', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'NP', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'S', 'BOTTOM');
+    approp.addMapping('BOTTOM', 'head', 'BOTTOM');
 
     type_lattice.appropriate_function = approp;
     

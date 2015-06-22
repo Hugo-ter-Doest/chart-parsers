@@ -97,7 +97,6 @@ InterrogativeSentence -> WHAT ADV_ADJ NOUN *Predicate* PUNCT_QM
 InterrogativeSentence -> WHICH NOUN *Predicate* PUNCT_QM
 InterrogativeSentence -> WHICH ADV_ADJ NOUN *Predicate* PUNCT_QM
 
-WhWord -> interrogative_pronoun
 WhWord -> WHAT
 WhWord -> WHEN
 WhWord -> WHERE
@@ -106,44 +105,50 @@ WhWord -> TO WHOM
 WhWord -> WHY
 WhWord -> HOW
 
+VerbDo -> DO
+VerbDo -> DOES
+VerbDo -> DONT
+VerbDo -> DOESNT
+VerbDo -> DID
+VerbDo -> DIDNT
+
+
 // <Interrogative Sentence> = ["What" |"When" |"Where" |"Who" |"To whom" |"Why"]
 //   ("do" |"does" |"don't" |"doesn't" |"did" |"didn't") <Subject> <Predicate>"?"
 // The verb of the Predicate must be infinitive (Vinf).
-InterrogativeSentence -> DO Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> VerbDo Subject *Predicate* PUNCT_QM
 <InterrogativeSentence SynSem> = <Predicate SynSem>
 <Predicate SynSem Valence Subj> = <Subject SynSem>
-<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
+<VerbDo SynSem Head Agreement> = <Subject SynSem Head Agreement>
+<Predicate SynSem Head VerbForm> = infinitive
 
-InterrogativeSentence -> WhWord DO Subject *Predicate* PUNCT_QM
+InterrogativeSentence -> WhWord VerbDo Subject *Predicate* PUNCT_QM
 <InterrogativeSentence SynSem> = <Predicate SynSem>
 <InterrogativeSentence SynSem WhWord> = <WhWord SynSem>
 <Predicate SynSem Valence Subj> = <Subject SynSem>
-<Predicate SynSem Head Agreeement> = <Subject SynSem Head Agreement>
+<VerbDo SynSem Head Agreement> = <Subject SynSem Head Agreement>
+<Predicate SynSem Head VerbForm> = infinitive
 
-InterrogativeSentence -> DOES Subject *Predicate* PUNCT_QM
-InterrogativeSentence -> WhWord DOES Subject *Predicate* PUNCT_QM
 
-InterrogativeSentence -> DONT Subject *Predicate* PUNCT_QM
-InterrogativeSentence -> WhWord DONT Subject *Predicate* PUNCT_QM
-
-InterrogativeSentence -> DOESNT Subject *Predicate* PUNCT_QM
-InterrogativeSentence -> WhWord DOESNT Subject *Predicate* PUNCT_QM
-
-InterrogativeSentence -> DID Subject *Predicate* PUNCT_QM
-InterrogativeSentence -> WhWord DID Subject *Predicate* PUNCT_QM
-
-InterrogativeSentence -> DIDNT Subject *Predicate* PUNCT_QM
-InterrogativeSentence -> WhWord DIDNT Subject *Predicate* PUNCT_QM
-
-// <Interrogative Sentence> = "Which" [<noun phrase>] 
+// <Interrogative Sentence> = "Which" [<noun phrase>]
 // ("do" |"does" |"don't" |"doesn't" |"did" |"didn't") <Subject> <Predicate>"?"
 // The verb of the Predicate must be infinitive (Vinf).
-InterrogativeSentence -> WHICH NounPhrase DO Subject Predicate PUNCT_QM
-InterrogativeSentence -> WHICH NounPhrase DOES Subject Predicate PUNCT_QM
-InterrogativeSentence -> WHICH NounPhrase DONT Subject Predicate PUNCT_QM
-InterrogativeSentence -> WHICH NounPhrase DOESNT Subject Predicate PUNCT_QM
-InterrogativeSentence -> WHICH NounPhrase DID Subject Predicate PUNCT_QM
-InterrogativeSentence -> WHICH NounPhrase DIDNT Subject Predicate PUNCT_QM
+// Which flower do you like best?
+InterrogativeSentence -> WHICH NounPhrase VerbDo Subject *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Valence DirObj> = <NounPhrase SynSem>
+<NounPhrase SynSem WhWord> = which
+<VerbDo SynSem Head Agreement> = <Subject SynSem Head Agreement>
+<Predicate SynSem Head VerbForm> = infinitive
+
+// Which didn't Mary take home?
+InterrogativeSentence -> WHICH VerbDo Subject *Predicate* PUNCT_QM
+<InterrogativeSentence SynSem> = <Predicate SynSem>
+<Predicate SynSem Valence Subj> = <Subject SynSem>
+<Predicate SynSem Valence DirObj> = <Subject SynSem>
+<VerbDo SynSem Head Agreement> = <Subject SynSem Head Agreement>
+<Predicate SynSem Head VerbForm> = infinitive
 
 // <Interrogative Sentence> = ["What" |"Which" |"When" |"Where" |"Who" |"To whom" |"Why"]
 //             ("will" |"won't") <Subject> <Predicate>"?" 
@@ -152,6 +157,10 @@ InterrogativeSentence -> WHICH NounPhrase DIDNT Subject Predicate PUNCT_QM
 //       "have" "been" <Ving>
 //       "be" <Ving>
 //       <Vinf>
+// What will John take to Manhattan?
+// When will he return?
+// Will John be thinking about Mary?
+// Why will John cry?
 InterrogativeSentence -> WILL Subject *Predicate* PUNCT_QM
 InterrogativeSentence -> WhWord WILL Subject *Predicate* PUNCT_QM
 InterrogativeSentence -> WHICH WILL Subject *Predicate* PUNCT_QM
