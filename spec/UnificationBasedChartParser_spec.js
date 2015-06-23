@@ -63,7 +63,7 @@ parser_types.forEach(function(parserType) {
         type_lattice = typeLatticeParser.parse(text);
         type_lattice.appropriate_function = null;
         console.log('beforeEach: parsed the type lattice');
-        console.log(type_lattice.pretty_print());
+        console.log(type_lattice.prettyPrint());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
             logger.error(error);
@@ -77,7 +77,7 @@ parser_types.forEach(function(parserType) {
             }
             // Parse the grammar
             grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
-            logger.debug(grammar.pretty_print());
+            logger.debug(grammar.prettyPrint());
             // Create the parser
             parser = parserFactory.createParser({type: parserType, 
               grammar: grammar, 
@@ -119,9 +119,9 @@ parser_types.forEach(function(parserType) {
         expected_fs = results.getWord('0')[0];
         parse_result.get_complete_items_from_to(0, 5).forEach(function(item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
-          logger.debug(expected_fs.pretty_print());
-          logger.debug('This is THE FS: ' + item.data.fs.pretty_print());
-          expect(item.data.fs.is_equal_to(expected_fs, type_lattice)).toEqual(true);
+          logger.debug(expected_fs.prettyPrint());
+          logger.debug('This is THE FS: ' + item.data.fs.prettyPrint());
+          expect(item.data.fs.isEqualTo(expected_fs, type_lattice)).toEqual(true);
         });
       });
     });

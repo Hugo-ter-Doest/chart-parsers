@@ -28,36 +28,36 @@ describe('Type lattice parser', function() {
     fs.readFile(type_lattice_file, 'utf8', function (error, data) {
       done();
       var type_lattice = type_lattice_parser.parse(data);
-      var agreement = type_lattice.get_type_by_name('agreement');
+      var agreement = type_lattice.getTypeByName('agreement');
       //Approp POS agreement agreement
-      var POS = type_lattice.get_type_by_name('POS');
+      var POS = type_lattice.getTypeByName('POS');
       expect(type_lattice.appropriate_function.isAppropriate(POS, 'agreement', agreement)).toEqual(true);
       //Approp agreement number plural
-      var plural = type_lattice.get_type_by_name('plural');
+      var plural = type_lattice.getTypeByName('plural');
       expect(type_lattice.appropriate_function.isAppropriate(agreement, 'number', plural)).toEqual(true);
       //Approp agreement number singular
-      var singular = type_lattice.get_type_by_name('singular');
+      var singular = type_lattice.getTypeByName('singular');
       expect(type_lattice.appropriate_function.isAppropriate(agreement, 'number', singular)).toEqual(true);
       //Approp agreement gender masculin
-      var masculin = type_lattice.get_type_by_name('masculin');
+      var masculin = type_lattice.getTypeByName('masculin');
       expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', masculin)).toEqual(true);
       //Approp agreement gender feminin
-      var feminin = type_lattice.get_type_by_name('feminin');
+      var feminin = type_lattice.getTypeByName('feminin');
       expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', feminin)).toEqual(true);
       //Approp agreement gender neutrum
-      var neutrum = type_lattice.get_type_by_name('neutrum');
+      var neutrum = type_lattice.getTypeByName('neutrum');
       expect(type_lattice.appropriate_function.isAppropriate(agreement, 'gender', neutrum)).toEqual(true);
 
-      var bottom = type_lattice.get_type_by_name('BOTTOM');
+      var bottom = type_lattice.getTypeByName('BOTTOM');
       expect(agreement.subsumes(bottom)).toEqual(true);
-      var person = type_lattice.get_type_by_name('person');
+      var person = type_lattice.getTypeByName('person');
       expect(person.subsumes(agreement)).toEqual(true);
       expect(person.subsumes(bottom)).toEqual(true);
-      var first = type_lattice.get_type_by_name('first');
+      var first = type_lattice.getTypeByName('first');
       expect(first.subsumes(person)).toEqual(true);
-      var second = type_lattice.get_type_by_name('second');
+      var second = type_lattice.getTypeByName('second');
       expect(second.subsumes(person)).toEqual(true);
-      var third = type_lattice.get_type_by_name('third');
+      var third = type_lattice.getTypeByName('third');
       expect(third.subsumes(person)).toEqual(true);
     });
   });

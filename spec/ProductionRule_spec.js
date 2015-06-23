@@ -45,7 +45,7 @@ describe('ProductionRule', function() {
 
     var type_lattice = new TypeLattice({});
     var agreement = new Type('agreement', [type_lattice.bottom]);
-    type_lattice.add_type(agreement);
+    type_lattice.addType(agreement);
     
     var approp = new AppropriateFunction();
     approp.addMapping('BOTTOM', 'agreement', 'agreement');
@@ -58,7 +58,7 @@ describe('ProductionRule', function() {
 
     type_lattice.appropriate_function = approp;
     
-    rule.process_constraints([constraint1, constraint2, constraint3], type_lattice);
+    rule.processConstraints([constraint1, constraint2, constraint3], type_lattice);
     
     //expect().toEqual(true);
     console.log('Feature structure: ' + JSON.stringify(rule.fs, null, 2));

@@ -40,7 +40,7 @@ describe('GrammarParser', function() {
             var arraysAreSame = (x.length === y.length);
             if (arraysAreSame) {
               for(var i; i < x.length; i++)
-                 if(!x[i].is_equal_to(y[i]))
+                 if(!x[i].isEqualTo(y[i]))
                     arraysAreSame = false;
               return arraysAreSame;
             }
@@ -54,7 +54,7 @@ describe('GrammarParser', function() {
           this.message = function() {
             return "Expected " + JSON.stringify(this.actual) + " to be production rule " + JSON.stringify(rule) + ".";
           };
-          return (this.actual.is_equal_to(rule));
+          return (this.actual.isEqualTo(rule));
         }
       });
     });
@@ -81,33 +81,33 @@ describe('GrammarParser', function() {
   });
 
   it('should correctly compute the left-corner relation', function () {
-    grammar.compute_lc_relation();
+    grammar.computeLCRelation();
     var expected_lc = {'S': {'S': true}};
     expect(grammar.lc).toEqual(expected_lc);
   });
   
   it('should recognise nonterminals', function () {
-    expect(grammar.is_nonterminal('S')).toEqual(true);
+    expect(grammar.isNonterminal('S')).toEqual(true);
   });
 
   it('should recognise terminals', function () {
-    expect(grammar.is_terminal('S')).toEqual(false);
+    expect(grammar.isTerminal('S')).toEqual(false);
   });
   
   it('should look up rules with left-hand-side S', function () {
-    expect(grammar.rules_with_lhs('S')).toEqualProductionRules([ { lhs : 'S', rhs : [  ], head : 0, fs : null } ]);
+    expect(grammar.rulesWithLHS('S')).toEqualProductionRules([ { lhs : 'S', rhs : [  ], head : 0, fs : null } ]);
   });
   
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqualProductionRule({ lhs : 'S', rhs : [  ], head : 0, fs : null });
+    expect(grammar.startRule()).toEqualProductionRule({ lhs : 'S', rhs : [  ], head : 0, fs : null });
   });
 
   it('should look up the start symbol', function () {
-    expect(grammar.get_start_symbol()).toEqual('S');
+    expect(grammar.getStartSymbol()).toEqual('S');
   });
   
   it('should test left-corner relations', function () {
-    expect(grammar.is_leftcorner_of('S', 'S')).toEqual(true);
+    expect(grammar.isLeftcornerOf('S', 'S')).toEqual(true);
   });
   
   
@@ -143,7 +143,7 @@ describe('GrammarParser', function() {
   });
 
   it('should correctly compute the left-corner relation', function () {
-    grammar.compute_lc_relation();
+    grammar.computeLCRelation();
     var expected_lc = {'S': {'S': true, 'NP': true},
                        'NP': {'NP': true},
                        'PP': {'PP': true},
@@ -153,83 +153,83 @@ describe('GrammarParser', function() {
   });
   
   it('should recognise nonterminals', function () {
-    expect(grammar.is_nonterminal('S')).toEqual(true);
-    expect(grammar.is_nonterminal('NP')).toEqual(true);
-    expect(grammar.is_nonterminal('VP')).toEqual(true);
-    expect(grammar.is_nonterminal('PP')).toEqual(true);
-    expect(grammar.is_nonterminal('DT')).toBeFalsy();
-    expect(grammar.is_nonterminal('IN')).toBeFalsy();
-    expect(grammar.is_nonterminal('VBP')).toBeFalsy();
-    expect(grammar.is_nonterminal('work')).toBeFalsy();
+    expect(grammar.isNonterminal('S')).toEqual(true);
+    expect(grammar.isNonterminal('NP')).toEqual(true);
+    expect(grammar.isNonterminal('VP')).toEqual(true);
+    expect(grammar.isNonterminal('PP')).toEqual(true);
+    expect(grammar.isNonterminal('DT')).toBeFalsy();
+    expect(grammar.isNonterminal('IN')).toBeFalsy();
+    expect(grammar.isNonterminal('VBP')).toBeFalsy();
+    expect(grammar.isNonterminal('work')).toBeFalsy();
   });
 
   it('should recognise terminals', function () {
-    expect(grammar.is_terminal('S')).toEqual(false);
-    expect(grammar.is_terminal('NP')).toEqual(false);
-    expect(grammar.is_terminal('VP')).toEqual(false);
-    expect(grammar.is_terminal('PP')).toEqual(false);
-    expect(grammar.is_terminal('DT')).toEqual(true);
-    expect(grammar.is_terminal('IN')).toEqual(true);
-    expect(grammar.is_terminal('VBP')).toEqual(true);
-    expect(grammar.is_terminal('work')).toEqual(true);
+    expect(grammar.isTerminal('S')).toEqual(false);
+    expect(grammar.isTerminal('NP')).toEqual(false);
+    expect(grammar.isTerminal('VP')).toEqual(false);
+    expect(grammar.isTerminal('PP')).toEqual(false);
+    expect(grammar.isTerminal('DT')).toEqual(true);
+    expect(grammar.isTerminal('IN')).toEqual(true);
+    expect(grammar.isTerminal('VBP')).toEqual(true);
+    expect(grammar.isTerminal('work')).toEqual(true);
   });
   
   it('should look up rules with left-hand-side S', function () {
-    expect(grammar.rules_with_lhs('S')).toEqualProductionRules([ { lhs : 'S', rhs : [ 'NP', 'VP' ], head : 0, fs : null } ]);
+    expect(grammar.rulesWithLHS('S')).toEqualProductionRules([ { lhs : 'S', rhs : [ 'NP', 'VP' ], head : 0, fs : null } ]);
   });
 
   it('should look up rules with left-hand-side NP', function () {
-    expect(grammar.rules_with_lhs('NP')).toEqualProductionRules([ { lhs : 'NP', rhs : [ 'DT', 'NN' ], head : 0, fs : null } ]);
+    expect(grammar.rulesWithLHS('NP')).toEqualProductionRules([ { lhs : 'NP', rhs : [ 'DT', 'NN' ], head : 0, fs : null } ]);
   });
   
   it('should look up rules with left-hand-side PP', function () {
-    expect(grammar.rules_with_lhs('PP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, 'fs': null}]);
+    expect(grammar.rulesWithLHS('PP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, 'fs': null}]);
   });
   
   it('should look up rules with left-hand-side VP', function () {
-    expect(grammar.rules_with_lhs('VP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, 'fs': null},
+    expect(grammar.rulesWithLHS('VP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, 'fs': null},
                                                   {'lhs': 'VP', 'rhs': ['work'], 'head': 0, 'fs': null}]);
   });
 
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqualProductionRules({'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, 'fs': null});
+    expect(grammar.startRule()).toEqualProductionRules({'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, 'fs': null});
   });
   
   it('should look up the start symbol', function () {
-    expect(grammar.get_start_symbol()).toEqual('S');
+    expect(grammar.getStartSymbol()).toEqual('S');
   });
 
   it('should look up production rules based on right hand side symbols (for CYK)', function () {
-    expect(grammar.get_rules_with_rhs('NP', 'VP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
-    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
-    expect(grammar.get_rules_with_rhs('IN', 'NP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
-    expect(grammar.get_rules_with_rhs('VBP', 'NP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
-    expect(grammar.get_rules_with_rhs('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
+    expect(grammar.getRulesWithRHS('NP', 'VP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
+    expect(grammar.getRulesWithRHS('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
+    expect(grammar.getRulesWithRHS('IN', 'NP')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.getRulesWithRHS('VBP', 'NP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.getRulesWithRHS('DT', 'NN')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
   });
 
   it('should look up production rules with a given left-most daughter', function () {
-    expect(grammar.rules_with_leftmost_daughter('NP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
-    expect(grammar.rules_with_leftmost_daughter('DT')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
-    expect(grammar.rules_with_leftmost_daughter('IN')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
-    expect(grammar.rules_with_leftmost_daughter('VBP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
-    expect(grammar.rules_with_leftmost_daughter('work')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['work'], 'head': 0, fs: null}]);
+    expect(grammar.rulesWithLeftmostDaughter('NP')).toEqualProductionRules([{'lhs': 'S', 'rhs': ['NP', 'VP'], 'head': 0, fs: null}]);
+    expect(grammar.rulesWithLeftmostDaughter('DT')).toEqualProductionRules([{'lhs': 'NP', 'rhs': ['DT', 'NN'], 'head': 0, fs: null}]);
+    expect(grammar.rulesWithLeftmostDaughter('IN')).toEqualProductionRules([{'lhs': 'PP', 'rhs': ['IN', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.rulesWithLeftmostDaughter('VBP')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['VBP', 'NP'], 'head': 0, fs: null}]);
+    expect(grammar.rulesWithLeftmostDaughter('work')).toEqualProductionRules([{'lhs': 'VP', 'rhs': ['work'], 'head': 0, fs: null}]);
   });
 
   it('should test left-corner relations', function () {
-    expect(grammar.is_leftcorner_of('S', 'S')).toEqual(true);
-    expect(grammar.is_leftcorner_of('NP', 'NP')).toEqual(true);
-    expect(grammar.is_leftcorner_of('VP', 'VP')).toEqual(true);
-    expect(grammar.is_leftcorner_of('PP', 'PP')).toEqual(true);
-    expect(grammar.is_leftcorner_of('DT', 'DT')).toEqual(false);
-    expect(grammar.is_leftcorner_of('VBP', 'VBP')).toEqual(false);
-    expect(grammar.is_leftcorner_of('IN', 'IN')).toEqual(false);
-    expect(grammar.is_leftcorner_of('NP', 'S')).toEqual(true);
-    expect(grammar.is_leftcorner_of('NP', 'PP')).toBeFalsy();
-    expect(grammar.is_leftcorner_of('PP', 'NP')).toBeFalsy();
-    expect(grammar.is_leftcorner_of('VP', 'NP')).toBeFalsy();
-    expect(grammar.is_leftcorner_of('NP', 'VP')).toBeFalsy();
-    expect(grammar.is_leftcorner_of('PP', 'VP')).toBeFalsy();
-    expect(grammar.is_leftcorner_of('VP', 'PP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('S', 'S')).toEqual(true);
+    expect(grammar.isLeftcornerOf('NP', 'NP')).toEqual(true);
+    expect(grammar.isLeftcornerOf('VP', 'VP')).toEqual(true);
+    expect(grammar.isLeftcornerOf('PP', 'PP')).toEqual(true);
+    expect(grammar.isLeftcornerOf('DT', 'DT')).toEqual(false);
+    expect(grammar.isLeftcornerOf('VBP', 'VBP')).toEqual(false);
+    expect(grammar.isLeftcornerOf('IN', 'IN')).toEqual(false);
+    expect(grammar.isLeftcornerOf('NP', 'S')).toEqual(true);
+    expect(grammar.isLeftcornerOf('NP', 'PP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('PP', 'NP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('VP', 'NP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('NP', 'VP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('PP', 'VP')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('VP', 'PP')).toBeFalsy();
   });
 
 //E -> E plus E
@@ -263,37 +263,37 @@ describe('GrammarParser', function() {
    });
 
   it('should correctly compute the left-corner relation', function () {
-    grammar.compute_lc_relation();
+    grammar.computeLCRelation();
     // left corner of E is E
     expect(grammar.lc).toEqual({'E': {'E': true}});
   });
   
   it('should recognise nonterminals', function () {
-    expect(grammar.is_nonterminal('E')).toEqual(true);
+    expect(grammar.isNonterminal('E')).toEqual(true);
   });
 
   it('should recognise terminals', function () {
-    expect(grammar.is_terminal('E')).toEqual(false);
+    expect(grammar.isTerminal('E')).toEqual(false);
   });
   
   it('should look up the start rule', function () {
-    expect(grammar.start_rule()).toEqualProductionRule({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null});
+    expect(grammar.startRule()).toEqualProductionRule({'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null});
   });
   
   it('should look up the start symbol', function () {
-    expect(grammar.get_start_symbol()).toEqual('E');
+    expect(grammar.getStartSymbol()).toEqual('E');
   });
   
   it('should look up production rules with a given left-most daughter', function () {
-    expect(grammar.rules_with_leftmost_daughter('E')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null},
+    expect(grammar.rulesWithLeftmostDaughter('E')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['E', 'plus', 'E'], 'head': 1, 'fs': null},
                                                                {'lhs': 'E', 'rhs': ['E', 'minus', 'E'], 'head': 1, 'fs': null},
                                                                {'lhs': 'E', 'rhs': ['E', 'divide', 'E'], 'head': 1, 'fs': null},
                                                                {'lhs': 'E', 'rhs': ['E', 'multiply', 'E'], 'head': 1, 'fs': null}]);
-    expect(grammar.rules_with_leftmost_daughter('number')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['number'], 'head': 0, 'fs': null}]);
+    expect(grammar.rulesWithLeftmostDaughter('number')).toEqualProductionRules([{'lhs': 'E', 'rhs': ['number'], 'head': 0, 'fs': null}]);
   });
   
   it('should test left-corner relations', function () {
-    expect(grammar.is_leftcorner_of('E', 'E')).toEqual(true);
-    expect(grammar.is_leftcorner_of('number', 'E')).toBeFalsy();
+    expect(grammar.isLeftcornerOf('E', 'E')).toEqual(true);
+    expect(grammar.isLeftcornerOf('number', 'E')).toBeFalsy();
   });
 });

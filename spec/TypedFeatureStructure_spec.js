@@ -36,77 +36,77 @@ describe('Typed Feature Structure class', function() {
     // based on  The Logic of Typed Feature Structures, Carpenter, 1992
     var agreement = new Type('agreement', []);
 
-    typeLattice.add_type(agreement);
+    typeLattice.addType(agreement);
 
     var person = new Type('person', [agreement]);
     var first = new Type('first', [person]);
     var second = new Type('second', [person]);
     var third = new Type('third', [person]);
 
-    typeLattice.add_type(person);
-    typeLattice.add_type(first);
-    typeLattice.add_type(second);
-    typeLattice.add_type(third);
+    typeLattice.addType(person);
+    typeLattice.addType(first);
+    typeLattice.addType(second);
+    typeLattice.addType(third);
 
     var number = new Type('number', [agreement]);
     var singular = new Type('singular', [number]);
     var plural = new Type('plural', [number]);
 
-    typeLattice.add_type(number);
-    typeLattice.add_type(singular);
-    typeLattice.add_type(plural);
+    typeLattice.addType(number);
+    typeLattice.addType(singular);
+    typeLattice.addType(plural);
 
     var gender = new Type('gender', [agreement]);
     var masculin = new Type('masculin', [gender]);
     var feminin = new Type('feminin', [gender]);
     var neutrum = new Type('neutrum', [gender]);
 
-    typeLattice.add_type(gender);
-    typeLattice.add_type(masculin);
-    typeLattice.add_type(feminin);
-    typeLattice.add_type(neutrum);
+    typeLattice.addType(gender);
+    typeLattice.addType(masculin);
+    typeLattice.addType(feminin);
+    typeLattice.addType(neutrum);
 
     var first_singular = new Type('first_singular', [first, singular]);
     var first_plural = new Type('first_plural', [first, plural]);
     var third_singular = new Type('third_singular', [third, singular]);
     var third_plural = new Type('third_plural', [third, plural]);
 
-    typeLattice.add_type(first_singular);
-    typeLattice.add_type(first_plural);
-    typeLattice.add_type(third_singular);
-    typeLattice.add_type(third_plural);
+    typeLattice.addType(first_singular);
+    typeLattice.addType(first_plural);
+    typeLattice.addType(third_singular);
+    typeLattice.addType(third_plural);
 
     var third_singular_masculin = new Type('third_singular_masculin', [third_singular, masculin]);
     var third_singular_feminin = new Type('third_singular_feminin', [third_singular, feminin]);
     var third_singular_neutrum = new Type('third_singular_neutrum', [third_singular, neutrum]);
 
-    typeLattice.add_type(third_singular_masculin);
-    typeLattice.add_type(third_singular_feminin);
-    typeLattice.add_type(third_singular_neutrum);
+    typeLattice.addType(third_singular_masculin);
+    typeLattice.addType(third_singular_feminin);
+    typeLattice.addType(third_singular_neutrum);
 
     var part_of_speech = new Type('part_of_speech', []);
     var s = new Type('s', []);
     var noun = new Type('noun', [part_of_speech]);
     var verb = new Type('verb', [part_of_speech]);
 
-    typeLattice.add_type(part_of_speech);
-    typeLattice.add_type(s);
-    typeLattice.add_type(noun);
-    typeLattice.add_type(verb);
+    typeLattice.addType(part_of_speech);
+    typeLattice.addType(s);
+    typeLattice.addType(noun);
+    typeLattice.addType(verb);
 
     var np = new Type('np', []);
     var vp = new Type('vp', []);
     var rule = new Type('rule', []);
 
-    typeLattice.add_type(np);
-    typeLattice.add_type(vp);
-    typeLattice.add_type(rule);
+    typeLattice.addType(np);
+    typeLattice.addType(vp);
+    typeLattice.addType(rule);
 
     var man = new Type('man', []);
     var walks = new Type('walks', []);
 
-    typeLattice.add_type(man);
-    typeLattice.add_type(walks);
+    typeLattice.addType(man);
+    typeLattice.addType(walks);
 
     var dag_verb = {
       'type': 'verb',
@@ -143,16 +143,16 @@ describe('Typed Feature Structure class', function() {
   
     featureStructureFactory.setTypeLattice(typeLattice);
     var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
-    console.log(fs_verb.pretty_print());
+    console.log(fs_verb.prettyPrint());
     
     var fs_noun = featureStructureFactory.createFeatureStructure({'dag': dag_noun});
-    console.log(fs_noun.pretty_print());
+    console.log(fs_noun.prettyPrint());
     
     var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
     console.log(fs_verb_noun.prettyPrint());
     
     var fs_rule = featureStructureFactory.createFeatureStructure({'dag': dag_rule});
-    console.log(fs_rule.pretty_print());
+    console.log(fs_rule.prettyPrint());
 
   });
 
@@ -213,26 +213,26 @@ describe('Typed Feature Structure class', function() {
     featureStructureFactory.setTypeLattice(type_lattice_2);
     var fs1 = featureStructureFactory.createFeatureStructure({'dag': dag1});
     console.log(JSON.stringify(fs1, null, 2));
-    console.log(fs1.pretty_print());
+    console.log(fs1.prettyPrint());
     //console.log(JSON.stringify(fs1, null, 2))
     var fs2 = featureStructureFactory.createFeatureStructure({'dag': dag2});
     console.log(JSON.stringify(fs2, null, 2));
-    console.log(fs2.pretty_print());
+    console.log(fs2.prettyPrint());
     var fs3 = fs1.unify(fs2, type_lattice_2);
     console.log(JSON.stringify(fs3, null, 2));
-    console.log(fs3.pretty_print());
+    console.log(fs3.prettyPrint());
   });
  
   it('Should create a feature structure from a JSON object and unify these', function() {
     featureStructureFactory.setTypeLattice(type_lattice_2);
     var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
     console.log(JSON.stringify(fs3, null, 2));
-    console.log(fs3.pretty_print());
+    console.log(fs3.prettyPrint());
     var fs4 = featureStructureFactory.createFeatureStructure({dag: dag4});
     console.log(JSON.stringify(fs4, null, 2));
-    console.log(fs4.pretty_print());
+    console.log(fs4.prettyPrint());
     var fs5 = fs3.unify(fs4, type_lattice_2);
-    console.log(fs5.pretty_print(0));
+    console.log(fs5.prettyPrint(0));
     console.log(JSON.stringify(fs5, null, 2));
   });
   
@@ -241,8 +241,8 @@ describe('Typed Feature Structure class', function() {
     var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
     var fs4 = fs3.copy(type_lattice_2);
     // Feature structures should be equal up to the labels
-    expect(fs3.is_equal_to(fs4)).toEqual(true);
-    logger.debug(fs3.pretty_print());
-    logger.debug(fs4.pretty_print());
+    expect(fs3.isEqualTo(fs4)).toEqual(true);
+    logger.debug(fs3.prettyPrint());
+    logger.debug(fs4.prettyPrint());
   });
 });

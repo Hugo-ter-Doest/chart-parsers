@@ -72,7 +72,7 @@ describe('Chart', function() {
     'from': 0,
     'to': 6
   });
-  i4.set_children([i1, i2, i3]);
+  i4.setChildren([i1, i2, i3]);
 
   it('should add items to the chart', function() {
     chart.addItem(i1);

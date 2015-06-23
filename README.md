@@ -267,27 +267,27 @@ var Type = require('../lib/Type');
 
 var agreement = new Type('agreement', []);
   
-typeLattice.add_type(agreement);
+typeLattice.addType(agreement);
   
 var person = new Type('person', [agreement]);
 var first = new Type('first', [person]);
 var second = new Type('second', [person]);
 var third = new Type('third', [person]);
 
-typeLattice.add_type(person);
-typeLattice.add_type(first);
-typeLattice.add_type(second);
-typeLattice.add_type(third);
+typeLattice.addType(person);
+typeLattice.addType(first);
+typeLattice.addType(second);
+typeLattice.addType(third);
 ```
 Once a type lattice has been created the least upper bound of two types can be 
 determined:
 ```
-var lub = type1.lub(type2, type_lattice);
+var LUB = type1.LUB(type2, type_lattice);
 ```
 Checking if one type subsumes another type is done as follows:
 ```
 if (type1.subsumes(type2, type_lattice)) {
-  console.log(type1.pretty_print() + ' subsumes ' + type2.pretty_print());
+  console.log(type1.prettyPrint() + ' subsumes ' + type2.prettyPrint());
 }
 ```
 
@@ -324,9 +324,9 @@ var dag_noun = {
 };
 
 var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
-console.log(fs_verb.pretty_print());
+console.log(fs_verb.prettyPrint());
 var fs_noun = featureStructureFactory.createFeatureStructure({'dag': dag_noun});
-console.log(fs_noun.pretty_print());
+console.log(fs_noun.prettyPrint());
 ```
 
 Feature structures can be specified in a lexicon as well. 

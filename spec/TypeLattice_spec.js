@@ -29,22 +29,22 @@ describe('Type lattice', function() {
   var musical = new Type('musical', [play, concert]);
   var ballet = new Type('ballet', [concert]);
 
-  typeLattice.add_type(performance);
-  typeLattice.add_type(play);
-  typeLattice.add_type(concert);
-  typeLattice.add_type(musical);
-  typeLattice.add_type(ballet);
+  typeLattice.addType(performance);
+  typeLattice.addType(play);
+  typeLattice.addType(concert);
+  typeLattice.addType(musical);
+  typeLattice.addType(ballet);
 
   it('Should calculate least upper bounds correctly', function() {
 
-    expect(performance.lub(ballet, typeLattice)).toEqual(ballet);
-    expect(ballet.lub(performance, typeLattice)).toEqual(ballet);
-    expect(performance.lub(play, typeLattice)).toEqual(play);
-    expect(play.lub(performance, typeLattice)).toEqual(play);
-    expect(play.lub(concert, typeLattice)).toEqual(musical);
-    expect(concert.lub(play, typeLattice)).toEqual(musical);
-    expect(ballet.lub(musical, typeLattice)).toEqual(typeLattice.top);
-    expect(musical.lub(ballet, typeLattice)).toEqual(typeLattice.top);
+    expect(performance.LUB(ballet, typeLattice)).toEqual(ballet);
+    expect(ballet.LUB(performance, typeLattice)).toEqual(ballet);
+    expect(performance.LUB(play, typeLattice)).toEqual(play);
+    expect(play.LUB(performance, typeLattice)).toEqual(play);
+    expect(play.LUB(concert, typeLattice)).toEqual(musical);
+    expect(concert.LUB(play, typeLattice)).toEqual(musical);
+    expect(ballet.LUB(musical, typeLattice)).toEqual(typeLattice.top);
+    expect(musical.LUB(ballet, typeLattice)).toEqual(typeLattice.top);
   });
   
   it('Should determine subsumption correctly', function() {

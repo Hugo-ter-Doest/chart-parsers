@@ -90,7 +90,7 @@ parserTypes.forEach(function(parserType) {
                              ['+', 'plus'],
                              ['3', 'number']];
       var chart = parser.parse(tagged_sentence);
-      var parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+      var parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       expect(parse_trees).toBeArray(['E(E(number(2())),plus(+()),E(number(3())))']);
   
@@ -101,7 +101,7 @@ parserTypes.forEach(function(parserType) {
                          ['*', 'multiply'],
                          ['4', 'number']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+      parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
       expected_parse_trees = [
@@ -161,7 +161,7 @@ parserTypes.forEach(function(parserType) {
                          ['the', 'DET'],
                          ['telescope', 'N']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(parser.grammar.get_start_symbol(), 
+      parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
       //expect(parse_trees.length).toEqual(2);

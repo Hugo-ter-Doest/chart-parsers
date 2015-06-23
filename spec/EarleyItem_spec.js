@@ -57,7 +57,7 @@ describe('Item', function() {
     'to': 0
   });
   it('should set the children of the item', function () {
-    item.set_children([c1, c2, c3]);
+    item.setChildren([c1, c2, c3]);
     expect(item.children).toEqual([c1, c2, c3]);
   });
   
@@ -74,10 +74,10 @@ describe('Item', function() {
   });
   
   it('should check if an item is complete', function () {
-    expect(item.is_complete()).toEqual(false);
+    expect(item.isComplete()).toEqual(false);
   });
   
   it('should check if an item is incomplete', function () {
-    expect(item.is_incomplete()).toEqual(true);
+    expect(item.isIncomplete()).toEqual(true);
   });
 });

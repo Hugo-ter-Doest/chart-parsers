@@ -41,7 +41,7 @@ describe('Lexicon parser', function() {
       }
       // parse the type lattice
       type_lattice = type_lattice_parser.parse(data);
-      logger.debug(type_lattice.pretty_print());
+      logger.debug(type_lattice.prettyPrint());
     });
   });
   it('Should parse a lexicon with type specification and words with feature structures', function(done) {
