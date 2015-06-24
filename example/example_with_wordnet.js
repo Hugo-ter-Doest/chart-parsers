@@ -138,7 +138,7 @@ function tag_sentence_function_words(fw_tagger, tokenized_sentence) {
         logger.info("main: parse trees of \"" + sentence + "\":\n" + 
           // Head-Corner or CYK parser: pass cyk_item
           // Earley parser or Left-Corner parser: pass earleyitem
-          chart.parse_trees(parser.grammar.getStartSymbol(), "earleyitem"));
+          chart.parseTrees(parser.grammar.getStartSymbol(), "earleyitem"));
       });
     });
   });

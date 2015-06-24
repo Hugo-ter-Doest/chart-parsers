@@ -90,7 +90,7 @@ parserTypes.forEach(function(parserType) {
                              ['+', 'plus'],
                              ['3', 'number']];
       var chart = parser.parse(tagged_sentence);
-      var parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
+      var parse_trees = chart.parseTrees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       expect(parse_trees).toBeArray(['E(E(number(2())),plus(+()),E(number(3())))']);
   
@@ -101,7 +101,7 @@ parserTypes.forEach(function(parserType) {
                          ['*', 'multiply'],
                          ['4', 'number']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
+      parse_trees = chart.parseTrees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
       expected_parse_trees = [
@@ -161,12 +161,12 @@ parserTypes.forEach(function(parserType) {
                          ['the', 'DET'],
                          ['telescope', 'N']];
       chart = parser.parse(tagged_sentence);
-      parse_trees = chart.parse_trees(parser.grammar.getStartSymbol(),
+      parse_trees = chart.parseTrees(parser.grammar.getStartSymbol(),
         (parserType === 'HeadCorner') ? "cyk_item" : "earleyitem");
       parse_trees.sort();
-      //expect(parse_trees.length).toEqual(2);
-      //expect(parse_trees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
-      //expect(parse_trees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
+      //expect(parseTrees.length).toEqual(2);
+      //expect(parseTrees[0]).toEqual('S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))');
+      //expect(parseTrees[1]).toEqual('S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))');
       expected_parse_trees = [
         'S(NP(I()),VP(VP(V(saw()),NP(DET(the()),N(man()))),PP(P(with()),NP(DET(the()),N(telescope())))))',
         'S(NP(I()),VP(V(saw()),NP(NP(DET(the()),N(man())),PP(P(with()),NP(DET(the()),N(telescope()))))))'

@@ -117,7 +117,7 @@ parser_types.forEach(function(parserType) {
         // Parse sentence
         var parse_result = parser.parse(taggedSentence);
         expected_fs = results.getWord('0')[0];
-        parse_result.get_complete_items_from_to(0, 5).forEach(function(item, index, array) {
+        parse_result.getCompleteItemsFromTo(0, 5).forEach(function(item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
           logger.debug(expected_fs.prettyPrint());
           logger.debug('This is THE FS: ' + item.data.fs.prettyPrint());

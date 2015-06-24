@@ -86,7 +86,7 @@ describe('CYK Parser', function() {
       unification: false,
       listOfCategories: true});
     var chart = parser.parse(tagged_sentence);
-    var parses = chart.full_parse_items(parser.grammar.getStartSymbol(), "cyk_item");
+    var parses = chart.fullParseItems(parser.grammar.getStartSymbol(), "cyk_item");
     expect(parses.length).toEqual(2);
     var expected_item = itemFactory.createItem({
       'type': 'CYK', 
