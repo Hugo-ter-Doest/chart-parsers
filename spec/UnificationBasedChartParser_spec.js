@@ -24,9 +24,6 @@ var logger = log4js.getLogger('CYK_Item');
 
 var fs = require('fs');
 
-var natural = require('natural');
-var tokenizer = new natural.WordTokenizer();
-
 var typeLatticeParser = require('../lib/TypeLatticeParser');
 var lexiconParser = require('../lib/LexiconParser');
 
@@ -110,7 +107,7 @@ parser_types.forEach(function(parserType) {
     it('should correctly parse a set of sentences using unification grammar', function() {
       sentences.forEach(function(sentence) {
         // Tokenize sentence
-        var words = tokenizer.tokenize(sentence);
+        var words = sentence.trim().split(/\s+/);
         // Tag sentence
         var taggedSentence = lexicon.tagSentence(words);
         logger.debug(taggedSentence);
