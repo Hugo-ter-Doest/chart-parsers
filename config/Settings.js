@@ -33,12 +33,6 @@ config.APPROPRIATE_FUNCTION = true;
 // list of feature structures
 config.LIST_OF_CATEGORIES = false;
 
-// The event function is called by Agenda and Chart when items are added
-// Agenda and Chart are event emitters
-config.event_function = function(event_name, item) {
-  //console.log(event_name + ': ' + item.id);
-};
-
 config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
 //config.log4js_config = '/Workspace/chart-parsers/config/log4js.json';
 

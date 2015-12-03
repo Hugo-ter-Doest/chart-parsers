@@ -29,10 +29,7 @@ describe('Chart', function() {
   var size = 6;
   
   it('should create an empty chart', function() {
-    function event_func(event_name, item) {
-      //console.log(item.id);
-    }
-    chart = new Chart(size, event_func);
+    chart = new Chart(size);
     expect(chart.N).toEqual(size);
     expect(chart.outgoing_edges.length).toEqual(size + 1);
     expect(chart.incoming_edges.length).toEqual(size + 1);
