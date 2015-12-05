@@ -1,0 +1,74 @@
+[verb] ->
+[verb
+ literal: walks
+ agreement: [agreement
+             person: third
+             number: singular
+            ]
+]
+
+[noun] ->
+[verb
+ literal: man
+ agreement: [agreement
+             person: third
+             number: singular
+            ]
+]
+
+[rule] ->
+[rule
+ s: s
+ np: [np
+      agreement: [1] agreement
+     ]
+ vp: [vp
+      agreement: [1]
+     ]
+]
+
+[dag1] ->
+[BOTTOM
+ literal: kast
+ category: N
+ agreement: [agreement
+             number: plural
+             gender: male
+             person: third
+            ]
+]
+
+[dag2] ->
+[BOTTOM
+ literal: kast
+ category: N
+ agreement: [1] [agreement
+                 number: plural
+                 gender: male
+                 person: third
+                ]
+ subject: [BOTTOM
+           agreement: [1]
+          ]
+]
+
+[dag3] ->
+[BOTTOM
+ f: [BOTTOM
+     h: v
+     k: [1] w
+    ]
+ g: [BOTTOM
+     k: [1]
+    ]
+]
+
+[dag4] ->
+[BOTTOM
+ f: [2] [BOTTOM
+         h: v
+         k: w
+        ]
+ g: [2]
+]
+

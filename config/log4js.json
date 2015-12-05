@@ -113,7 +113,7 @@
     "Type": "ERROR",
     "TypeLattice": "WARN",
     "TypeLatticeParser": "ERROR",
-    "TypedFeatureStructure": "ERROR",
+    "TypedFeatureStructure": "DEBUG",
     "Agenda": "ERROR",
     "CYKParser": "ERROR",
     "CYK_Item": "ERROR",
