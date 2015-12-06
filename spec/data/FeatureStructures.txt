@@ -8,7 +8,7 @@
 ]
 
 [noun] ->
-[verb
+[noun
  literal: man
  agreement: [agreement
              person: third
@@ -27,7 +27,7 @@
      ]
 ]
 
-[dag1] ->
+[fs1] ->
 [BOTTOM
  literal: kast
  category: N
@@ -38,7 +38,7 @@
             ]
 ]
 
-[dag2] ->
+[fs2] ->
 [BOTTOM
  literal: kast
  category: N
@@ -52,7 +52,7 @@
           ]
 ]
 
-[dag3] ->
+[fs3] ->
 [BOTTOM
  f: [BOTTOM
      h: v
@@ -63,7 +63,7 @@
     ]
 ]
 
-[dag4] ->
+[fs4] ->
 [BOTTOM
  f: [2] [BOTTOM
          h: v
@@ -71,4 +71,3 @@
         ]
  g: [2]
 ]
-

@@ -23,157 +23,59 @@ log4js.configure(settings.log4js_config);
 var logger = log4js.getLogger('TypedFeatureStructure');
 var fs = require('fs');
 
-var FeatureStructureFactory = require('../lib/FeatureStructureFactory');
-var featureStructureFactory = new FeatureStructureFactory();
 var typeLatticeParser = require('../lib/TypeLatticeParser');
+var lexiconParser = require('../lib/LexiconParser');
 var TypeLattice = require('../lib/TypeLattice');
 var Type = require('../lib/Type');
 
-var typeLatticeFile = './spec/data/TypeLattice.txt';
+var base = '/home/hugo/Workspace/chart-parsers/spec/data/';
+
+var typeLatticeFile = base + 'TypeLattice.txt';
+var featureStructureFile = base + 'FeatureStructures.txt';
 
 
 describe('Typed Feature Structure class', function() {
-  it('Should create a feature structure from a JSON object and unify these', function() {
+  var data = fs.readFileSync(typeLatticeFile, 'utf8');
+  var typeLattice = typeLatticeParser.parse(data);
+  typeLattice.implicit_types = true;
 
+  data = fs.readFileSync(featureStructureFile, 'utf8');
+  var lexicon = lexiconParser.parse(data, {'type_lattice': typeLattice});
 
-    var data = fs.readFileSync(typeLatticeFile, 'utf8');
-    var typeLattice = typeLatticeParser.parse(data);
+  it('Should unify feature structures correctly',
+    function () {
 
-    var dag_verb = {
-      'type': 'verb',
-      'literal': 'walks',
-      'agreement' : {
-        'type': 'agreement',
-        'person': 'third',
-        'number': 'singular'
-      }
-    };
+      var fs_verb = lexicon.getWord('verb')[0];
+      var fs_noun = lexicon.getWord('noun')[0];
+      var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
+      expect(fs_verb_noun).toEqual(typeLattice.getTypeByName('TOP'));
 
-    var dag_noun = {
-      'type': 'noun',
-      'literal': 'walks',
-      'agreement': {
-        'type': 'agreement',
-        'person': 'third',
-        'number': 'singular'
-      }
-    };
+      // Unify agreement features
+      var agreementFS = fs_verb.features['agreement'].unify(fs_noun.features['agreement'], typeLattice);
+      expect(agreementFS.isEqualTo(fs_verb.features['agreement'])).toEqual(true);
 
-    var dag_rule = {
-      'type': 'rule',
-      's': 's',
-      'np': {
-        'type': 'np',
-        'agreement: [1]': 'agreement'
-      },
-      'vp': {
-        'type': 'vp',
-        'agreement': '[1]'
-      }
-    };
-  
-    featureStructureFactory.setTypeLattice(typeLattice);
-    var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
-    console.log(fs_verb.prettyPrint());
-    
-    var fs_noun = featureStructureFactory.createFeatureStructure({'dag': dag_noun});
-    console.log(fs_noun.prettyPrint());
-    
-    var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
-    console.log(fs_verb_noun.prettyPrint());
-    
-    var fs_rule = featureStructureFactory.createFeatureStructure({'dag': dag_rule});
-    console.log(fs_rule.prettyPrint());
+      // Unify noun and verb with the rule
+      var fs_rule = lexicon.getWord('rule')[0];
+      fs_rule.features['np'] = fs_rule.features['np'].unify(fs_noun, typeLattice);
+      fs_rule.features['vp'] = fs_rule.features['vp'].unify(fs_verb, typeLattice);
 
-  });
+      var fs1 = lexicon.getWord('fs1')[0];
+      var fs2 = lexicon.getWord('fs2')[0];
+      var fs3 = lexicon.getWord('fs3')[0];
+      var fs4 = lexicon.getWord('fs4')[0];
 
-  var type_lattice_2 = new TypeLattice({implicit_types: true});
-  //var agreement = new Type('agreement', []);
-  
-  var dag1 = {
-    'type': 'BOTTOM',
-    'category': 'N',
-    'agreement': {
-      'type': 'agreement',
-      'number': 'plural',
-      'gender': 'male',
-      'person': 'third'
-    },
-    'literal': 'kast'
-  };
+      var fs5 = fs1.unify(fs2, typeLattice);
+      expect(fs5.isEqualTo(fs2)).toEqual(true);
 
-  var dag2 = {
-    'type': 'BOTTOM',
-    'category': 'N',
-    'agreement: [1]': {
-      'type': 'agreement',
-      'number': 'plural',
-      'gender': 'male',
-      'person': 'third'
-    },
-    'subject': {
-      'type': 'BOTTOM',
-      'agreement': '[1]'
-    },
-    'literal': 'kast'
-  };
+      var fs6 = fs3.unify(fs4, typeLattice);
+      expect(fs6.isEqualTo(fs4)).toEqual(true);
 
-  var dag3 = {
-    'type': 'BOTTOM',
-    'f': {
-      'type': 'BOTTOM',
-      'h': 'v',
-      'k: [1]': 'w'
-    },
-    'g': {
-      'k': '[1]'
-    }
-  };
+    });
 
-  var dag4 = {
-    'type': 'BOTTOM',
-    'f: [2]': {
-      'type': 'BOTTOM',
-      'h': 'v',
-      'k': 'w'
-    },
-    'g': '[2]'
-  };
-  
-  it('Should create a feature structure from a JSON object and unify these', function() {
-    featureStructureFactory.setTypeLattice(type_lattice_2);
-    var fs1 = featureStructureFactory.createFeatureStructure({'dag': dag1});
-    console.log(JSON.stringify(fs1, null, 2));
-    console.log(fs1.prettyPrint());
-    //console.log(JSON.stringify(fs1, null, 2))
-    var fs2 = featureStructureFactory.createFeatureStructure({'dag': dag2});
-    console.log(JSON.stringify(fs2, null, 2));
-    console.log(fs2.prettyPrint());
-    var fs3 = fs1.unify(fs2, type_lattice_2);
-    console.log(JSON.stringify(fs3, null, 2));
-    console.log(fs3.prettyPrint());
-  });
- 
-  it('Should create a feature structure from a JSON object and unify these', function() {
-    featureStructureFactory.setTypeLattice(type_lattice_2);
-    var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
-    console.log(JSON.stringify(fs3, null, 2));
-    console.log(fs3.prettyPrint());
-    var fs4 = featureStructureFactory.createFeatureStructure({dag: dag4});
-    console.log(JSON.stringify(fs4, null, 2));
-    console.log(fs4.prettyPrint());
-    var fs5 = fs3.unify(fs4, type_lattice_2);
-    console.log(fs5.prettyPrint(0));
-    console.log(JSON.stringify(fs5, null, 2));
-  });
-  
   it('Should copy feature structures correctly', function() {
-    featureStructureFactory.setTypeLattice(type_lattice_2);
-    var fs3 = featureStructureFactory.createFeatureStructure({dag: dag3});
-    var fs4 = fs3.copy(type_lattice_2);
+    var fs3 = lexicon.getWord('fs3')[0];
+    var fs7 = fs3.copy(typeLattice);
     // Feature structures should be equal up to (but not including) the labels
-    expect(fs3.isEqualTo(fs4)).toEqual(true);
-    logger.debug(fs3.prettyPrint());
-    logger.debug(fs4.prettyPrint());
+    expect(fs7.isEqualTo(fs3)).toEqual(true);
   });
 });
