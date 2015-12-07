@@ -44,33 +44,38 @@ describe('Typed Feature Structure class', function() {
 
   it('Should unify feature structures correctly',
     function () {
-
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
       var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
-      expect(fs_verb_noun).toEqual(typeLattice.getTypeByName('TOP'));
+      var expected_result = lexicon.getWord('verb_noun')[0];
+      expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify agreement features
-      var agreementFS = fs_verb.features['agreement'].unify(fs_noun.features['agreement'], typeLattice);
-      expect(agreementFS.isEqualTo(fs_verb.features['agreement'])).toEqual(true);
+      var agreementFS = fs_verb.features['vp'].features['agreement'].unify(fs_noun.features['np'].
+        features['agreement'], typeLattice);
+      expect(agreementFS.isEqualTo(fs_verb.features['vp'].features['agreement'])).toEqual(true);
 
       // Unify noun and verb with the rule
       var fs_rule = lexicon.getWord('rule')[0];
-      fs_rule.features['np'] = fs_rule.features['np'].unify(fs_noun, typeLattice);
-      fs_rule.features['vp'] = fs_rule.features['vp'].unify(fs_verb, typeLattice);
+      var rule_with_noun = fs_rule.unify(fs_noun, typeLattice);
+      expected_result = lexicon.getWord('rule_with_noun')[0];
+      expect(rule_with_noun.isEqualTo(expected_result)).toEqual(true);
+
+      // Unify the result further with verb
+      var rule_with_noun_and_verb = rule_with_noun.unify(fs_verb, typeLattice);
+      expected_result = lexicon.getWord('rule_with_noun_and_verb')[0];
+      expect(rule_with_noun_and_verb.isEqualTo(expected_result)).toEqual(true);
 
       var fs1 = lexicon.getWord('fs1')[0];
       var fs2 = lexicon.getWord('fs2')[0];
-      var fs3 = lexicon.getWord('fs3')[0];
-      var fs4 = lexicon.getWord('fs4')[0];
-
       var fs5 = fs1.unify(fs2, typeLattice);
       expect(fs5.isEqualTo(fs2)).toEqual(true);
 
+      var fs3 = lexicon.getWord('fs3')[0];
+      var fs4 = lexicon.getWord('fs4')[0];
       var fs6 = fs3.unify(fs4, typeLattice);
       expect(fs6.isEqualTo(fs4)).toEqual(true);
-
-    });
+  });
 
   it('Should copy feature structures correctly', function() {
     var fs3 = lexicon.getWord('fs3')[0];

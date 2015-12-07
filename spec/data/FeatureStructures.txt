@@ -1,19 +1,37 @@
 [verb] ->
 [verb
- literal: walks
- agreement: [agreement
-             person: third
-             number: singular
-            ]
+ vp: [vp
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
 ]
 
 [noun] ->
 [noun
- literal: man
- agreement: [agreement
-             person: third
-             number: singular
-            ]
+ np: [np
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+]
+
+[verb_noun] ->
+[rule
+ vp: [vp
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+ np: [np
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
 ]
 
 [rule] ->
@@ -21,6 +39,34 @@
  s: s
  np: [np
       agreement: [1] agreement
+     ]
+ vp: [vp
+      agreement: [1]
+     ]
+]
+
+[rule_with_noun] ->
+[rule
+ s: s
+ np: [np
+      agreement: [1] [agreement
+                      person: third
+                      number: singular
+                     ]
+     ]
+ vp: [vp
+      agreement: [1]
+     ]
+]
+
+[rule_with_noun_and_verb] ->
+[rule
+ s: s
+ np: [np
+      agreement: [1] [agreement
+                      person: third
+                      number: singular
+                     ]
      ]
  vp: [vp
       agreement: [1]
