@@ -1,3 +1,19 @@
+[third_singular] ->
+[bottom
+ agreement: [agreement
+             person: third
+             number: singular
+            ]
+]
+
+[third_plural] ->
+[bottom
+ agreement: [agreement
+             person: third
+             number: plural
+            ]
+]
+
 [verb] ->
 [verb
  vp: [vp

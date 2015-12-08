@@ -44,16 +44,19 @@ describe('Typed Feature Structure class', function() {
 
   it('Should unify feature structures correctly',
     function () {
+      // Unify agreement features
+      var third_singular = lexicon.getWord('third_singular')[0];
+      var third_plural = lexicon.getWord('third_plural')[0];
+      var fs = third_singular.unify(third_singular, typeLattice);
+      expect(fs.isEqualTo(third_singular)).toEqual(true);
+      var fs = third_plural.unify(third_singular, typeLattice);
+      expect(fs.isEqualTo(third_singular)).toEqual(false);
+
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
       var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
       var expected_result = lexicon.getWord('verb_noun')[0];
       expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
-
-      // Unify agreement features
-      var agreementFS = fs_verb.features['vp'].features['agreement'].unify(fs_noun.features['np'].
-        features['agreement'], typeLattice);
-      expect(agreementFS.isEqualTo(fs_verb.features['vp'].features['agreement'])).toEqual(true);
 
       // Unify noun and verb with the rule
       var fs_rule = lexicon.getWord('rule')[0];
@@ -78,9 +81,11 @@ describe('Typed Feature Structure class', function() {
   });
 
   it('Should copy feature structures correctly', function() {
-    var fs3 = lexicon.getWord('fs3')[0];
-    var fs7 = fs3.copy(typeLattice);
-    // Feature structures should be equal up to (but not including) the labels
-    expect(fs7.isEqualTo(fs3)).toEqual(true);
+    Object.keys(lexicon.lexicon).forEach(function(word) {
+      var fs = lexicon.lexicon[word][0];
+      var copy = fs.copy(typeLattice);
+      // Feature structures should be equal up to (but not including) the labels
+      expect(copy.isEqualTo(fs)).toEqual(true);
+    });
   });
 });
