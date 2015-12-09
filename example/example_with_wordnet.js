@@ -30,10 +30,11 @@ var ChartParsers = require('../index');
 var parserFactory = new ChartParsers.ParserFactory();
 var GrammarParser = ChartParsers.GrammarParser;
 
-var path = '/home/hugo/Workspace/chart-parsers/';
-var sentences_file =      path + 'data/Example with Wordnet/sentences.txt';
-var tagger_config_file =  path + 'node_modules/simple-pos-tagger/data/English/lexicon_files.json';
-var grammar_file =        path + 'data/Example with Wordnet/English grammar using Wordnet tags.txt';
+var path = './data/';
+var sentences_file = path + 'sentences.txt';
+var grammar_file = path + 'English grammar using Wordnet tags.txt';
+
+var tagger_config_file =  '../node_modules/simple-pos-tagger/data/English/lexicon_files.json';
 
 tokenizer = new natural.TreebankWordTokenizer();
 var wordnet = new natural.WordNet();
@@ -54,7 +55,12 @@ function initialise(callback) {
       // parse the grammar
       var grammar = GrammarParser.parse(grammar_text);
       // create parser
-      var parser = parserFactory.createParser({type: 'Earley', grammar: grammar, unification: false});
+      var parser = parserFactory.createParser({
+        type: 'Earley',
+        grammar: grammar,
+        unification: false,
+        listOfCategories: true
+      });
       new Tagger(tagger_config_file, function(tagger) {
         logger.debug("POS tagger and parser are ready");
         callback(tagger, parser);

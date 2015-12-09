@@ -27,7 +27,7 @@ var parserFactory = new ChartParsers.ParserFactory();
 var ItemFactory = require('../lib/ItemFactory');
 var itemFactory = new ItemFactory();
 
-var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var path = './spec/data/CFGChartParser/';
 var lexicon_file = '';
 var grammar_file = path + 'test_grammar_for_CYK.txt';
 

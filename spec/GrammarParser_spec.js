@@ -21,7 +21,7 @@ var GrammarParser = require('../lib/GrammarParser');
 
 //var TFS = require('../lib/TypedFeatureStructure');
 
-var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var path = './spec/data/CFGChartParser/';
 var minimal_grammar_file = path + 'minimal_grammar.txt';
 var grammar_for_CFG_file = path + 'test_grammar_for_CFG.txt';
 var math_grammar_file = path + 'math_expressions.txt';

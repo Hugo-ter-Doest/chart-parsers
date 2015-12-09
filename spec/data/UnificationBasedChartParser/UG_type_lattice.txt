@@ -1,0 +1,35 @@
+Approp POS category Determiner
+Approp POS head BOTTOM
+Approp BOTTOM agreement agreement
+Approp agreement number singular
+Approp POS category Noun
+Approp agreement gender masculin
+Approp POS category Verb
+Approp BOTTOM tense present
+Approp BOTTOM subcat transitive
+Approp POS agreement agreement
+Approp BOTTOM agreement agreement
+Approp BOTTOM NP number
+Approp BOTTOM VP number
+Approp BOTTOM head number
+Approp BOTTOM VP number
+Approp BOTTOM Determiner POS
+Approp BOTTOM head BOTTOM
+Approp BOTTOM NP BOTTOM
+Approp BOTTOM VP BOTTOM
+Approp BOTTOM Noun POS
+Approp BOTTOM Verb POS
+Approp BOTTOM agreement BOTTOM
+Approp BOTTOM number BOTTOM
+Type POS (BOTTOM)
+Type present (BOTTOM)
+Type transitive (BOTTOM)
+Type Noun (BOTTOM)
+Type Verb (BOTTOM)
+Type Determiner (BOTTOM)
+Type agreement (BOTTOM)
+Type number (agreement)
+Type singular (number)
+Type plural (number)
+Type gender (agreement)
+Type masculin (gender)

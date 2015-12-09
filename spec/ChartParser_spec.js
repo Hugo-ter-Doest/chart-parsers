@@ -24,7 +24,7 @@ var GrammarParser = require('../lib/GrammarParser');
 var ChartParsers = require('../index');
 var parserFactory = new ChartParsers.ParserFactory();
 
-var path = '/home/hugo/Workspace/chart-parsers/data/CFG/';
+var path = './spec/data/CFGChartParser/';
 var math_grammar_file = path + 'math_expressions.txt';
 var CYK_grammar_file = path + 'test_grammar_for_CYK.txt';
 

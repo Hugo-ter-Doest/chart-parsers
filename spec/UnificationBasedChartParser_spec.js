@@ -32,7 +32,7 @@ var GrammarParser = require('../lib/GrammarParser');
 var ParserFactory = require('../lib/ParserFactory');
 var parserFactory = new ParserFactory();
 
-var base = '/home/hugo/Workspace/chart-parsers/data/UG/';
+var base = './spec/data/UnificationBasedChartParser/';
 
 var lexicon_file =      base + 'UG_lexicon.txt';
 var type_lattice_file = base + 'UG_type_lattice.txt';

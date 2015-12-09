@@ -18,8 +18,8 @@
 
 var fs = require('fs');
 
-var basedir = "/home/hugo/Workspace/chart-parsers/";
-var type_lattice_file = basedir + "data/FS/type_lattice.txt";
+var basedir = "./spec/data/LexiconParser/";
+var type_lattice_file = basedir + "type_lattice.txt";
 
 var type_lattice_parser = require('../lib/TypeLatticeParser');
 

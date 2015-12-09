@@ -26,7 +26,7 @@ var fs = require('fs');
 var lexicon_parser = require('../lib/LexiconParser');
 var type_lattice_parser = require('../lib/TypeLatticeParser');
 
-var basedir = '/home/hugo/Workspace/chart-parsers/data/FS/';
+var basedir = './spec/data/LexiconParser/';
 var lexicon_file = basedir + 'example_lexicon.txt';
 var type_lattice_file = basedir + 'type_lattice.txt';
 

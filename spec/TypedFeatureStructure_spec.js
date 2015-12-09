@@ -28,7 +28,7 @@ var lexiconParser = require('../lib/LexiconParser');
 var TypeLattice = require('../lib/TypeLattice');
 var Type = require('../lib/Type');
 
-var base = '/home/hugo/Workspace/chart-parsers/spec/data/';
+var base = './spec/data/TypedFeatureStructure/';
 
 var typeLatticeFile = base + 'TypeLattice.txt';
 var featureStructureFile = base + 'FeatureStructures.txt';
