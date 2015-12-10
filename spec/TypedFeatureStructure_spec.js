@@ -56,6 +56,7 @@ describe('Typed Feature Structure class', function() {
       var fs_noun = lexicon.getWord('noun')[0];
       var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
       var expected_result = lexicon.getWord('verb_noun')[0];
+      logger.debug(fs_verb_noun.prettyPrint());
       expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify noun and verb with the rule
