@@ -60,7 +60,7 @@ parser_types.forEach(function(parserType) {
         type_lattice = typeLatticeParser.parse(text);
         type_lattice.appropriate_function = null;
         console.log('beforeEach: parsed the type lattice');
-        console.log(type_lattice.prettyPrint());
+        console.log(type_lattice.printLUBMatrix());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
             logger.error(error);

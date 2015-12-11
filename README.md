@@ -237,7 +237,9 @@ These deduction rules are used for creating new items in the combine step:
 Deduction rules (1) and (2) introduce head-corner items from goal items. Rules (3) and (4) introduce goal items from partially recognised head-corner items. Rule (5) creates CYK items for head-corner items that are completely recognised. Rules (6) and (7) recognise parts of head-corner items based on CYK items. 
 
 ## Usage
-The head-corner parser is created and applied as usual; there is however one difference: the production rules of the grammar must be decorated with heads as follows:
+The head-corner parser is created and applied as usual; there is one 
+difference: the production rules of the grammar must be decorated with heads 
+as follows:
 ```
 S -> NP *VP*
 NP -> DET *N*
@@ -247,38 +249,19 @@ VP -> *V* NP
 VP -> *VP* PP
 ```
 
-# Feature Structures
-
-This module provides a class for typed feature structures, unification. Furthermore it allows reading a lexicon and taggging.
-
-## Usage of types
-A type is an object with a name and zero or more super types:
+# Specification of a type lattice
+A type lattice is specified as follows:
 ```
-var Type = require('../lib/Type');
-var agreement = new Type('agreement', []);
-var person = new Type('person', [agreement]);
+Type type1 ()
+Type type2 ()
+Type type3 (type1 type2)
+Type type4 (type1)
+Type type5 (type 4)
 ```
+Each type specification if started with keyword Type followed by the type 
+name and the super types between braces. If no super types are supplied, 
+bottom (the most general type) is assumed to be the sole super type.
 
-## Usage of type lattice
-```
-var TypeLattice = require('../lib/TypeLattice');
-var typeLattice = new TypeLattice();
-var Type = require('../lib/Type');
-
-var agreement = new Type('agreement', []);
-  
-typeLattice.addType(agreement);
-  
-var person = new Type('person', [agreement]);
-var first = new Type('first', [person]);
-var second = new Type('second', [person]);
-var third = new Type('third', [person]);
-
-typeLattice.addType(person);
-typeLattice.addType(first);
-typeLattice.addType(second);
-typeLattice.addType(third);
-```
 Once a type lattice has been created the least upper bound of two types can be 
 determined:
 ```
@@ -291,45 +274,12 @@ if (type1.subsumes(type2, type_lattice)) {
 }
 ```
 
-## Creating typed feature structures
-Feature structures can be created programmatically from JSON objects and by 
-specification in a PATRII like language. Typed feature structures are specified 
-with respect to a type lattice.
-
-Here is how to create feature structures from JSON objects:
-```
-var FeatureStructureFactory = require('../lib/FeatureStructureFactory');
-var featureStructureFactory = new FeatureStructureFactory();
-
-featureStructureFactory.set_type_lattice(typeLattice);
-
-var dag_verb = {
-  'type': 'verb',
-  'literal': 'walks',
-  'agreement' : {
-    'type': 'agreement',
-    'person': 'third',
-    'number': 'singular'
-  }
-};
-  
-var dag_noun = {
-  'type': 'noun',
-  'literal': 'man',
-  'agreement': {
-    'type': 'agreement',
-    'person': 'third',
-    'number': 'singular'
-  }
-};
-
-var fs_verb = featureStructureFactory.createFeatureStructure({dag: dag_verb});
-console.log(fs_verb.prettyPrint());
-var fs_noun = featureStructureFactory.createFeatureStructure({'dag': dag_noun});
-console.log(fs_noun.prettyPrint());
-```
-
-Feature structures can be specified in a lexicon as well. 
+# Typed feature structures
+Feature structures are specified using the PATRII formalism. The 
+LexiconParser reads lexicons that assign feature structures to words. 
+Multiple alternative feature structures may be assigned to the same word by 
+specifying multiple entries of the word. Each node of a feature structure has 
+a type assigned that is specified in a type lattice.
 ```
 [home] ->
 [POS
@@ -340,13 +290,10 @@ Feature structures can be specified in a lexicon as well.
             ]
 ]
 ```
-The module LexiconParser reads lexicon as follows:
+In this example the root node of the feature structure is of type POS and 
+category is of type noun.
+
+Feature structures can be unified as follows:
 ```
-
+var result = fs1.unify(fs2, typeLattice);
 ```
-
-## Unification of feature structures
-Todo
-
-## Algorithm
-Todo

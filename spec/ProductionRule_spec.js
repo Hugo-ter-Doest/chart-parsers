@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 var settings = require('../config/Settings');
 
 var log4js = require('log4js');
