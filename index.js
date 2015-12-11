@@ -23,10 +23,10 @@ var TypeLatticeParser = require('./lib/TypeLatticeParser');
 var GrammarParser = require('./lib/GrammarParser');
 var LexiconParser = require('./lib/LexiconParser');
 var ParserFactory = require('./lib/ParserFactory');
-var FeatureStructureFactory = require('./lib/FeatureStructureFactory');
+var TypedFeatureStructure = require('./lib/TypedFeatureStructure');
 
 module.exports.TypeLatticeParser = TypeLatticeParser;
 module.exports.LexiconParser = LexiconParser;
 module.exports.GrammarParser = GrammarParser;
 module.exports.ParserFactory = ParserFactory;
-module.exports.FeatureStructureFactory = FeatureStructureFactory;
+module.exports.TypedFeatureStructure = TypedFeatureStructure;
