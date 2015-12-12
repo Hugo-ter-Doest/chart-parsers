@@ -106,12 +106,12 @@
     }
   ],
   "levels": {
-    "AppropriateFunction": "ERROR",
+    "AppropriateFunction": "DEBUG",
     "FeatureStructureFactory": "ERROR",
     "Lexicon": "ERROR",
     "LexiconParser": "ERROR",
     "Type": "ERROR",
-    "TypeLattice": "WARN",
+    "TypeLattice": "DEBUG",
     "TypeLatticeParser": "ERROR",
     "TypedFeatureStructure": "DEBUG",
     "Agenda": "ERROR",
@@ -131,7 +131,9 @@
     "LeftCornerParser": "ERROR",
     "ParserFactory": "ERROR",
     "ProductionRule": "ERROR",
-    "ExampleWithWordnet": "INFO"
+    "ExampleWithWordnet": "INFO",
+    "Signature": "ERROR",
+    "SignatureParser": "DEBUG"
   },
   "replaceConsole": true
 }
