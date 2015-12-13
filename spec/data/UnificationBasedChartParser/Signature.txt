@@ -10,6 +10,10 @@ Feature VP
 Feature Determiner
 Feature Noun
 Feature Verb
+Feature action
+Feature subject
+Feature S
+Feature object
 
 Type POS (BOTTOM)
 Type present (BOTTOM)
@@ -29,7 +33,6 @@ Type person (agreement)
 Type first (person)
 Type second (person)
 Type third (person)
-
 
 Approp POS category Determiner
 Approp POS head BOTTOM
@@ -57,3 +60,10 @@ Approp BOTTOM Noun POS
 Approp BOTTOM Verb POS
 Approp BOTTOM agreement BOTTOM
 Approp BOTTOM number BOTTOM
+Approp BOTTOM action BOTTOM
+Approp BOTTOM subject BOTTOM
+Approp BOTTOM object BOTTOM
+Approp BOTTOM S BOTTOM
+Approp BOTTOM Determiner BOTTOM
+Approp BOTTOM Noun BOTTOM
+Approp BOTTOM Verb BOTTOM

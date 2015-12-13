@@ -24,7 +24,7 @@ var logger = log4js.getLogger('CYK_Item');
 
 var fs = require('fs');
 
-var typeLatticeParser = require('../lib/TypeLatticeParser');
+var signatureParser = require('../lib/SignatureParser');
 var lexiconParser = require('../lib/LexiconParser');
 
 var GrammarParser = require('../lib/GrammarParser');
@@ -34,52 +34,52 @@ var parserFactory = new ParserFactory();
 
 var base = './spec/data/UnificationBasedChartParser/';
 
+var signatureFile =     base + 'Signature.txt';
 var lexicon_file =      base + 'UG_lexicon.txt';
-var type_lattice_file = base + 'UG_type_lattice.txt';
 var grammar_file =      base + 'UG_grammar.txt';
 var sentences_file =    base + 'UG_sentences.txt';
 var results_file =      base + 'UG_expected_results.txt';
 
-var parser_types = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
-parser_types.forEach(function(parserType) {
+var parserTypes = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
+parserTypes.forEach(function(parserType) {
   describe('Unification grammar chain', function() {
 
-    var type_lattice;
+    var signature;
     var lexicon;
     var grammar;
     var parser;
     var sentences;
     var results;
 
-    beforeEach(function(done) { 
-      fs.readFile(type_lattice_file, 'utf8', function (error, text) {
+    beforeEach(function(done) {
+      fs.readFile(signatureFile, 'utf8', function (error, text) {
         if (error) {
           logger.debug(error);
         }
         // Parse the type lattice
-        type_lattice = typeLatticeParser.parse(text);
-        type_lattice.appropriate_function = null;
+        signature = signatureParser.parse(text);
         console.log('beforeEach: parsed the type lattice');
-        console.log(type_lattice.printLUBMatrix());
+        console.log(signature.typeLattice.printLUBMatrix());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
             logger.error(error);
           }
           // Parse the lexicon
-          lexicon = lexiconParser.parse(text, {'type_lattice': type_lattice});
+          lexicon = lexiconParser.parse(text, {signature: signature});
           logger.debug(lexicon.prettyPrint());
           fs.readFile(grammar_file, 'utf8', function (error, text) {
             if (error) {
               logger.error(error);
             }
             // Parse the grammar
-            grammar = GrammarParser.parse(text, {type_lattice: type_lattice});
+            grammar = GrammarParser.parse(text, {signature: signature});
             logger.debug(grammar.prettyPrint());
             // Create the parser
-            parser = parserFactory.createParser({type: parserType, 
+            parser = parserFactory.createParser({
+              type: parserType,
               grammar: grammar, 
-              unification: true, 
-              type_lattice: type_lattice});
+              unification: true
+            });
             //console.log('beforeEach: created the parser');
             // Read sentences from file
 
@@ -94,7 +94,7 @@ parser_types.forEach(function(parserType) {
                 if (error) {
                   logger.error(error);
                 }
-                results = lexiconParser.parse(text, {'type_lattice': type_lattice});
+                results = lexiconParser.parse(text, {signature: signature});
                 logger.debug('beforeEach: read ' + results.length + ' results');
                 done();
               });
@@ -118,7 +118,7 @@ parser_types.forEach(function(parserType) {
           logger.debug('Item ' + index + ' of ' + array.length);
           logger.debug(expected_fs.prettyPrint());
           logger.debug('This is THE FS: ' + item.data.fs.prettyPrint());
-          expect(item.data.fs.isEqualTo(expected_fs, type_lattice)).toEqual(true);
+          expect(item.data.fs.isEqualTo(expected_fs, signature)).toEqual(true);
         });
       });
     });

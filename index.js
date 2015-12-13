@@ -19,13 +19,13 @@
 // This index.js exports the necessary classes for using unification-based
 // chart parsers
 
-var TypeLatticeParser = require('./lib/TypeLatticeParser');
+var SignatureParser = require('./lib/SignatureParser');
 var GrammarParser = require('./lib/GrammarParser');
 var LexiconParser = require('./lib/LexiconParser');
 var ParserFactory = require('./lib/ParserFactory');
 var TypedFeatureStructure = require('./lib/TypedFeatureStructure');
 
-module.exports.TypeLatticeParser = TypeLatticeParser;
+module.exports.SignatureParser = SignatureParser;
 module.exports.LexiconParser = LexiconParser;
 module.exports.GrammarParser = GrammarParser;
 module.exports.ParserFactory = ParserFactory;

@@ -23,68 +23,68 @@ log4js.configure(settings.log4js_config);
 var logger = log4js.getLogger('TypedFeatureStructure');
 var fs = require('fs');
 
-var typeLatticeParser = require('../lib/TypeLatticeParser');
+var signatureParser = require('../lib/SignatureParser');
 var lexiconParser = require('../lib/LexiconParser');
 var TypeLattice = require('../lib/TypeLattice');
 var Type = require('../lib/Type');
 
 var base = './spec/data/TypedFeatureStructure/';
 
-var typeLatticeFile = base + 'TypeLattice.txt';
+var signatureFile = base + 'TypeLattice.txt';
 var featureStructureFile = base + 'FeatureStructures.txt';
 
 
 describe('Typed Feature Structure class', function() {
-  var data = fs.readFileSync(typeLatticeFile, 'utf8');
-  var typeLattice = typeLatticeParser.parse(data);
-  typeLattice.implicit_types = true;
+  var data = fs.readFileSync(signatureFile, 'utf8');
+  var signature = signatureParser.parse(data);
+  signature.typeLattice.implicit_types = true;
 
   data = fs.readFileSync(featureStructureFile, 'utf8');
-  var lexicon = lexiconParser.parse(data, {'type_lattice': typeLattice});
+  var lexicon = lexiconParser.parse(data, {signature: signature});
 
   it('Should unify feature structures correctly',
     function () {
       // Unify agreement features
       var third_singular = lexicon.getWord('third_singular')[0];
       var third_plural = lexicon.getWord('third_plural')[0];
-      var fs = third_singular.unify(third_singular, typeLattice);
+      var fs = third_singular.unify(third_singular, signature);
       expect(fs.isEqualTo(third_singular)).toEqual(true);
-      var fs = third_plural.unify(third_singular, typeLattice);
+      var fs = third_plural.unify(third_singular, signature);
       expect(fs.isEqualTo(third_singular)).toEqual(false);
 
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
-      var fs_verb_noun = fs_verb.unify(fs_noun, typeLattice);
+      var fs_verb_noun = fs_verb.unify(fs_noun, signature);
       var expected_result = lexicon.getWord('verb_noun')[0];
       logger.debug(fs_verb_noun.prettyPrint());
       expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify noun and verb with the rule
       var fs_rule = lexicon.getWord('rule')[0];
-      var rule_with_noun = fs_rule.unify(fs_noun, typeLattice);
+      var rule_with_noun = fs_rule.unify(fs_noun, signature);
       expected_result = lexicon.getWord('rule_with_noun')[0];
       expect(rule_with_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify the result further with verb
-      var rule_with_noun_and_verb = rule_with_noun.unify(fs_verb, typeLattice);
+      var rule_with_noun_and_verb = rule_with_noun.unify(fs_verb, signature);
       expected_result = lexicon.getWord('rule_with_noun_and_verb')[0];
       expect(rule_with_noun_and_verb.isEqualTo(expected_result)).toEqual(true);
 
       var fs1 = lexicon.getWord('fs1')[0];
       var fs2 = lexicon.getWord('fs2')[0];
-      var fs5 = fs1.unify(fs2, typeLattice);
+      var fs5 = fs1.unify(fs2, signature);
       expect(fs5.isEqualTo(fs2)).toEqual(true);
 
       var fs3 = lexicon.getWord('fs3')[0];
       var fs4 = lexicon.getWord('fs4')[0];
-      var fs6 = fs3.unify(fs4, typeLattice);
+      var fs6 = fs3.unify(fs4, signature);
       expect(fs6.isEqualTo(fs4)).toEqual(true);
   });
 
   it('Should copy feature structures correctly', function() {
     Object.keys(lexicon.lexicon).forEach(function(word) {
       var fs = lexicon.lexicon[word][0];
-      var copy = fs.copy(typeLattice);
+      var copy = fs.copy(signature);
       // Feature structures should be equal up to (but not including) the labels
       expect(copy.isEqualTo(fs)).toEqual(true);
     });

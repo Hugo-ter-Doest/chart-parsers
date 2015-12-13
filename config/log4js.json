@@ -109,7 +109,7 @@
     "AppropriateFunction": "DEBUG",
     "FeatureStructureFactory": "ERROR",
     "Lexicon": "ERROR",
-    "LexiconParser": "ERROR",
+    "LexiconParser": "DEBUG",
     "Type": "ERROR",
     "TypeLattice": "DEBUG",
     "TypeLatticeParser": "ERROR",

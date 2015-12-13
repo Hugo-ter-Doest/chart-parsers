@@ -49,20 +49,20 @@ describe('Type lattice', function() {
   
   it('Should determine subsumption correctly', function() {
     
-    expect(performance.subsumes(typeLattice.bottom)).toEqual(true);
-    expect(play.subsumes(typeLattice.bottom)).toEqual(true);
-    expect(concert.subsumes(typeLattice.bottom)).toEqual(true);
-    expect(musical.subsumes(typeLattice.bottom)).toEqual(true);
-    expect(ballet.subsumes(typeLattice.bottom)).toEqual(true);
+    expect(typeLattice.bottom.subsumes(performance)).toEqual(true);
+    expect(typeLattice.bottom.subsumes(play)).toEqual(true);
+    expect(typeLattice.bottom.subsumes(concert)).toEqual(true);
+    expect(typeLattice.bottom.subsumes(musical)).toEqual(true);
+    expect(typeLattice.bottom.subsumes(ballet)).toEqual(true);
     
-    expect(play.subsumes(performance)).toEqual(true);
-    expect(concert.subsumes(performance)).toEqual(true);
-    expect(musical.subsumes(play)).toEqual(true);
-    expect(musical.subsumes(concert)).toEqual(true);
-    expect(ballet.subsumes(concert)).toEqual(true);
+    expect(performance.subsumes(play)).toEqual(true);
+    expect(performance.subsumes(concert)).toEqual(true);
+    expect(play.subsumes(musical)).toEqual(true);
+    expect(concert.subsumes(musical)).toEqual(true);
+    expect(concert.subsumes(ballet)).toEqual(true);
     
-    expect(ballet.subsumes(performance)).toEqual(true);
-    expect(musical.subsumes(performance)).toEqual(true);
+    expect(performance.subsumes(ballet)).toEqual(true);
+    expect(performance.subsumes(musical)).toEqual(true);
     
     expect(performance.subsumes(performance)).toEqual(true);
     expect(play.subsumes(play)).toEqual(true);

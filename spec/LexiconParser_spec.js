@@ -23,38 +23,44 @@ var logger = log4js.getLogger('LexiconParser');
 
 var fs = require('fs');
 
-var lexicon_parser = require('../lib/LexiconParser');
-var type_lattice_parser = require('../lib/TypeLatticeParser');
+var lexiconParser = require('../lib/LexiconParser');
+var signatureParser  = require('../lib/SignatureParser');
 
-var basedir = './spec/data/LexiconParser/';
-var lexicon_file = basedir + 'example_lexicon.txt';
-var type_lattice_file = basedir + 'type_lattice.txt';
+var basedir = '/home/hugo/Workspace/chart-parsers/spec/data/LexiconParser/';
+var lexiconFile = basedir + 'Lexicon.txt';
+var signatureFile = basedir + 'Signature.txt';
 
 describe('Lexicon parser', function() {
   var lexicon;
-  var type_lattice;
-  it('Should parse a lexicon with type specification and words with feature structures', function() {
+  var signature;
+  it('Should parse a lexicon with type specification and words with feature' +
+  ' structures', function() {
     // Read a file with type lattice
-    fs.readFile(type_lattice_file, 'utf8', function (error, data) {
-      if (error) {
-        logger.debug(error);
-      }
+    fs.readFile(signatureFile, 'utf8', function (error, data) {
+      //if (error) {
+      //  logger.debug(error);
+      //}
       // parse the type lattice
-      type_lattice = type_lattice_parser.parse(data);
-      logger.debug(type_lattice.printLUBMatrix());
+      signature = signatureParser.parse(data);
+      expect(signature.featureSet.features.length).toEqual(16);
+      expect(Object.keys(signature.appropriateFunction.appropriate).length).toEqual(18);
+      expect(signature.typeLattice.types.length).toEqual(29);
     });
   });
-  it('Should parse a lexicon with type specification and words with feature structures', function(done) {
+
+  it('Should parse a lexicon with type specification and words with feature' +
+      ' structures', function(done) {
     // Read a file with lexicon
-    fs.readFile(lexicon_file, 'utf8', function (error, data) {
+    fs.readFile(lexiconFile, 'utf8', function (error, data) {
       if (error) {
         logger.debug(error);
       }
       // Parse the lexicon        
       // The type lattice is passed with an options variable
-      lexicon = lexicon_parser.parse(data, {type_lattice: type_lattice});
+      lexicon = lexiconParser.parse(data, {signature: signature});
       done();
       expect(lexicon.size()).toEqual(5);
     });
   });
+
 });
