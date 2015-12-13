@@ -20,7 +20,7 @@ Type present (BOTTOM)
 Type transitive (BOTTOM)
 Type Noun (BOTTOM)
 Type Verb (BOTTOM)
-Type Determiner (BOTTOM)
+Type Determiner (POS)
 Type agreement (BOTTOM)
 Type number (agreement)
 Type singular (number)
@@ -34,36 +34,24 @@ Type first (person)
 Type second (person)
 Type third (person)
 
-Approp POS category Determiner
+Approp POS category BOTTOM
 Approp POS head BOTTOM
 Approp BOTTOM agreement agreement
-Approp agreement number plural
-Approp agreement number singular
-Approp POS category Noun
-Approp agreement gender masculin
-Approp agreement gender feminin
-Approp agreement gender neutrum
-Approp POS category Verb
+Approp agreement number number
+Approp agreement gender gender
 Approp BOTTOM tense present
 Approp BOTTOM subcat transitive
 Approp POS agreement agreement
-Approp BOTTOM agreement agreement
-Approp BOTTOM NP number
-Approp BOTTOM VP number
-Approp BOTTOM head number
-Approp BOTTOM VP number
-Approp BOTTOM Determiner POS
-Approp BOTTOM head BOTTOM
 Approp BOTTOM NP BOTTOM
 Approp BOTTOM VP BOTTOM
-Approp BOTTOM Noun POS
-Approp BOTTOM Verb POS
-Approp BOTTOM agreement BOTTOM
+Approp BOTTOM head number
+Approp BOTTOM Determiner BOTTOM
+Approp BOTTOM Noun BOTTOM
+Approp BOTTOM Verb BOTTOM
 Approp BOTTOM number BOTTOM
 Approp BOTTOM action BOTTOM
 Approp BOTTOM subject BOTTOM
 Approp BOTTOM object BOTTOM
 Approp BOTTOM S BOTTOM
-Approp BOTTOM Determiner BOTTOM
-Approp BOTTOM Noun BOTTOM
-Approp BOTTOM Verb BOTTOM
+Approp BOTTOM head BOTTOM
+Approp BOTTOM agreement BOTTOM

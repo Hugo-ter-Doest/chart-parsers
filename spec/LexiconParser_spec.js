@@ -43,7 +43,7 @@ describe('Lexicon parser', function() {
       // parse the type lattice
       signature = signatureParser.parse(data);
       expect(signature.featureSet.features.length).toEqual(16);
-      expect(Object.keys(signature.appropriateFunction.appropriate).length).toEqual(18);
+      expect(signature.appropriateFunction.size()).toEqual(9);
       expect(signature.typeLattice.types.length).toEqual(29);
     });
   });

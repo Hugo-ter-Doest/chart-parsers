@@ -44,22 +44,11 @@ Type v (BOTTOM)
 Type w (BOTTOM)
 
 Approp POS agreement agreement
-Approp POS category noun
-Approp POS category determiner
-Approp POS category verb
-Approp POS category adjective
+Approp POS category POS
 Approp POS tense present
-
-Approp agreement number plural
-Approp agreement number singular
-Approp agreement gender masculin
-Approp agreement gender feminin
-Approp agreement gender neutrum
-
+Approp agreement number number
+Approp agreement gender gender
 Approp BOTTOM k BOTTOM
 Approp BOTTOM h BOTTOM
 Approp BOTTOM f BOTTOM
 Approp BOTTOM g BOTTOM
-Approp BOTTOM k w
-Approp BOTTOM h v
-Approp BOTTOM h w

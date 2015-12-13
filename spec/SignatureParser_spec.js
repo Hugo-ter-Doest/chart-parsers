@@ -42,6 +42,7 @@ describe('Signature parser', function() {
         agreement)).toEqual(true);
       //Approp agreement number plural
       var plural = signature.typeLattice.getTypeByName('plural');
+
       expect(signature.appropriateFunction.isAppropriate(agreement, 'number',
         plural)).toEqual(true);
       //Approp agreement number singular
