@@ -1,3 +1,7 @@
+Feature agreement
+Feature vp
+Feature number
+
 Type agreement (BOTTOM)
 Type person (agreement)
 Type first (person)
@@ -26,3 +30,8 @@ Type vp (verb)
 Type rule (noun verb)
 Type man (BOTTOM)
 Type walks (BOTTOM)
+
+
+Approp BOTTOM agreement agreement
+Approp verb vp vp
+Approp agreement number number

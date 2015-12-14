@@ -1,5 +1,5 @@
 [third_singular] ->
-[bottom
+[BOTTOM
  agreement: [agreement
              person: third
              number: singular
@@ -7,7 +7,7 @@
 ]
 
 [third_plural] ->
-[bottom
+[BOTTOM
  agreement: [agreement
              person: third
              number: plural
