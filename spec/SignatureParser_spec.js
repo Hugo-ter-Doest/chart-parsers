@@ -38,28 +38,28 @@ describe('Signature parser', function() {
       var agreement = signature.typeLattice.getTypeByName('agreement');
       //Approp POS agreement agreement
       var POS = signature.typeLattice.getTypeByName('POS');
-      expect(signature.appropriateFunction.isAppropriate(POS, 'agreement',
+      expect(signature.appropriateFunction.isAppropriateType(POS, 'agreement',
         agreement)).toEqual(true);
       //Approp agreement number plural
       var plural = signature.typeLattice.getTypeByName('plural');
 
-      expect(signature.appropriateFunction.isAppropriate(agreement, 'number',
+      expect(signature.appropriateFunction.isAppropriateType(agreement, 'number',
         plural)).toEqual(true);
       //Approp agreement number singular
       var singular = signature.typeLattice.getTypeByName('singular');
-      expect(signature.appropriateFunction.isAppropriate(agreement,
+      expect(signature.appropriateFunction.isAppropriateType(agreement,
         'number', singular)).toEqual(true);
       //Approp agreement gender masculin
       var masculin = signature.typeLattice.getTypeByName('masculin');
-      expect(signature.appropriateFunction.isAppropriate(agreement,
+      expect(signature.appropriateFunction.isAppropriateType(agreement,
         'gender', masculin)).toEqual(true);
       //Approp agreement gender feminin
       var feminin = signature.typeLattice.getTypeByName('feminin');
-      expect(signature.appropriateFunction.isAppropriate(agreement,
+      expect(signature.appropriateFunction.isAppropriateType(agreement,
         'gender', feminin)).toEqual(true);
       //Approp agreement gender neutrum
       var neutrum = signature.typeLattice.getTypeByName('neutrum');
-      expect(signature.appropriateFunction.isAppropriate(agreement, 'gender', neutrum)).toEqual(true);
+      expect(signature.appropriateFunction.isAppropriateType(agreement, 'gender', neutrum)).toEqual(true);
 
       //Tests for subsumption relation
       var bottom = signature.typeLattice.getTypeByName('BOTTOM');
