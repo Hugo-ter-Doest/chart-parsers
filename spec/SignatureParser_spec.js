@@ -25,7 +25,7 @@ var logger = log4js.getLogger('SignatureParser');
 var fs = require('fs');
 
 var basedir = "./spec/data/UnificationBasedChartParser/";
-var signatureFile = basedir + "Signature.txt";
+var signatureFile = basedir + "UG_Signature.txt";
 
 var SignatureParser = require('../lib/SignatureParser');
 
@@ -33,7 +33,12 @@ describe('Signature parser', function() {
   it('Should read type lattices from a specification file', function(done) {
     fs.readFile(signatureFile, 'utf8', function (error, data) {
       done();
-      var signature = SignatureParser.parse(data);
+      var signature = SignatureParser.parse(data, {
+        implicitTypes:false,
+        appropriateTypes: true,
+        appropriateFeatures: true,
+        completeAndAppropriateFeatures: false
+      });
       logger.error(signature);
       var agreement = signature.typeLattice.getTypeByName('agreement');
       //Approp POS agreement agreement

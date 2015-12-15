@@ -30,8 +30,8 @@ var Type = require('../lib/Type');
 
 var base = './spec/data/TypedFeatureStructure/';
 
-var signatureFile = base + 'TypeLattice.txt';
-var featureStructureFile = base + 'FeatureStructures.txt';
+var signatureFile = base + 'TFS_Signature.txt';
+var featureStructureFile = base + 'TFS_Lexicon.txt';
 
 
 describe('Typed Feature Structure class', function() {

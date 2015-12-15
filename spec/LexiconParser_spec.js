@@ -41,8 +41,13 @@ describe('Lexicon parser', function() {
       //  logger.debug(error);
       //}
       // parse the type lattice
-      signature = signatureParser.parse(data);
-      expect(signature.featureSet.features.length).toEqual(16);
+      signature = signatureParser.parse(data, {
+        implicitTypes:false,
+        appropriateTypes: true,
+        appropriateFeatures: true,
+        completeAndAppropriateFeatures: false
+      });
+      expect(signature.featureSet.features.length).toEqual(9);
       expect(signature.appropriateFunction.size()).toEqual(9);
       expect(signature.typeLattice.types.length).toEqual(29);
     });
@@ -59,7 +64,7 @@ describe('Lexicon parser', function() {
       // The type lattice is passed with an options variable
       lexicon = lexiconParser.parse(data, {signature: signature});
       done();
-      expect(lexicon.size()).toEqual(5);
+      expect(lexicon.size()).toEqual(6);
     });
   });
 

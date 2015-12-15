@@ -1,10 +1,13 @@
+[macroAgreement] ->
+[agreement
+ number: singular
+ gender: neutrum
+]
+
 [huis] ->
 [POS
  category: noun
- agreement: [agreement
-             number: singular
-             gender: neutrum
-            ]
+ agreement: [macroAgreement]
 ]
 
 [het] ->

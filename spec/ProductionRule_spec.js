@@ -24,6 +24,7 @@ var logger = log4js.getLogger('ProductionRule');
 
 var ProductionRule = require('../lib/ProductionRule');
 var Constraint = require('../lib/Constraint');
+var Signature = require('../lib/Signature');
 var AppropriateFunction = require('../lib/AppropriateFunction');
 var TypeLattice = require('../lib/TypeLattice');
 var Type = require('../lib/Type');
@@ -42,22 +43,24 @@ describe('ProductionRule', function() {
     var path6 = 'agreement';
     var constraint3 = new Constraint(path5, path6);
 
-    var type_lattice = new TypeLattice({});
-    var agreement = new Type('agreement', [type_lattice.bottom]);
-    type_lattice.addType(agreement);
-    
-    var approp = new AppropriateFunction();
-    approp.addMapping('BOTTOM', 'agreement', 'agreement');
-    approp.addMapping('BOTTOM', 'number', 'BOTTOM');
-    approp.addMapping('BOTTOM', 'VP', 'BOTTOM');
-    approp.addMapping('BOTTOM', 'agreement', 'BOTTOM');
-    approp.addMapping('BOTTOM', 'NP', 'BOTTOM');
-    approp.addMapping('BOTTOM', 'S', 'BOTTOM');
-    approp.addMapping('BOTTOM', 'head', 'BOTTOM');
+    var signature = new Signature({
+      implicitTypes:false,
+      appropriateTypes: true,
+      appropriateFeatures: true,
+      completeAndAppropriateFeatures: false
+    });
+    var agreement = new Type('agreement', [signature.typeLattice.bottom]);
+    signature.typeLattice.addType(agreement);
 
-    type_lattice.appropriate_function = approp;
-    
-    rule.processConstraints([constraint1, constraint2, constraint3], type_lattice);
+    signature.appropriateFunction.addMapping('BOTTOM', 'agreement', 'agreement');
+    signature.appropriateFunction.addMapping('BOTTOM', 'number', 'BOTTOM');
+    signature.appropriateFunction.addMapping('BOTTOM', 'VP', 'BOTTOM');
+    signature.appropriateFunction.addMapping('BOTTOM', 'agreement', 'BOTTOM');
+    signature.appropriateFunction.addMapping('BOTTOM', 'NP', 'BOTTOM');
+    signature.appropriateFunction.addMapping('BOTTOM', 'S', 'BOTTOM');
+    signature.appropriateFunction.addMapping('BOTTOM', 'head', 'BOTTOM');
+
+    rule.processConstraints([constraint1, constraint2, constraint3], signature);
     
     //expect().toEqual(true);
     console.log('Feature structure: ' + JSON.stringify(rule.fs, null, 2));

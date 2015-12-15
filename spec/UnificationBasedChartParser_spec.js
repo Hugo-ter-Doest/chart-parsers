@@ -34,7 +34,7 @@ var parserFactory = new ParserFactory();
 
 var base = './spec/data/UnificationBasedChartParser/';
 
-var signatureFile =     base + 'Signature.txt';
+var signatureFile =     base + 'UG_Signature.txt';
 var lexicon_file =      base + 'UG_lexicon.txt';
 var grammar_file =      base + 'UG_grammar.txt';
 var sentences_file =    base + 'UG_sentences.txt';
@@ -57,7 +57,12 @@ parserTypes.forEach(function(parserType) {
           logger.debug(error);
         }
         // Parse the type lattice
-        signature = signatureParser.parse(text);
+        signature = signatureParser.parse(text, {
+          implicitTypes:false,
+          appropriateTypes: true,
+          appropriateFeatures: true,
+          completeAndAppropriateFeatures: false
+        });
         console.log('beforeEach: parsed the type lattice');
         console.log(signature.typeLattice.printLUBMatrix());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {

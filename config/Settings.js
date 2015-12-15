@@ -26,10 +26,7 @@ config.appropriateSeparator = ':';
 // At completion steps feature structures are unified
 config.UNIFICATION = true;
 
-// Whether or not to apply the appropriate function to feature structures
-config.APPLY_SIGNATURE = true;
-
-// A tagged sentence is a word followed bij a list of categories or a 
+// A tagged sentence is a word followed bij a list of categories or a
 // list of feature structures
 config.LIST_OF_CATEGORIES = false;
 

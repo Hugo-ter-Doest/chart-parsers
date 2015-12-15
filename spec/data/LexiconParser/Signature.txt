@@ -1,20 +1,3 @@
-Feature category
-Feature head
-Feature agreement
-Feature number
-Feature gender
-Feature tense
-Feature subcat
-Feature NP
-Feature VP
-Feature Determiner
-Feature Noun
-Feature Verb
-Feature f
-Feature g
-Feature k
-Feature h
-
 Type POS (BOTTOM)
 Type noun (POS)
 Type determiner (POS)
