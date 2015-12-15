@@ -1,6 +1,18 @@
 Feature agreement
 Feature vp
 Feature number
+Feature person
+Feature vp
+Feature np
+Feature s
+Feature gender
+Feature literal
+Feature category
+Feature subject
+Feature h
+Feature k
+Feature f
+Feature g
 
 Type agreement (BOTTOM)
 Type person (agreement)
@@ -30,8 +42,28 @@ Type vp (verb)
 Type rule (noun verb)
 Type man (BOTTOM)
 Type walks (BOTTOM)
+Type kast (BOTTOM)
+Type v (BOTTOM)
+Type w (BOTTOM)
 
 
 Approp BOTTOM agreement agreement
-Approp verb vp vp
+Approp agreement person person
 Approp agreement number number
+Approp verb vp vp
+Approp noun np np
+Approp rule vp vp
+Approp rule np np
+Approp rule s s
+Approp vp agreement agreement
+Approp np agreement agreement
+Approp agreement gender gender
+Approp BOTTOM subject BOTTOM
+Approp BOTTOM literal kast
+Approp BOTTOM category noun
+Approp BOTTOM h v
+Approp BOTTOM k w
+Approp BOTTOM f BOTTOM
+Approp BOTTOM g BOTTOM
+Approp BOTTOM f BOTTOM
+

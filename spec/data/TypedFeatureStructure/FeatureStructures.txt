@@ -92,10 +92,10 @@
 [fs1] ->
 [BOTTOM
  literal: kast
- category: N
+ category: noun
  agreement: [agreement
              number: plural
-             gender: male
+             gender: masculin
              person: third
             ]
 ]
@@ -103,10 +103,10 @@
 [fs2] ->
 [BOTTOM
  literal: kast
- category: N
+ category: noun
  agreement: [1] [agreement
                  number: plural
-                 gender: male
+                 gender: masculin
                  person: third
                 ]
  subject: [BOTTOM
