@@ -1,3 +1,8 @@
+// Test signature for UnificationBasedChartParser_spec.js
+// Part of chart-parsers
+
+// Specification of the type lattice
+// Super types are between braces
 Type POS (BOTTOM)
 Type present (BOTTOM)
 Type transitive (BOTTOM)
@@ -17,6 +22,9 @@ Type first (person)
 Type second (person)
 Type third (person)
 
+// Appropriate specification
+// (type1, f, type2) means that nodes of type1 may have feature f which points
+// to a node of type2
 Approp POS category BOTTOM
 Approp POS head BOTTOM
 Approp BOTTOM agreement agreement

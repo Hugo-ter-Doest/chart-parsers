@@ -1,9 +1,11 @@
+// Test grammar for UnificationBasedChartParser_spec.js
+// Part of chart-parsers
+
 S -> NP *VP*
 <S head> = <VP head>
 <NP head agreement number> = <VP head agreement number>
 <S subject> = <NP head>
 <S action> = <VP head>
-
 
 NP -> Determiner *Noun*
 <NP head> = <Noun head>

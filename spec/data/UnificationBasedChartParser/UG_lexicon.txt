@@ -1,3 +1,6 @@
+// Test lexicon for UnificationBasedChartParser_spec.js
+// Part of chart-parsers module
+
 [the] ->
 [POS
  category: Determiner
