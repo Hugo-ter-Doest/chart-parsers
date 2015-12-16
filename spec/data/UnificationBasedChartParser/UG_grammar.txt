@@ -1,5 +1,5 @@
 S -> NP *VP*
-<S head > = <VP head>
+<S head> = <VP head>
 <NP head agreement number> = <VP head agreement number>
 <S subject> = <NP head>
 <S action> = <VP head>
