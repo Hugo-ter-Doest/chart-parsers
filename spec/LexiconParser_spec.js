@@ -49,7 +49,7 @@ describe('Lexicon parser', function() {
       });
       expect(signature.featureSet.features.length).toEqual(9);
       expect(signature.appropriateFunction.size()).toEqual(9);
-      expect(signature.typeLattice.types.length).toEqual(29);
+      expect(signature.typeLattice.types.length).toEqual(31);
     });
   });
 
