@@ -1,34 +1,30 @@
 [0] ->
 [CONSTITUENT
  S: [BOTTOM
-     head: [BOTTOM
-            agreement: [BOTTOM
-                        number: BOTTOM
-                       ]
-           ]
-     subject: [987] [BOTTOM
-                     agreement: [agreement
-                                 number: singular
-                                 gender: masculin
-                                ]
-                    ]
-     action: [993] [BOTTOM
-                    subcat: transitive
-                    object: [BOTTOM
-                             agreement: [agreement
-                                         number: singular
-                                        ]
-                            ]
-                    agreement: [agreement
-                                number: singular
-                               ]
-                    tense: present
-                   ]
+     head: [1526] [BOTTOM
+                   agreement: [agreement
+                               number: [1512] singular
+                              ]
+                   subcat: transitive
+                   object: [BOTTOM
+                            agreement: [agreement
+                                        number: singular
+                                       ]
+                           ]
+                   tense: present
+                  ]
+     subject: [1529] [BOTTOM
+                      agreement: [agreement
+                                  number: [1512]
+                                  gender: masculin
+                                 ]
+                     ]
+     action: [1526]
     ]
  VP: [BOTTOM
-      head: [993]
+      head: [1526]
      ]
  NP: [BOTTOM
-      head: [987]
+      head: [1529]
      ]
 ]

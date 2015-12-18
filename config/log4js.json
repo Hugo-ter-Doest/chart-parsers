@@ -102,11 +102,11 @@
     }
   ],
   "levels": {
-    "AppropriateFunction": "DEBUG",
+    "AppropriateFunction": "WARN",
     "Lexicon": "ERROR",
     "LexiconParser": "DEBUG",
     "Type": "ERROR",
-    "TypeLattice": "DEBUG",
+    "TypeLattice": "ERROR",
     "TypeLatticeParser": "ERROR",
     "TypedFeatureStructure": "DEBUG",
     "Agenda": "ERROR",

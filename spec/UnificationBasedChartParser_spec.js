@@ -20,7 +20,7 @@ var settings = require('../config/Settings');
 
 var log4js = require('log4js');
 log4js.configure(settings.log4js_config);
-var logger = log4js.getLogger('CYK_Item');
+var logger = log4js.getLogger('TypedFeatureStructure');
 
 var fs = require('fs');
 
