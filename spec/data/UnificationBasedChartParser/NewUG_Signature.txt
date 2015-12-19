@@ -1,0 +1,72 @@
+// Test signature for UnificationBasedChartParser_spec.js
+// Part of chart-parsers
+
+Type sign (BOTTOM) ->
+[sign
+ agreement: agreement
+ tense: present
+ subcat: transitive
+ head: number
+ Determiner: BOTTOM
+ Noun: BOTTOM
+ Verb: BOTTOM
+ number: BOTTOM
+ action: BOTTOM
+ subject: BOTTOM
+ object: BOTTOM
+ head: BOTTOM
+ agreement: BOTTOM
+ agreement: BOTTOM
+]
+
+Type CONSTITUENT () ->
+[CONSTITUENT
+ S: BOTTOM
+ NP: BOTTOM
+ VP: BOTTOM
+]
+
+Type POS (sign) ->
+[POS
+ category: BOTTOM
+ head: BOTTOM
+ agreement: agreement
+]
+
+Type present (sign)
+
+Type transitive (sign)
+
+Type Noun (sign)
+
+Type Verb (sign)
+
+Type Determiner (sign)
+
+Type agreement (sign) ->
+[agreement
+ number: number
+ gender: gender
+]
+
+Type number (agreement)
+
+Type singular (number)
+
+Type plural (number)
+
+Type gender (agreement)
+
+Type masculin (gender)
+
+Type feminin (gender)
+
+Type neutrum (gender)
+
+Type person (agreement)
+
+Type first (person)
+
+Type second (person)
+
+Type third (person)

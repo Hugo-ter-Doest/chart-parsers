@@ -102,7 +102,7 @@
     }
   ],
   "levels": {
-    "AppropriateFunction": "WARN",
+    "AppropriateFunction": "DEBUG",
     "Lexicon": "ERROR",
     "LexiconParser": "DEBUG",
     "Type": "ERROR",
