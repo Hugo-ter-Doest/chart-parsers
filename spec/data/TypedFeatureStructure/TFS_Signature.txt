@@ -1,4 +1,23 @@
-Type agreement (BOTTOM)
+Type BOTTOM () ->
+[BOTTOM
+ agreement: agreement
+ subject: BOTTOM
+ literal: kast
+ category: noun
+ h: v
+ k: w
+ f: BOTTOM
+ g: BOTTOM
+ f: BOTTOM
+]
+
+Type agreement (BOTTOM) ->
+[agreement
+ person: person
+ number: number
+ gender: gender
+]
+
 Type person (agreement)
 Type first (person)
 Type second (person)
@@ -19,11 +38,34 @@ Type third_singular_feminin (third_singular feminin)
 Type third_singular_neutrum (third_singular neutrum)
 Type part_of_speech (BOTTOM)
 Type s (BOTTOM)
-Type noun (part_of_speech)
-Type verb (part_of_speech)
-Type np (noun)
-Type vp (verb)
-Type rule (noun verb)
+
+Type noun (part_of_speech) ->
+[noun
+ np: np
+]
+
+Type verb (part_of_speech) ->
+[verb
+ vp: vp
+]
+
+Type np (noun) ->
+[np
+ agreement: agreement
+]
+
+Type vp (verb) ->
+[vp
+ agreement: agreement
+]
+
+Type rule (noun verb) ->
+[rule
+ vp: vp
+ np: np
+ s: s
+]
+
 Type man (BOTTOM)
 Type walks (BOTTOM)
 Type kast (BOTTOM)
@@ -31,23 +73,4 @@ Type v (BOTTOM)
 Type w (BOTTOM)
 
 
-Approp BOTTOM agreement agreement
-Approp agreement person person
-Approp agreement number number
-Approp verb vp vp
-Approp noun np np
-Approp rule vp vp
-Approp rule np np
-Approp rule s s
-Approp vp agreement agreement
-Approp np agreement agreement
-Approp agreement gender gender
-Approp BOTTOM subject BOTTOM
-Approp BOTTOM literal kast
-Approp BOTTOM category noun
-Approp BOTTOM h v
-Approp BOTTOM k w
-Approp BOTTOM f BOTTOM
-Approp BOTTOM g BOTTOM
-Approp BOTTOM f BOTTOM
 

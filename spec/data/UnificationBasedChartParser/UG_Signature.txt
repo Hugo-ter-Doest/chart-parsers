@@ -1,51 +1,76 @@
 // Test signature for UnificationBasedChartParser_spec.js
 // Part of chart-parsers
 
-// Specification of the type lattice
-// Super types are between braces
-Type POS (BOTTOM)
-Type present (BOTTOM)
-Type transitive (BOTTOM)
-Type Noun (BOTTOM)
-Type Verb (BOTTOM)
-Type Determiner (POS)
-Type agreement (BOTTOM)
+Type sign (BOTTOM) ->
+[sign
+ agreement: agreement
+ tense: present
+ head: number
+ Determiner: BOTTOM
+ Noun: BOTTOM
+ Verb: BOTTOM
+ number: BOTTOM
+ action: BOTTOM
+ subject: BOTTOM
+ object: BOTTOM
+ head: BOTTOM
+ agreement: BOTTOM
+]
+
+Type CONSTITUENT () ->
+[CONSTITUENT
+ S: BOTTOM
+ NP: BOTTOM
+ VP: BOTTOM
+]
+
+Type POS (sign) ->
+[POS
+ category: BOTTOM
+ head: BOTTOM
+ agreement: agreement
+]
+
+Type present (sign)
+
+Type transitive (sign)
+
+Type Noun (sign)
+
+Type Verb (sign) ->
+[Verb
+ head: [BOTTOM
+        subcat: transitive
+        object: BOTTOM
+       ]
+]
+
+Type Determiner (sign)
+
+Type agreement (sign) ->
+[agreement
+ number: number
+ gender: gender
+]
+
 Type number (agreement)
+
 Type singular (number)
+
 Type plural (number)
+
 Type gender (agreement)
+
 Type masculin (gender)
+
 Type feminin (gender)
+
 Type neutrum (gender)
+
 Type person (agreement)
+
 Type first (person)
+
 Type second (person)
+
 Type third (person)
-
-// Appropriate specification
-// (type1, f, type2) means that nodes of type1 may have feature f which points
-// to a node of type2
-Approp POS category BOTTOM
-Approp POS head BOTTOM
-Approp BOTTOM agreement agreement
-Approp agreement number number
-Approp agreement gender gender
-Approp BOTTOM tense present
-Approp BOTTOM subcat transitive
-Approp POS agreement agreement
-Approp BOTTOM head number
-Approp BOTTOM Determiner BOTTOM
-Approp BOTTOM Noun BOTTOM
-Approp BOTTOM Verb BOTTOM
-Approp BOTTOM number BOTTOM
-Approp BOTTOM action BOTTOM
-Approp BOTTOM subject BOTTOM
-Approp BOTTOM object BOTTOM
-Approp BOTTOM head BOTTOM
-Approp BOTTOM agreement BOTTOM
-Approp BOTTOM agreement BOTTOM
-
-// Specifications for rules and constituents
-Approp CONSTITUENT S BOTTOM
-Approp CONSTITUENT NP BOTTOM
-Approp CONSTITUENT VP BOTTOM

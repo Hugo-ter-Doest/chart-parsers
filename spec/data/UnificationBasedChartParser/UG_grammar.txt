@@ -13,5 +13,5 @@ NP -> Determiner *Noun*
 
 VP -> *Verb* NP
 <VP head> = <Verb head>
-<Verb head subcat> = transitive
 <VP head object> = <NP head>
+<Verb head subcat> = transitive

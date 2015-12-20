@@ -1,19 +1,19 @@
 /*
-    Unification-based chart parser test
-    Copyright (C) 2015 Hugo W.L. ter Doest
+  Unification-based chart parser test
+  Copyright (C) 2015 Hugo W.L. ter Doest
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 var settings = require('../config/Settings');
@@ -40,17 +40,16 @@ var grammar_file =      base + 'UG_grammar.txt';
 var sentences_file =    base + 'UG_sentences.txt';
 var results_file =      base + 'UG_expected_results.txt';
 
+var signature;
+var lexicon;
+var grammar;
+var parser;
+var sentences;
+var results;
+
 var parserTypes = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
 parserTypes.forEach(function(parserType) {
   describe('Unification grammar chain', function() {
-
-    var signature;
-    var lexicon;
-    var grammar;
-    var parser;
-    var sentences;
-    var results;
-
     beforeEach(function(done) {
       fs.readFile(signatureFile, 'utf8', function (error, text) {
         if (error) {
@@ -78,7 +77,7 @@ parserTypes.forEach(function(parserType) {
             }
             // Parse the grammar
             grammar = GrammarParser.parse(text, {signature: signature});
-            logger.debug(grammar.prettyPrint());
+            //logger.debug(grammar.prettyPrint());
             // Create the parser
             parser = parserFactory.createParser({
               type: parserType,
@@ -108,9 +107,8 @@ parserTypes.forEach(function(parserType) {
         });
       });
     });
-
     it('should correctly parse a set of sentences using unification grammar', function() {
-      sentences.forEach(function(sentence) {
+      sentences.forEach(function (sentence) {
         // Tokenize sentence
         var words = sentence.trim().split(/\s+/);
         // Tag sentence
@@ -119,10 +117,11 @@ parserTypes.forEach(function(parserType) {
         // Parse sentence
         var parse_result = parser.parse(taggedSentence);
         expected_fs = results.getWord('0')[0];
-        parse_result.getCompleteItemsFromTo(0, 5).forEach(function(item, index, array) {
+        parse_result.getCompleteItemsFromTo(0, 5).forEach(function (item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
           logger.debug(expected_fs.prettyPrint());
-          logger.debug('This is THE FS: ' + item.data.fs.prettyPrint());
+          logger.debug('This is the feature structure:\n' +
+            item.data.fs.prettyPrint());
           expect(item.data.fs.isEqualTo(expected_fs, signature)).toEqual(true);
         });
       });
