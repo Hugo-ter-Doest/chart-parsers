@@ -30,6 +30,12 @@ config.UNIFICATION = true;
 // list of feature structures
 config.LIST_OF_CATEGORIES = false;
 
+// Feature path to lexical category of a feature structure: array of strings
+// For HPSG
+//config.pathToLexicalCategory = ['SYNSEM', 'LOC', 'CAT', 'HEAD'];
+// For simple feature structures
+config.pathToLexicalCategory = ['category'];
+
 config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
 //config.log4js_config = '/Workspace/chart-parsers/config/log4js.json';
 

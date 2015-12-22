@@ -1,16 +1,3 @@
-Type BOTTOM () ->
-[BOTTOM
- agreement: agreement
- subject: BOTTOM
- literal: kast
- category: noun
- h: v
- k: w
- f: BOTTOM
- g: BOTTOM
- f: BOTTOM
-]
-
 Type agreement (BOTTOM) ->
 [agreement
  person: person
