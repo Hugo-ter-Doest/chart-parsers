@@ -34,6 +34,8 @@ config.LIST_OF_CATEGORIES = false;
 // For HPSG
 //config.pathToLexicalCategory = ['SYNSEM', 'LOC', 'CAT', 'HEAD'];
 // For simple feature structures
+// This is the default value. This item can be set through options of
+// ParserFactory.createParser
 config.pathToLexicalCategory = ['category'];
 
 config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
