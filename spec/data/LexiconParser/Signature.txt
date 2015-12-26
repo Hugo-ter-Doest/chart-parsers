@@ -2,7 +2,7 @@
 Type POS (BOTTOM) ->
 [POS
  agreement: agreement
- category: POS
+// category: POS
  tense: present
 ]
 

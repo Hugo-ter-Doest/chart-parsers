@@ -28,12 +28,12 @@ Type s (BOTTOM)
 
 Type noun (part_of_speech) ->
 [noun
- np: np
+//np: np
 ]
 
 Type verb (part_of_speech) ->
 [verb
- vp: vp
+//vp: vp
 ]
 
 Type np (noun) ->
