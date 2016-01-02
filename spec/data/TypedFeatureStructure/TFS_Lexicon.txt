@@ -133,3 +133,10 @@
         ]
  g: [2]
 ]
+
+[cyclic] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [1]
+        ]
+]

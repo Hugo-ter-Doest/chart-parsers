@@ -50,7 +50,7 @@ describe('Typed Feature Structure class', function() {
       var fs = third_singular.unify(third_singular, signature);
       expect(fs.isEqualTo(third_singular)).toEqual(true);
       var fs = third_plural.unify(third_singular, signature);
-      expect(fs).toEqual(signature.typeLattice.top);
+      expect(fs.type).toEqual(signature.typeLattice.top);
 
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
