@@ -1,3 +1,5 @@
+Type gender ()
+
 Type agreement (BOTTOM) ->
 [agreement
  person: person
@@ -12,7 +14,6 @@ Type third (person)
 Type number (agreement)
 Type singular (number)
 Type plural (number)
-Type gender (agreement)
 Type masculin (gender)
 Type feminin (gender)
 Type neutrum (gender)
@@ -28,12 +29,12 @@ Type s (BOTTOM)
 
 Type noun (part_of_speech) ->
 [noun
-//np: np
+ //np: np
 ]
 
 Type verb (part_of_speech) ->
 [verb
-//vp: vp
+ //vp: vp
 ]
 
 Type np (noun) ->

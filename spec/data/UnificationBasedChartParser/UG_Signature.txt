@@ -1,6 +1,18 @@
 // Test signature for UnificationBasedChartParser_spec.js
 // Part of chart-parsers
 
+Type number (BOTTOM)
+
+Type gender (BOTTOM)
+
+Type agreement (BOTTOM) ->
+[agreement
+ number: number
+ gender: gender
+]
+
+Type present (BOTTOM)
+
 Type sign (BOTTOM) ->
 [sign
  agreement: agreement
@@ -31,13 +43,11 @@ Type POS (sign) ->
  agreement: agreement
 ]
 
-Type present (sign)
+Type transitive (BOTTOM)
 
-Type transitive (sign)
+Type Noun (BOTTOM)
 
-Type Noun (sign)
-
-Type Verb (sign) ->
+Type Verb (BOTTOM) ->
 [Verb
  head: [BOTTOM
         subcat: transitive
@@ -47,19 +57,11 @@ Type Verb (sign) ->
 
 Type Determiner (sign)
 
-Type agreement (sign) ->
-[agreement
- number: number
- gender: gender
-]
-
-Type number (agreement)
 
 Type singular (number)
 
 Type plural (number)
 
-Type gender (agreement)
 
 Type masculin (gender)
 

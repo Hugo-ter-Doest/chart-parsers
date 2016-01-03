@@ -30,54 +30,38 @@ var signatureFile = basedir + "UG_Signature.txt";
 var SignatureParser = require('../lib/SignatureParser');
 
 describe('Signature parser', function() {
-  it('Should read type lattices from a specification file', function(done) {
-    fs.readFile(signatureFile, 'utf8', function (error, data) {
-      done();
-      var signature = SignatureParser.parse(data, {
-        implicitTypes:false,
-        appropriateTypes: true,
-        appropriateFeatures: true,
-        completeAndAppropriateFeatures: false
-      });
-      logger.error(signature);
-      var agreement = signature.typeLattice.getTypeByName('agreement');
-      //Approp POS agreement agreement
-      var POS = signature.typeLattice.getTypeByName('POS');
-      expect(signature.appropriateFunction.isAppropriateType(POS, 'agreement',
-        agreement)).toEqual(true);
-      //Approp agreement number plural
-      var plural = signature.typeLattice.getTypeByName('plural');
-
-      expect(signature.appropriateFunction.isAppropriateType(agreement, 'number',
-        plural)).toEqual(true);
-      //Approp agreement number singular
-      var singular = signature.typeLattice.getTypeByName('singular');
-      expect(signature.appropriateFunction.isAppropriateType(agreement,
-        'number', singular)).toEqual(true);
-      //Approp agreement gender masculin
-      var masculin = signature.typeLattice.getTypeByName('masculin');
-      expect(signature.appropriateFunction.isAppropriateType(agreement,
-        'gender', masculin)).toEqual(true);
-      //Approp agreement gender feminin
-      var feminin = signature.typeLattice.getTypeByName('feminin');
-      expect(signature.appropriateFunction.isAppropriateType(agreement,
-        'gender', feminin)).toEqual(true);
-      //Approp agreement gender neutrum
-      var neutrum = signature.typeLattice.getTypeByName('neutrum');
-      expect(signature.appropriateFunction.isAppropriateType(agreement, 'gender', neutrum)).toEqual(true);
-
-      //Tests for subsumption relation
-      var bottom = signature.typeLattice.getTypeByName('BOTTOM');
-      expect(bottom.subsumes(agreement)).toEqual(true);
-      var person = signature.typeLattice.getTypeByName('person');
-      expect(agreement.subsumes(person)).toEqual(true);
-      expect(bottom.subsumes(person)).toEqual(true);
-      var first = signature.typeLattice.getTypeByName('first');
-      expect(person.subsumes(first)).toEqual(true);
-      var second = signature.typeLattice.getTypeByName('second');
-      expect(person.subsumes(second)).toEqual(true);
-      var third = signature.typeLattice.getTypeByName('third');
-      expect(person.subsumes(third)).toEqual(true);
+  it('Should read type lattices from a specification file', function() {
+    var data = fs.readFileSync(signatureFile, 'utf8');
+    var signature = SignatureParser.parse(data, {
+      implicitTypes:false
     });
+    logger.error(signature);
+    var agreement = signature.typeLattice.getTypeByName('agreement');
+    //Approp POS agreement agreement
+    var POS = signature.typeLattice.getTypeByName('POS');
+    //Approp agreement number plural
+    var plural = signature.typeLattice.getTypeByName('plural');
+
+    //Approp agreement number singular
+    var singular = signature.typeLattice.getTypeByName('singular');
+    //Approp agreement gender masculin
+    var masculin = signature.typeLattice.getTypeByName('masculin');
+    //Approp agreement gender feminin
+    var feminin = signature.typeLattice.getTypeByName('feminin');
+    //Approp agreement gender neutrum
+    var neutrum = signature.typeLattice.getTypeByName('neutrum');
+
+    //Tests for subsumption relation
+    var bottom = signature.typeLattice.getTypeByName('BOTTOM');
+    expect(bottom.subsumes(agreement)).toEqual(true);
+    var person = signature.typeLattice.getTypeByName('person');
+    expect(agreement.subsumes(person)).toEqual(true);
+    expect(bottom.subsumes(person)).toEqual(true);
+    var first = signature.typeLattice.getTypeByName('first');
+    expect(person.subsumes(first)).toEqual(true);
+    var second = signature.typeLattice.getTypeByName('second');
+    expect(person.subsumes(second)).toEqual(true);
+    var third = signature.typeLattice.getTypeByName('third');
+    expect(person.subsumes(third)).toEqual(true);
   });
 });

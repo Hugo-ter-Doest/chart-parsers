@@ -55,8 +55,8 @@ describe('Typed Feature Structure class', function() {
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
       var fs_verb_noun = fs_verb.unify(fs_noun, signature);
+      fs_verb_noun = fs_verb_noun.unify(signature.typeLattice.getTypeByName('rule').fs, signature);
       var expected_result = lexicon.getWord('verb_noun')[0];
-      logger.debug(fs_verb_noun.prettyPrint());
       expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify noun and verb with the rule
@@ -68,6 +68,8 @@ describe('Typed Feature Structure class', function() {
       // Unify the result further with verb
       var rule_with_noun_and_verb = rule_with_noun.unify(fs_verb, signature);
       expected_result = lexicon.getWord('rule_with_noun_and_verb')[0];
+      logger.debug('TypedFeatureStructure_spec: rule_with_noun_and_verb: '  + rule_with_noun_and_verb.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  + expected_result.prettyPrint());
       expect(rule_with_noun_and_verb.isEqualTo(expected_result)).toEqual(true);
 
       var fs1 = lexicon.getWord('fs1')[0];

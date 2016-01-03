@@ -25,7 +25,6 @@ var logger = log4js.getLogger('ProductionRule');
 var ProductionRule = require('../lib/ProductionRule');
 var Constraint = require('../lib/Constraint');
 var Signature = require('../lib/Signature');
-var AppropriateFunction = require('../lib/AppropriateFunction');
 var TypeLattice = require('../lib/TypeLattice');
 var Type = require('../lib/Type');
 
@@ -44,21 +43,12 @@ describe('ProductionRule', function() {
     var constraint3 = new Constraint(path5, path6);
 
     var signature = new Signature({
-      implicitTypes:false,
-      appropriateTypes: true,
-      appropriateFeatures: true,
-      completeAndAppropriateFeatures: false
+      implicitTypes:false
     });
     var agreement = new Type('agreement', [signature.typeLattice.bottom]);
     signature.typeLattice.addType(agreement);
 
-    signature.appropriateFunction.addMapping('BOTTOM', 'agreement', 'agreement');
-    signature.appropriateFunction.addMapping('BOTTOM', 'number', 'BOTTOM');
-    signature.appropriateFunction.addMapping('BOTTOM', 'VP', 'BOTTOM');
-    signature.appropriateFunction.addMapping('BOTTOM', 'agreement', 'BOTTOM');
-    signature.appropriateFunction.addMapping('BOTTOM', 'NP', 'BOTTOM');
-    signature.appropriateFunction.addMapping('BOTTOM', 'S', 'BOTTOM');
-    signature.appropriateFunction.addMapping('BOTTOM', 'head', 'BOTTOM');
+
 
     rule.processConstraints([constraint1, constraint2, constraint3], signature);
     
