@@ -57,13 +57,8 @@ parserTypes.forEach(function(parserType) {
         }
         // Parse the type lattice
         signature = signatureParser.parse(text, {
-          implicitTypes:false,
-          appropriateTypes: true,
-          appropriateFeatures: true,
-          completeAndAppropriateFeatures: false
+          implicitTypes:false
         });
-        console.log('beforeEach: parsed the type lattice');
-        console.log(signature.typeLattice.printLUBMatrix());
         fs.readFile(lexicon_file, 'utf8', function (error, text) {
           if (error) {
             logger.error(error);
@@ -84,8 +79,6 @@ parserTypes.forEach(function(parserType) {
               grammar: grammar, 
               unification: true
             });
-            //console.log('beforeEach: created the parser');
-            // Read sentences from file
 
             fs.readFile(sentences_file, 'utf8', function (error, text) {
               if (error) {

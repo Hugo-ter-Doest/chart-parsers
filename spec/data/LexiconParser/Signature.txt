@@ -1,3 +1,4 @@
+Type phonstring ()
 
 Type POS (BOTTOM) ->
 [POS
