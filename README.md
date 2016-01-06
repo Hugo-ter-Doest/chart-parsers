@@ -53,7 +53,8 @@ The resulting chart is an array of length N+1, and each entry contains items of 
 * from is the origin position pointing at the position in the sentence at which recognition of this rule began.
 * children are the completed items that are used to recognise the current item
 
-Based on the children of the completed items the parse(s) of a sentence can be constructed.
+Based on the children of the completed items the parse(s) of a sentence can 
+be reconstructed.
 
 
 # Context-Free Grammars
@@ -68,12 +69,18 @@ nonterminal =     non_whitespace_char, { non_whitespace_char }
 comment =         "//", { any_character }
 ```
 Note the possibility of identifying one nonterminal as the head of the production rule. This information is used by the head-corner parser for predicting new partial parses.
-Terminals are not allowed in the grammar, because we assume these to be recognised by a lexer and tagged with (lexical) categories. In the grammar these lexical categories can be seen as preterminals.
-The grammar parsers also allows adding constraints to the production rules. This has been added for future extension of the parsers to unification-based parsing. Contraints may have two possible forms:
+Terminals are not allowed in the grammar, because we assume these to be 
+recognised by a lexer and tagged with (lexical) categories (or feature 
+structures). In the grammar these lexical categories are seen as preterminals.
+The grammar parser also allows adding constraints to the production rules. Contraints may have two possible forms:
 ```
-<nonterminal1 feature1 feature2> = atom
+<nonterminal1 feature1 feature2> = type
 <nonterminal2 feature3 feature3> = <nonterminal3 feature4>
 ```
+where type is a type defined by a type lattice. See below for an explanation 
+of type lattices.
+
+
 # CYK Chart Parser
 The CYK algorithm works with context-free grammars in Chomsky Normal Form (CNF). Production rules are of the form:
 ```
