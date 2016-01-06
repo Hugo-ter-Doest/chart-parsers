@@ -312,8 +312,10 @@ When a new type with a feature structure is defined:
  its super types.
 * The types used in the feature structure are unified with the respective 
 feature structures belonging to these types.
+
 As a result the feature structure inherits all appropriate features and types
  from super types and used types.
+
 
 # Typed feature structures
 Feature structures are specified using the PATRII formalism. The 
