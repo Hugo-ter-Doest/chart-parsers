@@ -274,7 +274,7 @@ Type type5 (type 4)
 ```
 Each type specification if started with keyword Type followed by the type 
 name and the super types between braces. If no super types are supplied, 
-bottom (the most general type) is assumed to be the sole super type.
+BOTTOM (the most general type) is assumed to be the sole super type.
 
 Once a type lattice has been created the least upper bound of two types can be 
 determined:
@@ -287,6 +287,26 @@ if (type1.subsumes(type2, type_lattice)) {
   console.log(type1.prettyPrint() + ' subsumes ' + type2.prettyPrint());
 }
 ```
+A type may be appropriate for a feature with a value type. These appropriate
+ features are specified in the form of a feature structure:
+```
+Type type1 ()
+Type type2 ()
+Type type3 (type1 type2) ->
+[type3
+ feature1: type1
+ feature2: [type2
+            feature3: type1
+           ]
+]
+```
+When a new type with a feature structure is defined:
+* The feature structure of the type is unified with the feature structures of
+ its super types.
+* The types used in the feature structure are unified with the respective 
+feature structures belonging to these types.
+As a result the feature structure inherits all appropriate features and types
+ from super types and used types.
 
 # Typed feature structures
 Feature structures are specified using the PATRII formalism. The 
@@ -296,7 +316,7 @@ specifying multiple entries of the word. Each node of a feature structure has
 a type assigned that is specified in a type lattice.
 ```
 [home] ->
-[POS
+[sign
  category: noun
  agreement: [agreement
              number: singular
@@ -304,7 +324,7 @@ a type assigned that is specified in a type lattice.
             ]
 ]
 ```
-In this example the root node of the feature structure is of type POS and 
+In this example the root node of the feature structure is of type sign and 
 category is of type noun.
 
 Feature structures can be unified as follows:
