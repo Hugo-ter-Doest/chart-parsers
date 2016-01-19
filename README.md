@@ -1,4 +1,5 @@
-This is a library of chart parsers for natural language processing.
+This is a library of chart parsers for natural language processing using 
+using typed feature structures.
 
 # Supported algorithms
 The following algorithms are supported:

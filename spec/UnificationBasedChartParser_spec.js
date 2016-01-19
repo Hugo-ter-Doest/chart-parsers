@@ -47,6 +47,8 @@ var parser;
 var sentences;
 var results;
 
+GLOBAL.config.addPhonString = false;
+
 var parserTypes = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
 parserTypes.forEach(function(parserType) {
   describe('Unification grammar chain', function() {

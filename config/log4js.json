@@ -123,7 +123,7 @@
     "GrammarParser": "DEBUG",
     "HeadCornerParser": "ERROR",
     "ItemFactory": "ERROR",
-    "LeftCornerParser": "DEBUG",
+    "LeftCornerParser": "ERROR",
     "ParserFactory": "ERROR",
     "ProductionRule": "DEBUG",
     "ExampleWithWordnet": "INFO",
