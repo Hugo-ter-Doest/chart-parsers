@@ -32,11 +32,11 @@ config.LIST_OF_CATEGORIES = false;
 
 // Feature path to lexical category of a feature structure: array of strings
 // For HPSG
-config.pathToLexicalCategory = ['SYNSEM', 'LOC', 'CAT', 'HEAD'];
+//config.pathToLexicalCategory = ['SYNSEM', 'LOC', 'CAT', 'HEAD'];
 // For simple feature structures
 // This is the default value. This item can be set through options of
 // ParserFactory.createParser
-//config.pathToLexicalCategory = ['category'];
+config.pathToLexicalCategory = ['category'];
 
 config.addPhonString = true;
 config.featureOfLexicalString = 'PHON';
