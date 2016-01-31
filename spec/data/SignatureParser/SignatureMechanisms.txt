@@ -1,0 +1,25 @@
+// FeatureThree of TypeTwo inherits features of TypeOne
+Type TypeOne(BOTTOM) ->
+[TypeOne
+ FeatureOne: BOTTOM
+ FeatureTwo: BOTTOM
+]
+
+Type TypeTwo (BOTTOM) ->
+[TypeTwo
+ FeatureThree: One
+]
+
+// TypeThree inherits features from TypeOne
+Type TypeThree (TypeOne) ->
+[TypeThree
+ FeatureThree: BOTTOM
+]
+
+// Cyclic feature structure
+Type TypeFour (BOTTOM) ->
+[TypeFour
+ FeatureOne: [1] [BOTTOM
+                  FeatureTwo: BOTTOM
+                 ]
+]

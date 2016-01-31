@@ -1,0 +1,26 @@
+[TypeOne] ->
+[TypeOne
+ FeatureOne: BOTTOM
+ FeatureTwo: BOTTOM
+]
+
+[TypeTwo] ->
+[TypeTwo
+ FeatureThree: [TypeOne
+                FeatureOne: BOTTOM
+                FeatureTwo: BOTTOM
+               ]
+]
+
+[TypeThree] ->
+[TypeThree
+ FeatureOne: BOTTOM
+ FeatureTwo: BOTTOM
+]
+
+[TypeFour] ->
+[TypeFour
+ FeatureOne: [1] [BOTTOM
+                  FeatureTwo: [1]
+                 ]
+]

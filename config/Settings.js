@@ -38,7 +38,7 @@ config.LIST_OF_CATEGORIES = false;
 // ParserFactory.createParser
 config.pathToLexicalCategory = ['category'];
 
-config.addPhonString = true;
+config.addPhonString = false;
 config.featureOfLexicalString = 'PHON';
 config.typeOfLexicalString = 'phonstring';
 
