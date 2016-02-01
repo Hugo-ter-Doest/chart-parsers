@@ -20,6 +20,6 @@ Type TypeThree (TypeOne) ->
 Type TypeFour (BOTTOM) ->
 [TypeFour
  FeatureOne: [1] [BOTTOM
-                  FeatureTwo: BOTTOM
+                  FeatureTwo: [1]
                  ]
 ]
