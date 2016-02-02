@@ -40,16 +40,15 @@
       agreement: [agreement
                   person: third
                   number: singular
-                  gender: gender
                  ]
      ]
  np: [np
       agreement: [agreement
                   person: third
                   number: singular
-                  gender: gender
                  ]
      ]
+ s: s
 ]
 
 
@@ -82,20 +81,16 @@
 [rule
  s: s
  np: [np
-      agreement:  [agreement
-                   person: third
-                   number: singular
-                  ]
+      agreement: [1] [agreement
+                      person: third
+                      number: singular
+                     ]
      ]
  vp: [vp
-      agreement: [agreement
-                  person: third
-                  number: singular
-                  gender: gender
-                 ]
+      agreement: [1]
      ]
-
 ]
+
 
 [fs1] ->
 [BOTTOM
