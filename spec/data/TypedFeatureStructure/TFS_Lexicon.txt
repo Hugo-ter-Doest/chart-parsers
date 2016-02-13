@@ -40,12 +40,14 @@
       agreement: [agreement
                   person: third
                   number: singular
+                  gender: gender
                  ]
      ]
  np: [np
       agreement: [agreement
                   person: third
                   number: singular
+                  gender: gender
                  ]
      ]
  s: s

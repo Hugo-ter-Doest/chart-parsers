@@ -16,6 +16,7 @@
 [TypeThree
  FeatureOne: BOTTOM
  FeatureTwo: BOTTOM
+ FeatureThree: BOTTOM
 ]
 
 [TypeFour] ->

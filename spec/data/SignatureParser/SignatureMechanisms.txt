@@ -7,7 +7,7 @@ Type TypeOne(BOTTOM) ->
 
 Type TypeTwo (BOTTOM) ->
 [TypeTwo
- FeatureThree: One
+ FeatureThree: TypeOne
 ]
 
 // TypeThree inherits features from TypeOne
