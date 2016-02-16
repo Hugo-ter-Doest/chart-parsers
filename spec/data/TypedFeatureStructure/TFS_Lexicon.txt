@@ -40,6 +40,23 @@
       agreement: [agreement
                   person: third
                   number: singular
+                 ]
+     ]
+ np: [np
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+]
+
+[verb_noun_with_type_rule] ->
+[rule
+ s: s
+ vp: [vp
+      agreement: [agreement
+                  person: third
+                  number: singular
                   gender: gender
                  ]
      ]
@@ -50,9 +67,7 @@
                   gender: gender
                  ]
      ]
- s: s
 ]
-
 
 [rule] ->
 [rule

@@ -52,23 +52,31 @@ describe('Typed Feature Structure class', function() {
       var fs = third_plural.unify(third_singular, signature);
       expect(fs.type).toEqual(signature.typeLattice.top);
 
+      // Unify verb with noun
       var fs_verb = lexicon.getWord('verb')[0];
       var fs_noun = lexicon.getWord('noun')[0];
       var fs_verb_noun = fs_verb.unify(fs_noun, signature);
-      fs_verb_noun = fs_verb_noun.unify(signature.typeLattice.getTypeByName('rule').fs, signature);
-      var expected_result = lexicon.getWord('verb_noun')[0];
+      expected_result = lexicon.getWord('verb_noun')[0];
       logger.debug('TypedFeatureStructure_spec: verb_noun: '  + fs_verb_noun.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expected_result.prettyPrint());
       expect(fs_verb_noun.isEqualTo(expected_result)).toEqual(true);
+
+      // Unify verb_noun with type (!) rule
+      var fs_verb_noun_with_type_rule =
+        fs_verb_noun.unify(signature.typeLattice.getTypeByName('rule').fs, signature);
+      expected_result = lexicon.getWord('verb_noun_with_type_rule')[0];
+      logger.debug('TypedFeatureStructure_spec: verb_noun_with_type_rule: '  + fs_verb_noun_with_type_rule.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  + expected_result.prettyPrint());
+      expect(fs_verb_noun_with_type_rule.isEqualTo(expected_result)).toEqual(true);
 
       // Unify noun with rule
       var fs_rule = lexicon.getWord('rule')[0];
       var rule_with_noun = fs_rule.unify(fs_noun, signature);
       expected_result = lexicon.getWord('rule_with_noun')[0];
-      //logger.debug('TypedFeatureStructure_spec: verb_noun: '  +
-      // rule_with_noun.prettyPrint());
-      //logger.debug('TypedFeatureStructure_spec: expected FS: '  +
-      // expected_result.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: rule_with_noun: '  +
+        rule_with_noun.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  +
+        expected_result.prettyPrint());
       expect(rule_with_noun.isEqualTo(expected_result)).toEqual(true);
 
       // Unify the result further with verb
