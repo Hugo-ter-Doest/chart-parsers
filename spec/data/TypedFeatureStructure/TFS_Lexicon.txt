@@ -154,9 +154,52 @@
  g: [2]
 ]
 
-[cyclic] ->
+[cyclicOne] ->
 [BOTTOM
  f: [1] [BOTTOM
          g: [1]
+        ]
+]
+
+[cyclicTwo] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         h: [1]
+        ]
+]
+
+[cyclicOneWithCyclicTwo] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [1]
+         h: [1]
+        ]
+]
+
+[cyclicThree] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [BOTTOM
+             h: [1]
+            ]
+        ]
+]
+
+[cyclicFour] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [BOTTOM
+             i: [1]
+            ]
+        ]
+]
+
+[cyclicThreeWithCyclicFour] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [BOTTOM
+             h: [1]
+             i: [1]
+            ]
         ]
 ]

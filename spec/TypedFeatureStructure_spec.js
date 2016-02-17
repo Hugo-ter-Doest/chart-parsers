@@ -97,14 +97,41 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: fs6: '  + fs6.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + fs4.prettyPrint());
       expect(fs6.isEqualTo(fs4)).toEqual(true);
-  });
+
+      // Test unification of cyclic feature structures
+      var cyclicOne = lexicon.getWord('cyclicOne')[0];
+      var cyclicTwo = lexicon.getWord('cyclicTwo')[0];
+
+      var cyclicOneCopy = cyclicOne.copy();
+      var cyclicOneWithCyclicOne = cyclicOne.unify(cyclicOneCopy, signature);
+      logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicOne: '  + cyclicOneWithCyclicOne.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  + cyclicOne.prettyPrint());
+      expect(cyclicOne.isEqualTo(cyclicOneWithCyclicOne)).toEqual(true);
+
+      var cyclicOneWithCyclicTwo = cyclicOne.unify(cyclicTwo, signature);
+      var expectedResult = lexicon.getWord('cyclicOneWithCyclicTwo')[0];
+      logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicTwo: '  + cyclicOneWithCyclicTwo.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  + expectedResult.prettyPrint());
+      expect(cyclicOneWithCyclicTwo.isEqualTo(expectedResult)).toEqual(true);
+
+      var cyclicThree = lexicon.getWord('cyclicThree')[0];
+      var cyclicFour = lexicon.getWord('cyclicFour')[0];
+      var cyclicThreeWithCyclicFour = cyclicFour.unify(cyclicThree, signature);
+      var expectedResult = lexicon.getWord('cyclicThreeWithCyclicFour')[0];
+      logger.debug('TypedFeatureStructure_spec: cyclicThree : '  + cyclicThree.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: cyclicFour : '  + cyclicFour.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: cyclicThreeWithCyclicFour : '  + cyclicThreeWithCyclicFour.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: expected FS: '  + expectedResult.prettyPrint());
+      expect(cyclicThreeWithCyclicFour.isEqualTo(expectedResult)).toEqual(true);
+
+    });
 
   it('Should copy feature structures correctly', function() {
     Object.keys(lexicon.lexicon).forEach(function(word) {
       var fs = lexicon.lexicon[word][0];
       var copy = fs.copy(signature);
       // Feature structures should be equal up to (but not including) the labels
-      //expect(copy.isEqualTo(fs)).toEqual(true);
+      expect(copy.isEqualTo(fs)).toEqual(true);
     });
   });
 });
