@@ -98,6 +98,15 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + fs4.prettyPrint());
       expect(fs6.isEqualTo(fs4)).toEqual(true);
 
+      // Test finding cycles
+      ['cyclicOne', 'cyclicTwo', 'cyclicThree', 'cyclicFour', 'cyclicOneWithCyclicTwo', 'cyclicThreeWithCyclicFour'].forEach(function(lexicalEntry) {
+        var fs= lexicon.getWord(lexicalEntry)[0];
+        var cycles = fs.findCycles();
+        logger.debug('TypedFeatureStructure_spec: fs: '  + fs.prettyPrint());
+        logger.debug('TypedFeatureStructure_spec: cycles: '  + JSON.stringify(cycles, null, 2));
+      });
+
+      /*
       // Test unification of cyclic feature structures
       var cyclicOne = lexicon.getWord('cyclicOne')[0];
       var cyclicTwo = lexicon.getWord('cyclicTwo')[0];
@@ -123,7 +132,7 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: cyclicThreeWithCyclicFour : '  + cyclicThreeWithCyclicFour.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expectedResult.prettyPrint());
       expect(cyclicThreeWithCyclicFour.isEqualTo(expectedResult)).toEqual(true);
-
+*/
     });
 
   it('Should copy feature structures correctly', function() {
