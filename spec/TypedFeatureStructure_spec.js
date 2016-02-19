@@ -85,14 +85,20 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: rule_with_noun_and_verb: '  + rule_with_noun_and_verb.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expected_result.prettyPrint());
       expect(rule_with_noun_and_verb.isEqualTo(expected_result)).toEqual(true);
-/*
+
       var fs1 = lexicon.getWord('fs1')[0];
       var fs2 = lexicon.getWord('fs2')[0];
       var fs5 = fs1.unify(fs2, signature);
       expect(fs5.isEqualTo(fs2)).toEqual(true);
 
       var fs3 = lexicon.getWord('fs3')[0];
+      logger.debug('TypedFeatureStructure_spec: fs3: '  + fs3.prettyPrint());
+      fs3.findCycles();
+      logger.debug('TypedFeatureStructure_spec: fs3 cycles: '  + JSON.stringify(fs3.cycles, null, 2));
       var fs4 = lexicon.getWord('fs4')[0];
+      logger.debug('TypedFeatureStructure_spec: fs4: '  + fs4.prettyPrint());
+      fs4.findCycles();
+      logger.debug('TypedFeatureStructure_spec: fs4 cycles: '  + JSON.stringify(fs4.cycles, null, 2));
       var fs6 = fs3.unify(fs4, signature);
       logger.debug('TypedFeatureStructure_spec: fs6: '  + fs6.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + fs4.prettyPrint());
@@ -110,12 +116,12 @@ describe('Typed Feature Structure class', function() {
       var cyclicOne = lexicon.getWord('cyclicOne')[0];
       var cyclicTwo = lexicon.getWord('cyclicTwo')[0];
 
-      var cyclicOneCopy = cyclicOne.copy();
+      var cyclicOneCopy = cyclicOne.copy(signature);
       var cyclicOneWithCyclicOne = cyclicOne.unify(cyclicOneCopy, signature);
-      logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicOne: '  + cyclicOneWithCyclicOne.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicOne: ' + cyclicOneWithCyclicOne.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + cyclicOne.prettyPrint());
       expect(cyclicOne.isEqualTo(cyclicOneWithCyclicOne)).toEqual(true);
-
+/*
       var cyclicOneWithCyclicTwo = cyclicOne.unify(cyclicTwo, signature);
       var expectedResult = lexicon.getWord('cyclicOneWithCyclicTwo')[0];
       logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicTwo: '  + cyclicOneWithCyclicTwo.prettyPrint());
