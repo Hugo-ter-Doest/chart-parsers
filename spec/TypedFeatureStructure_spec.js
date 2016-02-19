@@ -85,7 +85,7 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: rule_with_noun_and_verb: '  + rule_with_noun_and_verb.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expected_result.prettyPrint());
       expect(rule_with_noun_and_verb.isEqualTo(expected_result)).toEqual(true);
-
+/*
       var fs1 = lexicon.getWord('fs1')[0];
       var fs2 = lexicon.getWord('fs2')[0];
       var fs5 = fs1.unify(fs2, signature);
@@ -101,12 +101,11 @@ describe('Typed Feature Structure class', function() {
       // Test finding cycles
       ['cyclicOne', 'cyclicTwo', 'cyclicThree', 'cyclicFour', 'cyclicOneWithCyclicTwo', 'cyclicThreeWithCyclicFour'].forEach(function(lexicalEntry) {
         var fs= lexicon.getWord(lexicalEntry)[0];
-        var cycles = fs.findCycles();
+        fs.findCycles();
         logger.debug('TypedFeatureStructure_spec: fs: '  + fs.prettyPrint());
-        logger.debug('TypedFeatureStructure_spec: cycles: '  + JSON.stringify(cycles, null, 2));
+        logger.debug('TypedFeatureStructure_spec: cycles: '  + JSON.stringify(fs.cycles, null, 2));
       });
 
-      /*
       // Test unification of cyclic feature structures
       var cyclicOne = lexicon.getWord('cyclicOne')[0];
       var cyclicTwo = lexicon.getWord('cyclicTwo')[0];
