@@ -121,9 +121,11 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicOne: ' + cyclicOneWithCyclicOne.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + cyclicOne.prettyPrint());
       expect(cyclicOne.isEqualTo(cyclicOneWithCyclicOne)).toEqual(true);
-/*
+
       var cyclicOneWithCyclicTwo = cyclicOne.unify(cyclicTwo, signature);
       var expectedResult = lexicon.getWord('cyclicOneWithCyclicTwo')[0];
+      logger.debug('TypedFeatureStructure_spec: cyclicOne: '  + cyclicOne.prettyPrint());
+      logger.debug('TypedFeatureStructure_spec: cyclicTwo: '  + cyclicTwo.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: cyclicOneWithCyclicTwo: '  + cyclicOneWithCyclicTwo.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expectedResult.prettyPrint());
       expect(cyclicOneWithCyclicTwo.isEqualTo(expectedResult)).toEqual(true);
@@ -137,7 +139,7 @@ describe('Typed Feature Structure class', function() {
       logger.debug('TypedFeatureStructure_spec: cyclicThreeWithCyclicFour : '  + cyclicThreeWithCyclicFour.prettyPrint());
       logger.debug('TypedFeatureStructure_spec: expected FS: '  + expectedResult.prettyPrint());
       expect(cyclicThreeWithCyclicFour.isEqualTo(expectedResult)).toEqual(true);
-*/
+
     });
 
   it('Should copy feature structures correctly', function() {
