@@ -14,6 +14,10 @@
             ]
 ]
 
+[third_singular+third_plural] ->
+[TOP
+]
+
 [verb] ->
 [verb
  vp: [vp
@@ -34,6 +38,81 @@
      ]
 ]
 
+[verb+noun] ->
+[rule
+ vp: [vp
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+ np: [np
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+]
+
+[verb] ->
+[verb
+ vp: [vp
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+]
+
+[rule] ->
+[rule
+ s: s
+ np: [np
+      agreement: [1] agreement
+     ]
+ vp: [vp
+      agreement: [1]
+     ]
+]
+
+[verb+rule] ->
+[rule
+ s: s
+ vp: [vp
+      agreement: [1] [agreement
+                      person: third
+                      number: singular
+                     ]
+     ]
+ np: [np
+      agreement: [1]
+     ]
+]
+
+[noun] ->
+[noun
+ np: [np
+      agreement: [agreement
+                  person: third
+                  number: singular
+                 ]
+     ]
+]
+
+[noun+rule] ->
+[rule
+ s: s
+ vp: [vp
+      agreement: [1] [agreement
+                      person: third
+                      number: singular
+                     ]
+     ]
+ np: [np
+      agreement: [1]
+     ]
+]
+
 [verb_noun] ->
 [rule
  vp: [vp
@@ -50,64 +129,19 @@
      ]
 ]
 
-[verb_noun_with_type_rule] ->
+[verb_noun+rule] ->
 [rule
  s: s
  vp: [vp
-      agreement: [agreement
-                  person: third
-                  number: singular
-                  gender: gender
-                 ]
-     ]
- np: [np
-      agreement: [agreement
-                  person: third
-                  number: singular
-                  gender: gender
-                 ]
-     ]
-]
-
-[rule] ->
-[rule
- s: s
- np: [np
-      agreement: [1] agreement
-     ]
- vp: [vp
-      agreement: [1]
-     ]
-]
-
-[rule_with_noun] ->
-[rule
- s: s
- np: [np
       agreement: [1] [agreement
                       person: third
                       number: singular
                      ]
      ]
- vp: [vp
-      agreement: [1]
-     ]
-]
-
-[rule_with_noun_and_verb] ->
-[rule
- s: s
  np: [np
-      agreement: [1] [agreement
-                      person: third
-                      number: singular
-                     ]
-     ]
- vp: [vp
       agreement: [1]
      ]
 ]
-
 
 [fs1] ->
 [BOTTOM
@@ -121,6 +155,20 @@
 ]
 
 [fs2] ->
+[BOTTOM
+ literal: kast
+ category: noun
+ agreement: [1] [agreement
+                 number: plural
+                 gender: masculin
+                 person: third
+                ]
+ subject: [BOTTOM
+           agreement: [1]
+          ]
+]
+
+[fs1+fs2] ->
 [BOTTOM
  literal: kast
  category: noun
@@ -154,7 +202,52 @@
  g: [2]
 ]
 
+[fs3+fs4] ->
+[BOTTOM
+ f: [2] [BOTTOM
+         h: v
+         k: w
+        ]
+ g: [2]
+]
+
 [cyclicOne] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [1]
+        ]
+]
+
+[cyclicOne+cyclicOne] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [1]
+        ]
+]
+
+[nonCyclicOne] ->
+[BOTTOM
+ f: [BOTTOM
+     h: BOTTOM
+    ]
+]
+
+[cyclicOne+nonCyclicOne] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         g: [1]
+         h: BOTTOM
+        ]
+]
+
+[nonCyclicTwo] ->
+[BOTTOM
+ f: [BOTTOM
+     g: BOTTOM
+    ]
+]
+
+[cyclicOne+nonCyclicTwo] ->
 [BOTTOM
  f: [1] [BOTTOM
          g: [1]
@@ -168,7 +261,7 @@
         ]
 ]
 
-[cyclicOneWithCyclicTwo] ->
+[cyclicOne+cyclicTwo] ->
 [BOTTOM
  f: [1] [BOTTOM
          g: [1]
@@ -194,7 +287,7 @@
         ]
 ]
 
-[cyclicThreeWithCyclicFour] ->
+[cyclicThree+cyclicFour] ->
 [BOTTOM
  f: [1] [BOTTOM
          g: [BOTTOM
