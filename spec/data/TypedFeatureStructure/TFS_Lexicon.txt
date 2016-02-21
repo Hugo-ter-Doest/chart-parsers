@@ -296,3 +296,29 @@
             ]
         ]
 ]
+
+[coRef1] ->
+[BOTTOM
+ f: [1] [BOTTOM
+         a: BOTTOM
+        ]
+ g: [1]
+]
+
+[coRef2] ->
+[BOTTOM
+ g: [1] [BOTTOM
+         b: BOTTOM
+        ]
+ f: [1]
+]
+
+[coRef1+coRef2] ->
+[BOTTOM
+ g: [1] [BOTTOM
+         a: BOTTOM
+         b: BOTTOM
+        ]
+ f: [1]
+]
+

@@ -1,6 +1,6 @@
 /*
     Typed Feature Structure unit test
-    Copyright (C) 2015 Hugo W.L. ter Doest
+    Copyright (C) 2016 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@ var base = './spec/data/TypedFeatureStructure/';
 var signatureFile = base + 'TFS_Signature.txt';
 var featureStructureFile = base + 'TFS_Lexicon.txt';
 
+// For selectings tests from the lexicon
+var ignoreFilter = true;
+var filterTests = ['cyclicOne+nonCyclicTwo'];
 
 describe('Typed Feature Structure class', function() {
   var data = fs.readFileSync(signatureFile, 'utf8');
@@ -45,29 +48,36 @@ describe('Typed Feature Structure class', function() {
   it('Should unify and copy feature structures correctly',
     function () {
         Object.keys(lexicon.lexicon).forEach(function(word) {
-          if (word.indexOf('+') > -1) {
-            // This is an expected result feature structure
-            var words  = word.split('+');
-            var fs1 = lexicon.getWord(words[0])[0];
-            var fs2 = lexicon.getWord(words[1])[0];
-            var expectedResult = lexicon.getWord(word)[0];
-            if (fs1 && fs2 && expectedResult) {
-              var unificationResult1 = fs1.unify(fs2, signature);
-              var unificationResult2 = fs2.unify(fs1, signature);
-              var copyResult1 = fs1.copy(signature);
-              var copyResult2 = fs2.copy(signature);
-              var copyResult3 = expectedResult.copy(signature);
-              expect(unificationResult1.isEqualTo(expectedResult)).toEqual(true);
-              expect(unificationResult2.isEqualTo(expectedResult)).toEqual(true);
-              expect(copyResult1.isEqualTo(fs1)).toEqual(true);
-              expect(copyResult2.isEqualTo(fs2)).toEqual(true);
-              expect(copyResult3.isEqualTo(expectedResult)).toEqual(true);
+          if (ignoreFilter || (filterTests.indexOf(word) > -1)) {
+            if (word.indexOf('+') > -1) {
+              // This is an expected result feature structure
+              var words = word.split('+');
+              var fs1 = lexicon.getWord(words[0])[0];
+              var fs2 = lexicon.getWord(words[1])[0];
+              var expectedResult = lexicon.getWord(word)[0];
+              if (fs1 && fs2 && expectedResult) {
+                var unificationResult1 = fs1.unify(fs2, signature);
+                var unificationResult2 = fs2.unify(fs1, signature);
+                var copyResult1 = fs1.copy(signature);
+                var copyResult2 = fs2.copy(signature);
+                var copyResult3 = expectedResult.copy(signature);
+                expect(unificationResult1.isEqualTo(expectedResult)).toEqual(true);
+                expect(unificationResult2.isEqualTo(expectedResult)).toEqual(true);
+                expect(copyResult1.isEqualTo(fs1)).toEqual(true);
+                expect(copyResult2.isEqualTo(fs2)).toEqual(true);
+                expect(copyResult3.isEqualTo(expectedResult)).toEqual(true);
 
-              logger.debug('TypedFeatureStructure_spec: fs1: ' + fs1.prettyPrint());
-              logger.debug('TypedFeatureStructure_spec: fs2: ' + fs2.prettyPrint());
-              logger.debug('TypedFeatureStructure_spec: unificationResult1: ' + unificationResult1.prettyPrint());
-              logger.debug('TypedFeatureStructure_spec: unificationResult2: ' + unificationResult2.prettyPrint());
-              logger.debug('TypedFeatureStructure_spec: expectedResult: ' + expectedResult.prettyPrint());
+                logger.debug('TypedFeatureStructure_spec: fs1 ' + words[0] +
+                  ' -> ' + fs1.prettyPrint(true));
+                logger.debug('TypedFeatureStructure_spec: fs2 ' + words[1] +
+                  ' -> ' + fs2.prettyPrint(true));
+                logger.debug('TypedFeatureStructure_spec: fs1 + fs2: ' +
+                  unificationResult1.prettyPrint(true));
+                logger.debug('TypedFeatureStructure_spec: fs2 + fs1: ' +
+                  unificationResult2.prettyPrint(true));
+                logger.debug('TypedFeatureStructure_spec: expectedResult: ' +
+                  expectedResult.prettyPrint(true));
+              }
             }
           }
         })
