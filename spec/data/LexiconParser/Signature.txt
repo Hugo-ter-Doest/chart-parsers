@@ -1,4 +1,5 @@
 Type phonstring ()
+Type list-phonstring ()
 
 Type POS (BOTTOM) ->
 [POS
