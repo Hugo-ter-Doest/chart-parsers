@@ -45,6 +45,24 @@
             ]
 ]
 
+[groot] ->
+[POS
+ phon: [1] + [2]
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
+[groot] ->
+[POS
+ phon: [1] + [2] + [3]
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
 [test] ->
 [BOTTOM
  f: [45] [BOTTOM
