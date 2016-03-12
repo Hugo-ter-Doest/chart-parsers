@@ -48,6 +48,8 @@
 [groot] ->
 [POS
  phon: [1] + [2]
+ phon1: [1] <string>
+ phon2: [2] <string>
  category: adjective
  agreement: [agreement
              number: singular
