@@ -42,10 +42,7 @@ describe('Lexicon parser', function() {
       //}
       // parse the type lattice
       signature = signatureParser.parse(data, {
-        implicitTypes:false,
-        appropriateTypes: true,
-        appropriateFeatures: true,
-        completeAndAppropriateFeatures: false
+        implicitTypes:false
       });
     });
   });

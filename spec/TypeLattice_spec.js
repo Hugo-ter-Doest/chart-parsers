@@ -18,7 +18,9 @@
 
 
 var TypeLattice = require('../lib/TypeLattice');
-var typeLattice = new TypeLattice({implicit_types: false});
+var typeLattice = new TypeLattice({
+  implicit_types: false
+});
 
 var Type = require('../lib/Type');
 
