@@ -1,6 +1,6 @@
 /*
     Unit test for GrammarParser.js using Jasmine
-    Copyright (C) 2014 Hugo W.L. ter Doest
+    Copyright (C) 2016 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
 var fs = require('fs');
 var GrammarParser = require('../lib/GrammarParser');
-
-//var TFS = require('../lib/TypedFeatureStructure');
 
 var path = './spec/data/CFGChartParser/';
 var minimal_grammar_file = path + 'minimal_grammar.txt';
@@ -59,7 +57,7 @@ describe('GrammarParser', function() {
       });
     });
     
-//S ->
+//S -> (empty)
   it('should read a text file', function(done) {
     fs.readFile(minimal_grammar_file, 'utf8', function (error, text) {
       expect(text).toBeDefined();
@@ -109,10 +107,7 @@ describe('GrammarParser', function() {
   it('should test left-corner relations', function () {
     expect(grammar.isLeftcornerOf('S', 'S')).toEqual(true);
   });
-  
-  
-  
-  
+
 //S -> NP VP
 //NP -> DT NN
 //PP -> IN NP

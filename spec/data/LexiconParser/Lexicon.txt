@@ -38,7 +38,7 @@
 
 [groot] ->
 [POS
- phon: <groot>
+ phon: "groot"
  category: adjective
  agreement: [agreement
              number: singular
@@ -48,8 +48,8 @@
 [groot] ->
 [POS
  phon: [1] + [2]
- phon1: [1] <string>
- phon2: [2] <string>
+ phon1: [1] "string1"
+ phon2: [2] "string2"
  category: adjective
  agreement: [agreement
              number: singular
@@ -59,9 +59,9 @@
 [cross-refs-naar-strings] ->
 [POS
  phon: [1] + [2] + [3]
- phon1: [1] <string1>
- phon2: [2] <string2>
- phon3: [3] <string3>
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
  category: adjective
  agreement: [agreement
              number: singular
