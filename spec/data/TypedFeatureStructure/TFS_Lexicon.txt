@@ -322,3 +322,49 @@
  f: [1]
 ]
 
+[wordWithPhonstring1] ->
+[BOTTOM
+ phon: "word"
+]
+
+[wordWithPhonstring1+wordWithPhonstring1] ->
+[BOTTOM
+ phon: "word"
+]
+
+[wordWithPhonstring2] ->
+[BOTTOM
+ phon: "different word"
+]
+
+[wordWithPhonstring1+wordWithPhonstring2] ->
+[TOP
+]
+
+[wordWithListPhonstring1] ->
+[BOTTOM
+ phon: [1] + [2] + [3]
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+]
+
+[wordWithListPhonstring1+wordWithListPhonstring1] ->
+[BOTTOM
+ phon: [1] + [2] + [3]
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+]
+
+[wordWithListPhonstring2] ->
+[BOTTOM
+ phon: [1] + [2] + [3]
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+]
+
+[wordWithListPhonstring1+wordWithListPhonstring2] ->
+[TOP
+]

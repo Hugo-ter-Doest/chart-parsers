@@ -1,3 +1,6 @@
+Type phonstring ()
+Type list-phonstring ()
+
 Type gender ()
 
 Type agreement (BOTTOM) ->
@@ -59,6 +62,4 @@ Type walks (BOTTOM)
 Type kast (BOTTOM)
 Type v (BOTTOM)
 Type w (BOTTOM)
-
-
 
