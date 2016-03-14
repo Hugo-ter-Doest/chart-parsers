@@ -359,7 +359,7 @@
 
 [wordWithListPhonstring2] ->
 [BOTTOM
- phon: [1] + [2] + [3]
+ phon: [1] + [2]
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"

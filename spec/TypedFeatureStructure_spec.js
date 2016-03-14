@@ -52,9 +52,21 @@ describe('Typed Feature Structure class', function() {
             if (word.indexOf('+') > -1) {
               // This is an expected result feature structure
               var words = word.split('+');
-              var fs1 = lexicon.getWord(words[0])[0];
-              var fs2 = lexicon.getWord(words[1])[0];
-              var expectedResult = lexicon.getWord(word)[0];
+              var fss = lexicon.getWord(words[0]);
+              var fs1 = null;
+              if (fss) {
+                fs1 = fss[0];
+              }
+              fss = lexicon.getWord(words[1]);
+              var fs2 = null;
+              if (fss) {
+                fs2 = fss[0];
+              }
+              fss = lexicon.getWord(word);
+              var expectedResult = null;
+              if (fss) {
+                expectedResult = fss[0];
+              }
               if (fs1 && fs2 && expectedResult) {
                 var unificationResult1 = fs1.unify(fs2, signature);
                 var unificationResult2 = fs2.unify(fs1, signature);
@@ -68,15 +80,19 @@ describe('Typed Feature Structure class', function() {
                 expect(copyResult3.isEqualTo(expectedResult)).toEqual(true);
 
                 logger.debug('TypedFeatureStructure_spec: fs1 ' + words[0] +
-                  ' -> ' + fs1.prettyPrint(true));
+                  ' ->\n' + fs1.prettyPrint(true));
                 logger.debug('TypedFeatureStructure_spec: fs2 ' + words[1] +
-                  ' -> ' + fs2.prettyPrint(true));
-                logger.debug('TypedFeatureStructure_spec: fs1 + fs2: ' +
+                  ' ->\n' + fs2.prettyPrint(true));
+                logger.debug('TypedFeatureStructure_spec: fs1 + fs2:\n' +
                   unificationResult1.prettyPrint(true));
-                logger.debug('TypedFeatureStructure_spec: fs2 + fs1: ' +
+                logger.debug('TypedFeatureStructure_spec: fs2 + fs1:\n' +
                   unificationResult2.prettyPrint(true));
-                logger.debug('TypedFeatureStructure_spec: expectedResult: ' +
+                logger.debug('TypedFeatureStructure_spec: expectedResult:\n' +
                   expectedResult.prettyPrint(true));
+              }
+              else {
+                logger.warn('TypedFeatureStructure_spec: test not specified' +
+                  ' correctly in lexicon');
               }
             }
           }
