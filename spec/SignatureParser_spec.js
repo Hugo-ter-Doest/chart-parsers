@@ -24,7 +24,7 @@ var logger = log4js.getLogger('SignatureParser');
 
 var fs = require('fs');
 
-var basedir = "/home/hugo/Workspace/chart-parsers/spec/data/UnificationBasedChartParser/";
+var basedir = "/Workspace/chart-parsers/spec/data/UnificationBasedChartParser/";
 var signatureFile = basedir + "UG_Signature.txt";
 
 var SignatureParser = require('../lib/SignatureParser');

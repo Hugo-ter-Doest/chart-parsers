@@ -1,6 +1,6 @@
 /*
     Lexicon Parser unit test
-    Copyright (C) 2015 Hugo W.L. ter Doest
+    Copyright (C) 2016 Hugo W.L. ter Doest
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ var fs = require('fs');
 var lexiconParser = require('../lib/LexiconParser');
 var signatureParser  = require('../lib/SignatureParser');
 
-var basedir = '/home/hugo/Workspace/chart-parsers/spec/data/LexiconParser/';
+//var basedir = '/home/hugo/Workspace/chart-parsers/spec/data/LexiconParser/';
+var basedir = '/Workspace/chart-parsers/spec/data/LexiconParser/';
 var lexiconFile = basedir + 'Lexicon.txt';
 var signatureFile = basedir + 'Signature.txt';
 
