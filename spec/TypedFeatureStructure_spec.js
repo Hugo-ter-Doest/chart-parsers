@@ -73,22 +73,22 @@ describe('Typed Feature Structure class', function() {
                 var copyResult1 = fs1.copy(signature);
                 var copyResult2 = fs2.copy(signature);
                 var copyResult3 = expectedResult.copy(signature);
-                expect(unificationResult1.isEqualTo(expectedResult)).toEqual(true);
-                expect(unificationResult2.isEqualTo(expectedResult)).toEqual(true);
-                expect(copyResult1.isEqualTo(fs1)).toEqual(true);
-                expect(copyResult2.isEqualTo(fs2)).toEqual(true);
-                expect(copyResult3.isEqualTo(expectedResult)).toEqual(true);
+                expect(unificationResult1.isEqualTo(expectedResult, signature)).toEqual(true);
+                expect(unificationResult2.isEqualTo(expectedResult, signature)).toEqual(true);
+                expect(copyResult1.isEqualTo(fs1, signature)).toEqual(true);
+                expect(copyResult2.isEqualTo(fs2, signature)).toEqual(true);
+                expect(copyResult3.isEqualTo(expectedResult, signature)).toEqual(true);
 
                 logger.debug('TypedFeatureStructure_spec: fs1 ' + words[0] +
-                  ' ->\n' + fs1.prettyPrint(true));
+                  ' ->\n' + fs1.prettyPrint(signature, true));
                 logger.debug('TypedFeatureStructure_spec: fs2 ' + words[1] +
-                  ' ->\n' + fs2.prettyPrint(true));
+                  ' ->\n' + fs2.prettyPrint(signature, true));
                 logger.debug('TypedFeatureStructure_spec: fs1 + fs2:\n' +
-                  unificationResult1.prettyPrint(true));
+                  unificationResult1.prettyPrint(signature, true));
                 logger.debug('TypedFeatureStructure_spec: fs2 + fs1:\n' +
-                  unificationResult2.prettyPrint(true));
+                  unificationResult2.prettyPrint(signature, true));
                 logger.debug('TypedFeatureStructure_spec: expectedResult:\n' +
-                  expectedResult.prettyPrint(true));
+                  expectedResult.prettyPrint(signature, true));
               }
               else {
                 logger.warn('TypedFeatureStructure_spec: test not specified' +
