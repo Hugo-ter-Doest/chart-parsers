@@ -67,7 +67,7 @@ parserTypes.forEach(function(parserType) {
           }
           // Parse the lexicon
           lexicon = lexiconParser.parse(text, {signature: signature});
-          logger.debug(lexicon.prettyPrint());
+          logger.debug(lexicon.prettyPrint(signature));
           fs.readFile(grammar_file, 'utf8', function (error, text) {
             if (error) {
               logger.error(error);
@@ -114,9 +114,9 @@ parserTypes.forEach(function(parserType) {
         expected_fs = results.getWord('0')[0];
         parse_result.getCompleteItemsFromTo(0, 5).forEach(function (item, index, array) {
           logger.debug('Item ' + index + ' of ' + array.length);
-          logger.debug(expected_fs.prettyPrint());
+          logger.debug(expected_fs.prettyPrint(signature));
           logger.debug('This is the feature structure:\n' +
-            item.data.fs.prettyPrint());
+            item.data.fs.prettyPrint(signature));
           expect(item.data.fs.isEqualTo(expected_fs, signature)).toEqual(true);
         });
       });
