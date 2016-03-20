@@ -59,7 +59,7 @@ describe('Lexicon parser', function() {
       // The type lattice is passed with an options variable
       lexicon = lexiconParser.parse(data, {signature: signature});
       done();
-      expect(lexicon.size()).toEqual(7);
+      expect(lexicon.size()).toEqual(10);
     });
   });
 

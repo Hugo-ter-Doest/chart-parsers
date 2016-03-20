@@ -45,7 +45,43 @@
             ]
 ]
 
-[cross-refs-naar-strings] ->
+[empty-list-of-cross-refs] ->
+[POS
+ phon: <>
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
+[list-of-cross-refs-one-item] ->
+[POS
+ phon: <[1]>
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
+[list-of-cross-refs] ->
+[POS
+ phon: <[1], [2], [3]>
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+ category: adjective
+ agreement: [agreement
+             number: singular
+            ]
+]
+
+[concatenate-lists] ->
 [POS
  phon: [1] + [2] + [3]
  phon1: [1] "string1"

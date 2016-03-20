@@ -40,12 +40,12 @@ var grammar_file =      base + 'UG_grammar.txt';
 var sentences_file =    base + 'UG_sentences.txt';
 var results_file =      base + 'UG_expected_results.txt';
 
-var signature;
-var lexicon;
-var grammar;
-var parser;
-var sentences;
-var results;
+var signature = null;
+var lexicon = null;
+var grammar = null;
+var parser = null;
+var sentences = null;
+var results = null;
 
 GLOBAL.config.addPhonString = false;
 
