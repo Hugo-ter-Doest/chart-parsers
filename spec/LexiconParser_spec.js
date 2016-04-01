@@ -26,8 +26,8 @@ var fs = require('fs');
 var lexiconParser = require('../lib/LexiconParser');
 var signatureParser  = require('../lib/SignatureParser');
 
-var basedir = '/home/hugo/Workspace/chart-parsers/spec/data/LexiconParser/';
-//var basedir = '/Workspace/chart-parsers/spec/data/LexiconParser/';
+//var basedir = '/home/hugo/Workspace/chart-parsers/spec/data/LexiconParser/';
+var basedir = '/Workspace/chart-parsers/spec/data/LexiconParser/';
 var lexiconFile = basedir + 'Lexicon.txt';
 var signatureFile = basedir + 'Signature.txt';
 
