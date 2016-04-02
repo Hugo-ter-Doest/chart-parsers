@@ -35,7 +35,7 @@ var featureStructureFile = base + 'TFS_Lexicon.txt';
 
 // For selectings tests from the lexicon
 var ignoreFilter = true;
-var filterTests = ['cyclicOne+nonCyclicTwo'];
+var filterTests = ['wordWithListPhonstring1+wordWithListPhonstring1a'];
 
 describe('Typed Feature Structure class', function() {
   var data = fs.readFileSync(signatureFile, 'utf8');
@@ -70,6 +70,7 @@ describe('Typed Feature Structure class', function() {
               if (fs1 && fs2 && expectedResult) {
                 var unificationResult1 = fs1.unify(fs2, signature);
                 var unificationResult2 = fs2.unify(fs1, signature);
+
                 var copyResult1 = fs1.copy(signature);
                 var copyResult2 = fs2.copy(signature);
                 var copyResult3 = expectedResult.copy(signature);
