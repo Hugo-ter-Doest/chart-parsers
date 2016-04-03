@@ -33,8 +33,9 @@ var base = './spec/data/TypedFeatureStructure/';
 var signatureFile = base + 'TFS_Signature.txt';
 var featureStructureFile = base + 'TFS_Lexicon.txt';
 
-// For selectings tests from the lexicon
+// For selecting tests from the lexicon
 var ignoreFilter = true;
+// A list of results that must be tested
 var filterTests = ['wordWithListPhonstring1+wordWithListPhonstring1a'];
 
 describe('Typed Feature Structure class', function() {

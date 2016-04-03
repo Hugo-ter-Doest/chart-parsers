@@ -37,18 +37,11 @@ describe('Signature parser', function() {
     });
     logger.error(signature);
     var agreement = signature.typeLattice.getTypeByName('agreement');
-    //Approp POS agreement agreement
     var POS = signature.typeLattice.getTypeByName('POS');
-    //Approp agreement number plural
     var plural = signature.typeLattice.getTypeByName('plural');
-
-    //Approp agreement number singular
     var singular = signature.typeLattice.getTypeByName('singular');
-    //Approp agreement gender masculin
     var masculin = signature.typeLattice.getTypeByName('masculin');
-    //Approp agreement gender feminin
     var feminin = signature.typeLattice.getTypeByName('feminin');
-    //Approp agreement gender neutrum
     var neutrum = signature.typeLattice.getTypeByName('neutrum');
 
     //Tests for subsumption relation

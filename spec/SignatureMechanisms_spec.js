@@ -50,7 +50,7 @@ describe('Signature parser', function() {
         var result = expectedResults.getWord(typeName);
         if (result) {
           logger.debug('SignatureMechanisms_spec: testing ' + typeName);
-          expect(type.fs.isEqualTo(result[0])).toEqual(true);
+          expect(type.fs.isEqualTo(result[0], signature)).toEqual(true);
         }
       }
     });
