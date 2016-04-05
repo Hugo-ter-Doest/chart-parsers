@@ -30,6 +30,14 @@
 [TypeWithListOfCorefs] ->
 [TypeWithListOfCorefs
  phon: [1] + [2] + [3]
+ phon1: [1] BOTTOM
+ phon2: [2] BOTTOM
+ phon3: [3] BOTTOM
+]
+
+[TypeWithListOfCorefsInherit] ->
+[TypeWithListOfCorefsInherit
+ phon: [1] + [2] + [3]
  phon1: [1] TypeOne
  phon2: [2] TypeOne
  phon3: [3] TypeOne
