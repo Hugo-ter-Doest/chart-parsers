@@ -1,6 +1,6 @@
 /*
   Signature parser unit test
-  Copyright (C) 2015 Hugo W.L. ter Doest
+  Copyright (C) 2016 Hugo W.L. ter Doest
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -43,14 +43,20 @@ describe('Signature parser', function() {
       signature: signature
     });
 
-    ['TypeOne', 'TypeTwo', 'TypeThree', 'TypeFour'].forEach(function (typeName) {
+    ['TypeOne', 'TypeTwo', 'TypeThree', 'TypeFour', 'TypeWithListOfCorefs'].forEach(function (typeName) {
       // Get the type
       var type = signature.typeLattice.getTypeByName(typeName);
       if (type) {
+        // Get the expected result from the lexicon
         var result = expectedResults.getWord(typeName);
         if (result) {
+          var expectedFS = result[0];
           logger.debug('SignatureMechanisms_spec: testing ' + typeName);
-          expect(type.fs.isEqualTo(result[0], signature)).toEqual(true);
+          logger.debug('SignatureMechanisms_spec: fs of type: ' +
+            type.fs.prettyPrint(signature, true));
+          logger.debug('SignatureMechanisms_spec: expected fs: ' +
+            expectedFS.prettyPrint(signature, true));
+          expect(type.fs.isEqualTo(expectedFS, signature)).toEqual(true);
         }
       }
     });
