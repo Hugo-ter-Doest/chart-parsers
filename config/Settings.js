@@ -41,8 +41,8 @@ config.pathToLexicalCategory = ['category'];
 config.addPhonString = false;
 config.featureOfLexicalString = 'PHON';
 
-config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
-//config.log4js_config = '/Workspace/chart-parsers/config/log4js.json';
+//config.log4js_config = '/home/hugo/Workspace/chart-parsers/config/log4js.json';
+config.log4js_config = '/Workspace/chart-parsers/config/log4js.json';
 
 GLOBAL.config = config;
 
