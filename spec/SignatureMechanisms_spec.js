@@ -24,7 +24,7 @@ var logger = log4js.getLogger('SignatureParser');
 
 var fs = require('fs');
 
-var basedir = "/home/hugo/Workspace/chart-parsers/spec/data/SignatureParser/";
+var basedir = "./spec/data/SignatureParser/";
 var signatureFile = basedir + "SignatureMechanisms.txt";
 var expectedResultsFile = basedir + "ExpectedResults.txt";
 
@@ -43,7 +43,7 @@ describe('Signature parser', function() {
       signature: signature
     });
 
-    ['TypeOne', 'TypeTwo', 'TypeThree', 'TypeFour', 'TypeWithListOfCorefs'].forEach(function (typeName) {
+    ['TypeOne', 'TypeTwo', 'TypeThree', 'TypeFour', 'TypeWithListOfCorefs', 'TypeWithListOfCorefsInherit'].forEach(function (typeName) {
       // Get the type
       var type = signature.typeLattice.getTypeByName(typeName);
       if (type) {
