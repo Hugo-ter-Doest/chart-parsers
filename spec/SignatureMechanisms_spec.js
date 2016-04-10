@@ -24,12 +24,17 @@ var logger = log4js.getLogger('SignatureParser');
 
 var fs = require('fs');
 
-var basedir = "./spec/data/SignatureParser/";
+var basedir = __dirname + '/data/SignatureParser/';
 var signatureFile = basedir + "SignatureMechanisms.txt";
 var expectedResultsFile = basedir + "ExpectedResults.txt";
 
 var SignatureParser = require('../lib/SignatureParser');
 var LexiconParser = require('../lib/LexiconParser');
+
+// For selecting tests from the lexicon
+var ignoreFilter = true;
+// A list of results that must be tested
+var filterTests = ['TypeWithListOfCorefsInherit'];
 
 describe('Signature parser', function() {
   it('Should read type lattices from a specification file', function() {
@@ -43,21 +48,21 @@ describe('Signature parser', function() {
       signature: signature
     });
 
-    ['TypeOne', 'TypeTwo', 'TypeThree', 'TypeFour', 'TypeWithListOfCorefs'].forEach(function (typeName) {
-    //['TypeWithListOfCorefsInherit'].forEach(function (typeName) {
-      // Get the type
-      var type = signature.typeLattice.getTypeByName(typeName);
-      if (type) {
-        // Get the expected result from the lexicon
-        var result = expectedResults.getWord(typeName);
-        if (result) {
-          var expectedFS = result[0];
-          logger.debug('SignatureMechanisms_spec: testing ' + typeName);
-          logger.debug('SignatureMechanisms_spec: fs of type: ' +
-            type.fs.prettyPrint(signature, true));
-          logger.debug('SignatureMechanisms_spec: expected fs: ' +
-            expectedFS.prettyPrint(signature, true));
-          expect(type.fs.isEqualTo(expectedFS, signature)).toEqual(true);
+    Object.keys(expectedResults.lexicon).forEach(function(typeName) {
+      if (ignoreFilter || (filterTests.indexOf(typeName) > -1)) {
+        var type = signature.typeLattice.getTypeByName(typeName);
+        if (type) {
+          // Get the expected result from the lexicon
+          var result = expectedResults.getWord(typeName);
+          if (result) {
+            var expectedFS = result[0];
+            logger.debug('SignatureMechanisms_spec: testing ' + typeName);
+            logger.debug('SignatureMechanisms_spec: fs of type: ' +
+              type.fs.prettyPrint(signature, true));
+            logger.debug('SignatureMechanisms_spec: expected fs: ' +
+              expectedFS.prettyPrint(signature, true));
+            expect(type.fs.isEqualTo(expectedFS, signature)).toEqual(true);
+          }
         }
       }
     });
