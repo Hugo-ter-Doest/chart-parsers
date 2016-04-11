@@ -1,6 +1,6 @@
 /*
   Signature parser unit test
-  Copyright (C) 2015 Hugo W.L. ter Doest
+  Copyright (C) 2016 Hugo W.L. ter Doest
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -24,37 +24,70 @@ var logger = log4js.getLogger('SignatureParser');
 
 var fs = require('fs');
 
-var basedir = "/home/hugo/Workspace/chart-parsers/spec/data/UnificationBasedChartParser/";
-var signatureFile = basedir + "UG_Signature.txt";
+var basedir = __dirname + '/data/SignatureParser/';
+var signatureFile =       basedir + "Signature.txt";
+var expectedResultsFile = basedir + "ExpectedResults.txt";
 
+var LexiconParser = require('../lib/LexiconParser');
 var SignatureParser = require('../lib/SignatureParser');
 
+// For selecting tests from the lexicon
+var ignoreFilter = true;
+// A list of results that must be tested
+var filterTests = ['TypeWithListOfCorefsInherit'];
+
+var signature = null;
+
 describe('Signature parser', function() {
-  it('Should read type lattices from a specification file', function() {
+  it('Should read a type lattice from a specification file', function() {
     var data = fs.readFileSync(signatureFile, 'utf8');
-    var signature = SignatureParser.parse(data, {
-      implicitTypes:false
+    signature = SignatureParser.parse(data, {
+      implicitTypes: false
     });
     logger.error(signature);
+  });
+
+  it('Should correctly apply subsumption relations', function() {
+    // Look up some types
+    var bottom = signature.typeLattice.bottom;
     var agreement = signature.typeLattice.getTypeByName('agreement');
-    var POS = signature.typeLattice.getTypeByName('POS');
-    var plural = signature.typeLattice.getTypeByName('plural');
-    var singular = signature.typeLattice.getTypeByName('singular');
-    var masculin = signature.typeLattice.getTypeByName('masculin');
-    var feminin = signature.typeLattice.getTypeByName('feminin');
-    var neutrum = signature.typeLattice.getTypeByName('neutrum');
+    var person = signature.typeLattice.getTypeByName('person');
+    var first = signature.typeLattice.getTypeByName('first');
+    var second = signature.typeLattice.getTypeByName('second');
+    var third = signature.typeLattice.getTypeByName('third');
 
     //Tests for subsumption relation
-    var bottom = signature.typeLattice.getTypeByName('BOTTOM');
     expect(bottom.subsumes(agreement)).toEqual(true);
-    var person = signature.typeLattice.getTypeByName('person');
     expect(agreement.subsumes(person)).toEqual(true);
     expect(bottom.subsumes(person)).toEqual(true);
-    var first = signature.typeLattice.getTypeByName('first');
     expect(person.subsumes(first)).toEqual(true);
-    var second = signature.typeLattice.getTypeByName('second');
     expect(person.subsumes(second)).toEqual(true);
-    var third = signature.typeLattice.getTypeByName('third');
     expect(person.subsumes(third)).toEqual(true);
+  });
+
+  it('Should correctly process inheritance of features from super types', function() {
+    var data = fs.readFileSync(expectedResultsFile, 'utf8');
+    var expectedResults = LexiconParser.parse(data, {
+      signature: signature
+    });
+
+    Object.keys(expectedResults.lexicon).forEach(function(typeName) {
+      if (ignoreFilter || (filterTests.indexOf(typeName) > -1)) {
+        var type = signature.typeLattice.getTypeByName(typeName);
+        if (type) {
+          // Get the expected result from the lexicon
+          var result = expectedResults.getWord(typeName);
+          if (result) {
+            var expectedFS = result[0];
+            logger.debug('SignatureMechanisms_spec: testing ' + typeName);
+            logger.debug('SignatureMechanisms_spec: fs of type: ' +
+              type.fs.prettyPrint(signature, true));
+            logger.debug('SignatureMechanisms_spec: expected fs: ' +
+              expectedFS.prettyPrint(signature, true));
+            expect(type.fs.isEqualTo(expectedFS, signature)).toEqual(true);
+          }
+        }
+      }
+    });
   });
 });
