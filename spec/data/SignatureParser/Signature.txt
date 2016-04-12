@@ -8,28 +8,6 @@ Type agreement (BOTTOM) ->
  gender: gender
 ]
 
-Type transitive (BOTTOM)
-
-Type Noun (BOTTOM)
-
-Type Verb (BOTTOM) ->
-[Verb
- head: [BOTTOM
-        subcat: transitive
-        object: BOTTOM
-       ]
-]
-
-Type singular (number)
-
-Type plural (number)
-
-Type masculin (gender)
-
-Type feminin (gender)
-
-Type neutrum (gender)
-
 Type person (agreement)
 
 Type first (person)

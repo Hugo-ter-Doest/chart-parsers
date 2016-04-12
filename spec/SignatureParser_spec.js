@@ -56,7 +56,7 @@ describe('Signature parser', function() {
     var second = signature.typeLattice.getTypeByName('second');
     var third = signature.typeLattice.getTypeByName('third');
 
-    //Tests for subsumption relation
+    // Tests for subsumption relation
     expect(bottom.subsumes(agreement)).toEqual(true);
     expect(agreement.subsumes(person)).toEqual(true);
     expect(bottom.subsumes(person)).toEqual(true);
