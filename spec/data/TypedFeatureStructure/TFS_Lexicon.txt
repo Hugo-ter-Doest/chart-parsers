@@ -376,3 +376,35 @@
 [wordWithListPhonstring1+wordWithListPhonstring2] ->
 [TOP
 ]
+
+// Unify an fs with a non-empty list with an fs with an empty list
+[wordWithNonEmptyList] ->
+[BOTTOM
+ phon: [1] + [2]
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+]
+
+[wordWithEmptyList] ->
+[BOTTOM
+ phon: <>
+]
+
+[wordWithNonEmptyList+wordWithEmptyList] ->
+[TOP
+]
+
+// Unify an fs with non-empty list with an not having the feature
+[wordWithhoutFeatures] ->
+[BOTTOM
+]
+
+[wordWithNonEmptyList+wordWithhoutFeatures] ->
+[BOTTOM
+ phon: [1] + [2]
+ phon1: [1] "string1"
+ phon2: [2] "string2"
+ phon3: [3] "string3"
+]
+
