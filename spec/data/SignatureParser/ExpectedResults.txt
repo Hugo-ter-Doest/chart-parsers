@@ -41,4 +41,8 @@
  phon1: [1] BOTTOM
  phon2: [2] BOTTOM
  phon3: [3] BOTTOM
+ Feature: [TypeOne
+           FeatureOne: BOTTOM
+           FeatureTwo: BOTTOM
+          ]
 ]

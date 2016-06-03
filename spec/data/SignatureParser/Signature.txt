@@ -53,4 +53,5 @@ Type TypeWithListOfCorefs (BOTTOM) ->
 
 Type TypeWithListOfCorefsInherit (TypeWithListOfCorefs) ->
 [TypeWithListOfCorefsInherit
+  Feature: TypeOne
 ]
