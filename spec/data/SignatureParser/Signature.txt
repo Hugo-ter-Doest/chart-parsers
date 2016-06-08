@@ -55,3 +55,11 @@ Type TypeWithListOfCorefsInherit (TypeWithListOfCorefs) ->
 [TypeWithListOfCorefsInherit
   Feature: TypeOne
 ]
+
+Type TypeWithEmbeddedFS (BOTTOM) ->
+[TypeWithEmbeddedFS
+ feature1: [1] [BOTTOM
+                CAT: BOTTOM
+               ]
+ feature2: <[1] [BOTTOM LEX: BOTTOM]>
+]
