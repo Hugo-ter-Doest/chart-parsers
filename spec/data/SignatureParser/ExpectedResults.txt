@@ -52,5 +52,5 @@
  feature1: [1] [BOTTOM
                 CAT: BOTTOM
                ]
- feature2: <[1] [BOTTOM LEX: BOTTOM]>
+// feature2: <[1] [BOTTOM LEX: BOTTOM]>
 ]
