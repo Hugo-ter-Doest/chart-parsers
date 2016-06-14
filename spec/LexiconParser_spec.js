@@ -37,9 +37,9 @@ describe('Lexicon parser', function() {
   ' structures', function() {
     // Read a file with type lattice
     fs.readFile(signatureFile, 'utf8', function (error, data) {
-      //if (error) {
-      //  logger.debug(error);
-      //}
+      if (error) {
+        logger.debug(error);
+      }
       // parse the type lattice
       signature = signatureParser.parse(data, {
         implicitTypes:false
