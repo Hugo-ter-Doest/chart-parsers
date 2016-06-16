@@ -30,11 +30,11 @@ var basedir = './spec/data/LexiconParser/';
 var lexiconFile = basedir +   'Lexicon.txt';
 var signatureFile = basedir + 'Signature.txt';
 
-//describe('Lexicon parser', function() {
+describe('Lexicon parser', function() {
   var lexicon;
   var signature;
-//  it('Should parse a lexicon with type specification and words with feature' +
-//  ' structures', function() {
+  it('Should parse a lexicon with type specification and words with feature' +
+  ' structures', function() {
     // Read a file with type lattice
     fs.readFile(signatureFile, 'utf8', function (error, data) {
       if (error) {
@@ -45,10 +45,10 @@ var signatureFile = basedir + 'Signature.txt';
         implicitTypes:false
       });
     });
-//  });
+  });
 
-//  it('Should parse a lexicon with type specification and words with feature' +
-//      ' structures', function(done) {
+  it('Should parse a lexicon with type specification and words with feature' +
+      ' structures', function(done) {
     // Read a file with lexicon
     fs.readFile(lexiconFile, 'utf8', function (error, data) {
       if (error) {
@@ -60,6 +60,6 @@ var signatureFile = basedir + 'Signature.txt';
       done();
       expect(lexicon.size()).toEqual(10);
     });
-//  });
+  });
 
-//});
+});
