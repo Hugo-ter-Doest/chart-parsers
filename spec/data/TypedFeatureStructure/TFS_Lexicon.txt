@@ -343,7 +343,7 @@
 
 [wordWithListPhonstring1] ->
 [BOTTOM
- phon: [1] + [2] + [3]
+ phon: <[1] + [2] + [3]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
@@ -351,7 +351,7 @@
 
 [wordWithListPhonstring1a] ->
 [BOTTOM
- phon: [1] + [2] + [3]
+ phon: <[1] + [2] + [3]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
@@ -359,7 +359,7 @@
 
 [wordWithListPhonstring1+wordWithListPhonstring1a] ->
 [BOTTOM
- phon: [1] + [2] + [3]
+ phon: <[1] + [2] + [3]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
@@ -367,7 +367,7 @@
 
 [wordWithListPhonstring2] ->
 [BOTTOM
- phon: [1] + [2]
+ phon: <[1] + [2]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
@@ -380,7 +380,7 @@
 // Unify an fs with a non-empty list with an fs with an empty list
 [wordWithNonEmptyList] ->
 [BOTTOM
- phon: [1] + [2]
+ phon: <[1] + [2]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
@@ -402,7 +402,7 @@
 
 [wordWithNonEmptyList+wordWithhoutFeatures] ->
 [BOTTOM
- phon: [1] + [2]
+ phon: <[1] + [2]>
  phon1: [1] "string1"
  phon2: [2] "string2"
  phon3: [3] "string3"
