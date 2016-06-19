@@ -343,9 +343,9 @@ var result = fs1.unify(fs2, typeLattice);
 ```
 
 Features may have several different values:
-* Type
-* Feature structure
-* A coreference to a feature structures: <code>[1]</code>
+* Type: <code>feature: type</code>
+* Feature structure: <code>f1: [t1 f2: t2]</code>
+* A coreference to a feature structures: <code>feature: [1]</code>
 * A list of coreferences to other feature structures: <code><[1], [2], ...></code>; 
 the list may contain embedded feature structures: <code><[BOTTOM f: type], [1]></code>
 * A concatenation of lists of coreferences (under development)
