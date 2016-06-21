@@ -316,7 +316,12 @@ feature structures belonging to these types.
 
 As a result the feature structure inherits all appropriate features and types
  from super types and used types.
-
+ 
+Built-in types are:
+* <code>BOTTOM</code>
+* <code>TOP</code>
+* <code>LIST</code>
+* <code>STRING</code>
 
 # Typed feature structures
 Feature structures are specified using the PATRII formalism. The 
