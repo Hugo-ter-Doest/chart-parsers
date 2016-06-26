@@ -1,0 +1,120 @@
+// Lexicon based on introduction to HPSG by Steve Harlow
+// (c) 2015 Hugo W.L. ter Doest
+
+[likes] ->
+[word
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      LEX: true
+                      HEAD: verb
+                      SUBJ: [1] [list
+                                 FIRST: NP
+                                 REST: elist
+                                ]
+                      COMPS: [2] [list
+                                  FIRST: NP
+                                  REST: elist
+                                 ]
+                      ARG-STR: [concat-list
+                                FIRST: [1]
+                                REST: [2]
+                               ]
+                     ]
+               ]
+         ]
+]
+
+[scotch] ->
+[word
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      LEX: true
+                      HEAD: [noun
+                             CASE: case
+                            ]
+                      SUBJ: [1] elist
+                      COMPS: [2] elist
+                      ARG-STR: [concat-list
+                                FIRST: [1]
+                                REST: [2]
+                               ]
+                     ]
+               ]
+         ]
+]
+
+[dagger] ->
+[word
+ SYNSEM: [1] [synsem
+              LOC: [local
+                    CAT: [cat
+                          LEX: true
+                          HEAD: [noun
+                                 CASE: case
+                                ]
+                          SUBJ: [2] elist
+                          SPR: [list
+                                FIRST: [synsem
+                                        LOC: [local
+                                              CAT: [cat
+                                                    LEX: true
+                                                    HEAD: [det
+                                                           SPEC: [1]
+                                                          ]
+                                                   ]
+                                              ]
+                                       ]
+                               ]
+                          COMPS: [3] elist
+                          ARG-STR: [concat-list
+                                    FIRST: [2]
+                                    REST: [3]
+                                   ]
+                         ]
+                   ]
+             ]
+]
+
+[the] ->
+[word
+ SYNSEM: [1] [synsem
+              LOC: [local
+                    CAT: [cat
+                          LEX: true
+                          HEAD: [det
+                                 SPEC: [synsem
+                                        LOC: [local
+                                              CAT: [cat
+                                                    HEAD: noun
+                                                    SPR: [list
+                                                          FIRST: [synsem
+                                                                  LOC: [local
+                                                                        CAT: [cat
+                                                                              HEAD: [noun
+                                                                                     SPEC: [1]
+                                                                                    ]
+                                                                             ]
+                                                                       ]
+                                                                 ]
+                                                          REST: elist
+                                                         ]
+                                                   ]
+                                             ]
+                                       ]
+                                ]
+                          SUBJ: [2] elist
+                          SPR: [3] elist
+                          COMPS: [4] elist
+                          ARG-STR: [concat-list
+                                    FIRST: [2]
+                                    REST: [concat-list
+                                           FIRST: [3]
+                                           REST: [4]
+                                          ]
+                                   ]
+                         ]
+                   ]
+             ]
+]

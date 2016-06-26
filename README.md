@@ -317,11 +317,11 @@ feature structures belonging to these types.
 As a result the feature structure inherits all appropriate features and types
  from super types and used types.
  
-Built-in types are:
-* <code>BOTTOM</code>
-* <code>TOP</code>
-* <code>LIST</code>
-* <code>STRING</code>
+Built-in types are (types are case sensitive):
+* <code>BOTTOM</code>: least specific type
+* <code>TOP</code>: most specific type 
+* <code>LIST</code>: a list of coreferences and/or feature structures
+* <code>STRING</code>: a lexical string
 
 # Typed feature structures
 Feature structures are specified using the PATRII formalism. The 
@@ -354,3 +354,7 @@ Features may have several different values:
 * A list of coreferences to other feature structures: <code><[1], [2], ...></code>; 
 the list may contain embedded feature structures: <code><[BOTTOM f: type], [1]></code>
 * A concatenation of lists of coreferences (under development): <code>[1] + [2]</code>
+
+# References
+* Introduction to Head-driven Phrase Structure Grammar, Steve Harlow, 2009, 
+URL: 

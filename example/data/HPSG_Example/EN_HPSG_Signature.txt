@@ -1,0 +1,214 @@
+// HPSG Signature based on introduction to HPSG by Steve Harlow
+// (c) 2016 Hugo W.L. ter Doest
+
+// Head type hierarchy
+Type head (BOTTOM)
+Type subst (head)
+
+Type case (BOTTOM)
+Type nom (case)
+Type gen (case)
+Type dat (case)
+Type acc (case)
+
+Type noun (subst) ->
+[noun
+ CASE: case
+]
+
+Type verb (subst)
+Type prep (subst)
+Type adj (subst)
+Type func (head)
+Type det (func)
+
+// Booleans
+Type boolean(BOTTOM)
+Type true(boolean)
+Type false (boolean)
+
+Type cat(BOTTOM) ->
+[cat
+ HEAD: head
+ LEX: boolean
+ SUBJ: [1] LIST
+ SPR: [2] LIST
+ COMPS: [3] LIST
+ ARG-STR: <[1] + [2] + [3]>
+]
+
+Type content (BOTTOM)
+
+Type local (BOTTOM) ->
+[local
+ CAT: cat
+ CONTENT: content
+]
+
+
+Type non-local (BOTTOM)
+
+Type synsem (BOTTOM) ->
+[synsem
+ LOC: local
+ NONLOC: non-local
+]
+
+// Main type
+Type sign (BOTTOM) ->
+[sign
+ SYNSEM: synsem
+]
+
+// Sign for words
+Type word (sign) ->
+[word
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      LEX: true
+                     ]
+                ]
+          ]
+]
+
+// Hierarchy for daughters
+Type dtrs (BOTTOM) ->
+[dtrs
+ HEAD-DTR: sign
+ NON-HD-DTRS: LIST
+]
+
+// Sign for phrases
+Type phrase (sign) ->
+[phrase
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      LEX: false
+                     ]
+               ]
+         ]
+  DTRS: dtrs
+]
+
+// Includes the Head Feature Principle: the sign's head is equal to
+// the head of its head daughter
+Type headed-ph (phrase) ->
+[headed-ph
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      HEAD: [1] head
+                     ]
+                ]
+         ]
+ DTRS: [dtrs
+        HEAD-DTR: [sign
+                   SYNSEM: [synsem
+                            LOC: [local
+                                  CAT: [cat
+                                        HEAD: [1]
+                                       ]
+                                 ]
+                           ]
+                  ]
+        NON-HD-DTRS: LIST
+       ]
+]
+
+Type hd-nexus-ph (headed-ph)
+Type hd-adjunct-ph (headed-ph)
+Type hd-valence-ph (hd-nexus-ph)
+Type hd-filler-ph (hd-nexus-ph)
+
+Type hd-subject-ph (hd-valence-ph) ->
+[hd-subject-ph
+ PHON: <[1] + [2]>
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      SUBJ: <>
+                      SPR: [3]
+                      COMPS: [4]
+                     ]
+                ]
+          ]
+ DTRS: [dtrs
+        HEAD-DTR: [phrase
+                   PHON: [2] LIST
+                   SYNSEM: [synsem
+                            LOC: [local
+                                  CAT: [cat
+                                        SUBJ: <[5]>
+                                        SPR: [3] <>
+                                        COMPS: [4] <>
+                                       ]
+                                  ]
+                            ]
+                  ]
+        NON-HD-DTRS: <[sign
+                       PHON: [1] LIST
+                       SYNSEM: [5] BOTTOM
+                      ]
+                     >
+
+       ]
+]
+
+Type hd-specifier-ph (hd-valence-ph) ->
+[hd-specifier-ph
+ PHON: <[1] + [2]>
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      SPR: <>
+                     ]
+                ]
+          ]
+ DTRS: [dtrs
+        HEAD-DTR: [phrase
+                   PHON: [2]
+                   SYNSEM: [synsem
+                            LOC: [local
+                                  CAT: [cat
+                                        SPR: <[3]>
+                                       ]
+                                  ]
+                            ]
+                  ]
+        NON-HD-DTRS: <[phrase
+                       PHON: [1]
+                       SYNSEM: [3]
+                      ]
+                     >
+       ]
+]
+
+// Head-Complement Phrase
+Type hd-complement-ph (hd-valence-ph) ->
+[hd-complement-ph
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      SUBJ: [1]
+                      SPR: [2]
+                      COMPS: <>
+                     ]
+                ]
+          ]
+ DTRS: [dtrs
+        HEAD-DTR: [phrase
+                   SYNSEM: [synsem
+                            LOC: [local
+                                  CAT: [cat
+                                        SUBJ: [1]
+                                        SPR: [2]
+                                        COMPS: LIST
+                                       ]
+                                  ]
+                            ]
+                  ]
+        NON-HD-DTRS: LIST
+       ]
+]
