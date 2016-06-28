@@ -37,14 +37,14 @@ var signature = chartParsers.SignatureParser.parse(text, {
 });
 logger.debug(signature.printSpecification(false));
 
+// Load lexicon
+text = fs.readFileSync(lexiconFile, 'utf8');
+var lexicon = chartParsers.LexiconParser.parse(text, {
+  signature: signature
+});
+logger.debug(lexicon.prettyPrint(signature));
+
 /*
- // Load lexicon
- text = fs.readFileSync(lexiconFile, 'utf8');
- var lexicon = chartParsers.LexiconParser.parse(text, {
- signature: signature
- });
-
-
  // Load grammar
  text = fs.readFileSync(grammarFile, 'utf8');
  var grammar = chartParsers.GrammarParser.parse(text, {

@@ -8,9 +8,8 @@
                 CAT: [cat
                       LEX: true
                       HEAD: verb
-                      SUBJ: [1] <[NP]>
-                      COMPS: [2] <[NP]>
-                      ARG-STR: <[1] + [2]>
+                      SUBJ: <[NP]>
+                      COMPS: <[NP]>
                      ]
                ]
          ]
@@ -25,9 +24,8 @@
                       HEAD: [noun
                              CASE: case
                             ]
-                      SUBJ: [1] <>
-                      COMPS: [2] <>
-                      ARG-STR: <[1] + [2]>
+                      SUBJ: <>
+                      COMPS: <>
                      ]
                ]
          ]
@@ -39,24 +37,20 @@
               LOC: [local
                     CAT: [cat
                           LEX: true
-                          HEAD: [noun
-                                 CASE: case
-                                ]
-                          SUBJ: [2] <>
-                          SPR: [list
-                                FIRST: [synsem
-                                        LOC: [local
-                                              CAT: [cat
-                                                    LEX: true
-                                                    HEAD: [det
-                                                           SPEC: [1]
-                                                          ]
+                          HEAD: noun
+                          SUBJ: <>
+                          SPR: <[synsem
+                                 LOC: [local
+                                       CAT: [cat
+                                             LEX: true
+                                             HEAD: [det
+                                                    SPEC: [1]
                                                    ]
-                                              ]
+                                            ]
                                        ]
-                               ]
-                          COMPS: [3] <>
-                          ARG-STR: <[2] + [3]>
+                                ]
+                               >
+                          COMPS: <>
                          ]
                    ]
              ]
@@ -90,7 +84,6 @@
                           SUBJ: [2] <>
                           SPR: [3] <>
                           COMPS: [4] <>
-                          ARG-STR: <[2] + [3] + [4]>
                          ]
                    ]
              ]
