@@ -103,7 +103,7 @@
   ],
   "levels": {
     "Lexicon": "ERROR",
-    "LexiconParser": "DEBUG",
+    "LexiconParser": "ERROR",
     "Type": "ERROR",
     "TypeLattice": "ERROR",
     "TypeLatticeParser": "ERROR",

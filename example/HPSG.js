@@ -44,14 +44,15 @@ var lexicon = chartParsers.LexiconParser.parse(text, {
 });
 logger.debug(lexicon.prettyPrint(signature));
 
+
+// Load grammar
+text = fs.readFileSync(grammarFile, 'utf8');
+var grammar = chartParsers.GrammarParser.parse(text, {
+  signature: signature
+});
+logger.debug(grammar.prettyPrint(signature));
+
 /*
- // Load grammar
- text = fs.readFileSync(grammarFile, 'utf8');
- var grammar = chartParsers.GrammarParser.parse(text, {
- signature: signature
- });
-
-
  // Create parser
  var parserFactory = new chartParsers.ParserFactory();
  parser = parserFactory.createParser({
