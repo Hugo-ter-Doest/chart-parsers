@@ -24,6 +24,9 @@ var minimal_grammar_file = path + 'minimal_grammar.txt';
 var grammar_for_CFG_file = path + 'test_grammar_for_CFG.txt';
 var math_grammar_file = path + 'math_expressions.txt';
 
+var UG_GrammarFile = './spec/data/GrammarParser/' + 'UG_Grammar.txt';
+var UG_ResultsFile = './spec/data/GrammarParser/' + 'UG_Results.txt';
+
 describe('GrammarParser', function() {
   var grammar_text;
   var grammar;
@@ -291,4 +294,11 @@ describe('GrammarParser', function() {
     expect(grammar.isLeftcornerOf('E', 'E')).toEqual(true);
     expect(grammar.isLeftcornerOf('number', 'E')).toBeFalsy();
   });
+
+  it('should read a unification grammar with list constraints', function () {
+    //grammar_text = fs.readFileSync(UG_GrammarFile, 'utf8');
+    //grammar = GrammarParser.parse(grammar_text);
+
+  });
+
 });
