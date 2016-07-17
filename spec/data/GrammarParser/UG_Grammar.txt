@@ -15,4 +15,4 @@ VP -> *Verb* NP
 <VP head> = <Verb head>
 <VP head object> = <NP head>
 <Verb head subcat> = transitive
-<VP head args> = <<NP>, <Verb>>
+<VP head args> = [<NP>, <Verb>]

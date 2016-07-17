@@ -18,6 +18,7 @@
 
 var fs = require('fs');
 var GrammarParser = require('../lib/GrammarParser');
+var SignatureParser = require('../lib/SignatureParser');
 
 var path = './spec/data/CFGChartParser/';
 var minimal_grammar_file = path + 'minimal_grammar.txt';
@@ -25,6 +26,7 @@ var grammar_for_CFG_file = path + 'test_grammar_for_CFG.txt';
 var math_grammar_file = path + 'math_expressions.txt';
 
 var UG_GrammarFile = './spec/data/GrammarParser/' + 'UG_Grammar.txt';
+var UG_SignatureFile = './spec/data/GrammarParser/' + 'UG_Signature.txt';
 var UG_ResultsFile = './spec/data/GrammarParser/' + 'UG_Results.txt';
 
 describe('GrammarParser', function() {
@@ -296,9 +298,12 @@ describe('GrammarParser', function() {
   });
 
   it('should read a unification grammar with list constraints', function () {
-    //grammar_text = fs.readFileSync(UG_GrammarFile, 'utf8');
-    //grammar = GrammarParser.parse(grammar_text);
-
+    var signature_text = fs.readFileSync(UG_SignatureFile, 'utf8');
+    var signature = SignatureParser.parse(signature_text, {
+      implicitTypes: false
+    });
+    grammar_text = fs.readFileSync(UG_GrammarFile, 'utf8');
+    grammar = GrammarParser.parse(grammar_text, {signature: signature});
   });
 
 });
