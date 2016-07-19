@@ -119,7 +119,7 @@
     "EarleyParser": "ERROR",
     "GoalItem": "ERROR",
     "Grammar": "ERROR",
-    "GrammarParser": "ERROR",
+    "GrammarParser": "DEBUG",
     "HeadCornerParser": "ERROR",
     "ItemFactory": "ERROR",
     "LeftCornerParser": "ERROR",

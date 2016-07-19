@@ -16,6 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var settings = require('../config/Settings');
+
+var log4js = require('log4js');
+log4js.configure(settings.log4js_config);
+var logger = log4js.getLogger('GammarParser');
+
 var fs = require('fs');
 var GrammarParser = require('../lib/GrammarParser');
 var SignatureParser = require('../lib/SignatureParser');
@@ -304,6 +310,7 @@ describe('GrammarParser', function() {
     });
     grammar_text = fs.readFileSync(UG_GrammarFile, 'utf8');
     grammar = GrammarParser.parse(grammar_text, {signature: signature});
+    logger.debug(grammar.prettyPrint());
   });
 
 });
