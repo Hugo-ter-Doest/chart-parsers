@@ -124,7 +124,7 @@
     "ItemFactory": "ERROR",
     "LeftCornerParser": "ERROR",
     "ParserFactory": "ERROR",
-    "ProductionRule": "ERROR",
+    "ProductionRule": "DEBUG",
     "ExampleWithWordnet": "INFO",
     "Signature": "ERROR",
     "SignatureParser": "DEBUG"
