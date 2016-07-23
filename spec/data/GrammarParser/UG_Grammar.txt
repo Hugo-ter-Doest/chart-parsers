@@ -6,13 +6,14 @@ S -> NP *VP*
 <NP head agreement number> = <VP head agreement number>
 <S subject> = <NP head>
 <S action> = <VP head>
+<S action new> = BOTTOM
 
 NP -> Determiner *Noun*
 <NP head> = <Noun head>
 <Determiner head agreement> = <Noun head agreement>
 
 VP -> *Verb* NP
-<VP head args> = [<Verb>, <VP>, <NP>]
+<VP head args> = [<NP>, <VP head>, <NP head>]
 <VP head> = <Verb head>
 <VP head object> = <NP head>
 <Verb head subcat> = transitive
