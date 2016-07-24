@@ -13,7 +13,7 @@ NP -> Determiner *Noun*
 <Determiner head agreement> = <Noun head agreement>
 
 VP -> *Verb* NP
-<VP head args> = [<NP>, <VP head>, <NP head>]
 <VP head> = <Verb head>
+<VP head args> = [<NP>, <VP head>, <NP head>]
 <VP head object> = <NP head>
 <Verb head subcat> = transitive
