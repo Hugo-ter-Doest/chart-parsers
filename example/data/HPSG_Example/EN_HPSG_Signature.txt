@@ -179,7 +179,7 @@ Type hd-specifier-ph (hd-valence-ph) ->
                   ]
         NON-HD-DTRS: <[phrase
                        PHON: [1]
-                       SYNSEM: [3]
+                       SYNSEM: <[3]>
                       ]
                      >
        ]
