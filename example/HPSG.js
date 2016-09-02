@@ -50,7 +50,7 @@ text = fs.readFileSync(grammarFile, 'utf8');
 var grammar = chartParsers.GrammarParser.parse(text, {
   signature: signature
 });
-logger.debug(grammar.prettyPrint(signature));
+logger.debug(grammar.prettyPrint(true));
 
 /*
  // Create parser

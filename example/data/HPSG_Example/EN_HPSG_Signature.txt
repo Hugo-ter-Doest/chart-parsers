@@ -45,7 +45,6 @@ Type local (BOTTOM) ->
  CONTENT: content
 ]
 
-
 Type non-local (BOTTOM)
 
 Type synsem (BOTTOM) ->

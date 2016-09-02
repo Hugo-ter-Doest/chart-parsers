@@ -1,5 +1,5 @@
 // Grammar based on introduction to HPSG by Steve Harlow
-// (c) 2015 Hugo W.L. ter Doest
+// (c) 2016 Hugo W.L. ter Doest
 
 NP -> DetP Nbar
 <NP> = hd-specifier-ph
