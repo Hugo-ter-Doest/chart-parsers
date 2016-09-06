@@ -60,10 +60,9 @@ Type TypeWithConcatList (BOTTOM) ->
  phon3: [3] <[1], [2]>
 ]
 
-
 Type TypeWithListOfCorefsInherit (TypeWithListOfCorefs) ->
 [TypeWithListOfCorefsInherit
-  Feature: TypeOne
+ Feature: TypeOne
 ]
 
 Type TypeWithEmbeddedFS (BOTTOM) ->
