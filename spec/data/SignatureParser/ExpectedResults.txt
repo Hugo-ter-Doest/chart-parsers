@@ -38,7 +38,7 @@
 // Type with a concatenated list
 [TypeWithConcatList] ->
 [TypeWithConcatList
- phon: <[1] + [2] + [3]>
+// phon: <[1] + [2] + [3]>
  phon1: [1] <[2], [3]>
  phon2: [2] <[1], [3]>
  phon3: [3] <[1], [2]>

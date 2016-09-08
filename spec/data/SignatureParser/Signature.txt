@@ -54,7 +54,7 @@ Type TypeWithListOfCorefs (BOTTOM) ->
 // Type with a concatenated list
 Type TypeWithConcatList (BOTTOM) ->
 [TypeWithConcatList
- phon: <[1] + [2] + [3]>
+// phon: <[1] + [2] + [3]>
  phon1: [1] <[2], [3]>
  phon2: [2] <[1], [3]>
  phon3: [3] <[1], [2]>
