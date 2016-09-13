@@ -36,7 +36,7 @@ var featureStructureFile = base + 'TFS_Lexicon.txt';
 // For selecting tests from the lexicon
 var ignoreFilter = true;
 // A list of results that must be tested
-var filterTests = ['wordWithListPhonstring1+wordWithListPhonstring2'];
+var filterTests = ['wordWithNonEmptyList+wordWithhoutFeatures'];
 
 describe('Typed Feature Structure class', function() {
   var data = fs.readFileSync(signatureFile, 'utf8');
