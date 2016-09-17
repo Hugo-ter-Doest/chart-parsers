@@ -331,11 +331,11 @@ Built-in types are (types are case sensitive):
 * <code>STRING</code>: a lexical string
 
 # Typed feature structures
-Feature structures are specified using the PATRII formalism. The 
-LexiconParser reads lexicons that assign feature structures to words. 
-Multiple alternative feature structures may be assigned to the same word by 
-specifying multiple entries of the word. Each node of a feature structure has 
-a type assigned that is specified in a type lattice.
+Feature structures are specified using a specification language that largely 
+follows PATRII. The LexiconParser reads lexicons that assign feature structures 
+to words. Multiple alternative feature structures may be assigned to the same
+word by specifying multiple entries of the word. Each node of a feature  
+structure has a type assigned that is specified in a type lattice.
 ```
 [home] ->
 [sign
@@ -374,17 +374,14 @@ AGREEMENT: [1][agreement
               ]
 SAME: [1]
 ```
-A **list** of coreferences to other feature structures: <code><[1], [2], ...></code>;
+A **list** of coreferences to other feature structures: <code><[1], [2], ..
+.></code>; A list may contain embedded feature structures.
 ```
 NP: [1]: [...]
 PP: [2]: [...]
 CAT: [cat
-      COMPS: <[1], [2]>
+      COMPS: <[1], [2], [BOTTOM f: type]>
      ]
-```
-A list may contain embedded feature structures: 
-```
-<[BOTTOM f: type], [1]>
 ```
 A **concatenated list** of coreferences: <code>[1] + 
 [2]</code>
@@ -398,5 +395,7 @@ CAT: [cat
 ```
 
 # References
+* An Introduction to Unification-Based Approaches to Grammar, Stuart M. 
+Shieber, 2003, URL: https://dash.harvard.edu/handle/1/11576719
 * Introduction to Head-driven Phrase Structure Grammar, Steve Harlow, 2009, 
-URL: 
+URL: http://www-users.york.ac.uk/~sjh1/hpsgcourse.pdf
