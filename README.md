@@ -397,5 +397,8 @@ CAT: [cat
 # References
 * An Introduction to Unification-Based Approaches to Grammar, Stuart M. 
 Shieber, 2003, URL: https://dash.harvard.edu/handle/1/11576719
+* Head-Driven Phrase Structure Grammar, Pollard, Carl, and Ivan A. Sag. 1994. 
+ Chicago: University of Chicago Press and Stanford: CSLI Publications. 
+ Chapters 1, 3 and 4 are online available: http://hpsg.stanford.edu/LSA07/
 * Introduction to Head-driven Phrase Structure Grammar, Steve Harlow, 2009, 
 URL: http://www-users.york.ac.uk/~sjh1/hpsgcourse.pdf
