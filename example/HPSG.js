@@ -44,7 +44,7 @@ var lexicon = chartParsers.LexiconParser.parse(text, {
 });
 logger.debug(lexicon.prettyPrint(signature));
 
-/*
+
 // Load grammar
 text = fs.readFileSync(grammarFile, 'utf8');
 var grammar = chartParsers.GrammarParser.parse(text, {
@@ -52,7 +52,7 @@ var grammar = chartParsers.GrammarParser.parse(text, {
 });
 logger.debug(grammar.prettyPrint(true));
 
-
+/*
  // Create parser
  var parserFactory = new chartParsers.ParserFactory();
  parser = parserFactory.createParser({
