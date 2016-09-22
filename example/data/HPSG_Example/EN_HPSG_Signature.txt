@@ -16,7 +16,20 @@ Type noun (subst) ->
  CASE: case
 ]
 
-Type verb (subst)
+Type vform (BOTTOM)
+Type finite (vform)
+Type pres (finite)
+Type past (finite)
+Type prp (vform)
+Type psp (vform)
+Type bse (vform)
+Type ger (vform)
+
+Type verb (subst) ->
+[verb
+ VFORM: vform
+]
+
 Type prep (subst)
 Type adj (subst)
 Type func (head)
@@ -211,3 +224,36 @@ Type hd-complement-ph (hd-valence-ph) ->
         NON-HD-DTRS: LIST
        ]
 ]
+
+// Prepositions
+Type pform (BOTTOM)
+Type about (pform)
+Type at (pform)
+Type on (pform)
+Type to (pform)
+Type from (pform)
+
+// A preposition is a word with a one complement, a noun with case accusative
+Type preposition (word) ->
+[preposition
+ SYNSEM: [synsem
+          LOC: [local
+                CAT: [cat
+                      SUBJ: <>
+                      COMPS: <[phrase
+                               SYNSEM: [synsem
+                                        LOC: [local
+                                              CAT: [cat
+                                                    HEAD: [noun
+                                                           CASE: acc
+                                                          ]
+
+                                                   ]
+                                             ]
+                                       ]
+                              ]>
+                     ]
+                ]
+          ]
+]
+
