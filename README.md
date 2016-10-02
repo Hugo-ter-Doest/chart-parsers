@@ -308,9 +308,9 @@ Type type1 ()
 Type type2 ()
 Type type3 (type1 type2) ->
 [type3
- feature1: type1
- feature2: [type2
-            feature3: type1
+ FEATURE1: type1
+ FEATURE2: [type2
+            FEATURE3: type1
            ]
 ]
 ```
@@ -327,8 +327,11 @@ Built-in types are (types are case sensitive):
 * <code>BOTTOM</code>: least specific type
 * <code>TOP</code>: most specific type 
 * <code>LIST</code>: a list of coreferences and/or feature structures
-* <code>CONCATLIST</code>: concatenation of lists refered to
+* <code>CONCATLIST</code>: concatenation of lists referred to
 * <code>STRING</code>: a lexical string
+* <code>RULE</code>: type used for the feature structures of production rules
+* <code>CONSTITUENT</code>: type used for the feature structures of a 
+RHS nonterminal 
 
 # Typed feature structures
 Feature structures are specified using a specification language that largely 
@@ -339,10 +342,10 @@ structure has a type assigned that is specified in a type lattice.
 ```
 [home] ->
 [sign
- category: noun
- agreement: [agreement
-             number: singular
-             gender: neutrum
+ CATEGORY: noun
+ AGREEMENT: [agreement
+             NUMBER: singular
+             GENDER: neutrum
             ]
 ]
 ```
@@ -366,7 +369,7 @@ AGREEMENT: [agreement
             GENDER: masculin
            ]
 ```
-A **coreference** to a feature structures: <code>feature: [1]</code>
+A **coreference** to a feature structures: <code>FEATURE: [1]</code>
 ```
 AGREEMENT: [1][agreement
                PERSON: first
