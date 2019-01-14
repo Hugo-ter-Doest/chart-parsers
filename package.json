@@ -1,23 +1,29 @@
 {
   "name": "chart-parsers",
   "version": "0.0.29",
-  "author" : {
-    "name" : "Hugo W.L. ter Doest",
-    "email" : "hwl.ter.doest@gmail.com"
+  "author": {
+    "name": "Hugo W.L. ter Doest",
+    "email": "hwl.ter.doest@gmail.com"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "git://github.com/Hugo-ter-Doest/chart-parsers.git"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hugo-ter-Doest/chart-parsers.git"
   },
-  "keywords" : [ "natural language processing", "parsing", "chart parsing", 
-                 "chart parser", "parser", "unification-based grammar",
-                 "feature structure", "typed feature structure",
-                 "type lattice", "type hierarchy"],
-  "licenses" : {
-    "type" : "gpl30"
-  },
+  "keywords": [
+    "natural language processing",
+    "parsing",
+    "chart parsing",
+    "chart parser",
+    "parser",
+    "unification-based grammar",
+    "feature structure",
+    "typed feature structure",
+    "type lattice",
+    "type hierarchy"
+  ],
+  "license": "GPL-3.0",
   "dependencies": {
-    "underscore" : "*",
+    "underscore": "*",
     "log4js": "*",
     "typeof": "*"
   }
