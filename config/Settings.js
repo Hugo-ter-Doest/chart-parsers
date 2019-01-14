@@ -44,6 +44,6 @@ config.featureOfLexicalString = 'PHON';
 var basedir = __dirname;
 config.log4js_config = basedir + '/log4js.json';
 
-GLOBAL.config = config;
+global.config = config;
 
 module.exports = config;
