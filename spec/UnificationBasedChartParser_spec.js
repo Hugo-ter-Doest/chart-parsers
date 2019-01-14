@@ -47,7 +47,7 @@ var parser = null;
 var sentences = null;
 var results = null;
 
-GLOBAL.config.addPhonString = false;
+global.config.addPhonString = false;
 
 var parserTypes = ['Earley', 'LeftCorner', 'HeadCorner', 'CYK'];
 parserTypes.forEach(function(parserType) {

@@ -1,133 +1,165 @@
 {
-  "appenders": [
-    {
-      "type": "console",
-      "category": "Agenda"
-    },
-    {
-      "type": "console",
-      "category": "CYKParser"
-    },
-    {
-      "type": "console",
-      "category": "CYK_Item"
-    },
-    {
-      "type": "console",
-      "category": "Chart"
-    },
-    {
-      "type": "console",
-      "category": "ChartParser"
-    },
-    {
-      "type": "console",
-      "category": "Constraint"
-    },
-    {
-      "type": "console",
-      "category": "DoubleDottedItem"
-    },
-    {
-      "type": "console",
-      "category": "EarleyItem"
-    },
-    {
-      "type": "console",
-      "category": "EarleyParser"
-    },
-    {
-      "type": "console",
-      "category": "GoalItem"
-    },
-    {
-      "type": "console",
-      "category": "Grammar"
-    },
-    {
-      "type": "console",
-      "category": "GrammarParser"
-    },
-    {
-      "type": "console",
-      "category": "HeadCornerParser"
-    },
-    {
-      "type": "console",
-      "category": "ItemFactory"
-    },
-    {
-      "type": "console",
-      "category": "LeftCornerParser"
-    },
-    {
-      "type": "console",
-      "category": "ParserFactory"
-    },
-    {
-      "type": "console",
-      "category": "ProductionRule"
-    },
-        {
-      "type": "console",
-      "category": "SignatureParser"
-    },
-    {
-      "type": "console",
-      "category": "Lexicon"
-    },
-    {
-      "type": "console",
-      "category": "LexiconParser"
-    },
-    {
-      "type": "console",
-      "category": "Type"
-    },
-    {
-      "type": "console",
-      "category": "TypeLattice"
-    },
-    {
-      "type": "console",
-      "category": "TypeLatticeParser"
-    },
-    {
-      "type": "console",
-      "category": "TypedFeatureStructure"
-    },
-    {
-      "type": "console",
-      "category": "ExampleWithWordnet"
+  "appenders": {
+    "out": {
+      "type": "console"
     }
-  ],
-  "levels": {
-    "Lexicon": "ERROR",
-    "LexiconParser": "ERROR",
-    "Type": "ERROR",
-    "TypeLattice": "ERROR",
-    "TypeLatticeParser": "ERROR",
-    "TypedFeatureStructure": "ERROR",
-    "Agenda": "ERROR",
-    "CYKParser": "ERROR",
-    "CYK_Item": "ERROR",
-    "Chart": "ERROR",
-    "ChartParser": "ERROR",
-    "Constraint": "ERROR",
-    "DoubleDottedItem": "ERROR",
-    "EarleyItem": "ERROR",
-    "EarleyParser": "ERROR",
-    "GoalItem": "ERROR",
-    "Grammar": "ERROR",
-    "GrammarParser": "DEBUG",
-    "HeadCornerParser": "ERROR",
-    "ItemFactory": "ERROR",
-    "LeftCornerParser": "ERROR",
-    "ParserFactory": "ERROR",
-    "ProductionRule": "DEBUG",
-    "ExampleWithWordnet": "INFO",
-    "Signature": "ERROR",
-    "SignatureParser": "DEBUG"
   },
-  "replaceConsole": true
+  "categories": {
+    "default": {
+      "appenders": [
+        "out"
+      ],
+      "level": "info"
+    },
+    "Agenda": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "CYKParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "CYK_Item": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "Chart": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "ChartParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "Constraint": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "DoubleDottedItem": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "EarleyItem": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "EarleyParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "GoalItem": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "Grammar": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "GrammarParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "DEBUG"
+    },
+    "HeadCornerParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "ItemFactory": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "LeftCornerParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "ParserFactory": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "ProductionRule": {
+      "appenders": [
+        "out"
+      ],
+      "level": "DEBUG"
+    },
+    "SignatureParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "DEBUG"
+    },
+    "Lexicon": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "LexiconParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "Type": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "TypeLattice": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "TypeLatticeParser": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "TypedFeatureStructure": {
+      "appenders": [
+        "out"
+      ],
+      "level": "ERROR"
+    },
+    "ExampleWithWordnet": {
+      "appenders": [
+        "out"
+      ],
+      "level": "INFO"
+    }
+  }
 }
